@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-import ManagementConsole from './Component/ManagementConsle';
+import ManagementConsole from './Component/ManagementConsole';
 
 function App() {
   return (
