@@ -1,8 +1,15 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation, Footer, Home, NewTicket, closeTicket, TransferTicket } from "./components";
-import CloseTicket from "./components/closeTicket";
-import AllTicketList from "./components/ticketList";
+import { Navigation,Footer}from "./components";
+import Home from "./pages/Home";
+import NewTicket from "./pages/createNewTicket";
+import CloseTicket from "./pages/closeTicket";
+import TransferTicket from "./pages/ticketTransferring";
+import  MoreInfo  from "./pages/requestMoreInfo";
+import  EditTicket  from "./pages/modExistTicket";
+import "./index";
+
+import AllTicketList from "./pages/ticketList";
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
   return (
@@ -15,7 +22,9 @@ function App() {
           <Route path="/AllTicket" exact component={() => <AllTicketList />} />
           <Route path="/Ticketforyou" exact component={() => <AllTicketList />} />
           <Route path="/CloseTicket" exact component={() => <CloseTicket />} />
-          <Route path="/ticketTransferring" exact component={() => <TransferTicket />} />
+          <Route path="/TransferTicket" exact component={() => <TransferTicket />} />
+          <Route path="/MoreInfoRequest" exact component={() => <MoreInfo />} />
+          <Route path="/edit" exact component={() => <EditTicket />} />
         </Switch>
         <Footer />
       </Router>
