@@ -1,4 +1,4 @@
-import './ManagementConsole.css';
+
 
 function ManagementConsole() {
 
