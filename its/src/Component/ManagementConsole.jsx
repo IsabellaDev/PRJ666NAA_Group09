@@ -13,7 +13,7 @@ function ManagementConsole() {
             <div class="col-md-7 col-lg-8">
                 <h4 class="mb-3">Features</h4>
                 <div class="form-check form-switch" >
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
+                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" />
                     <label class="form-check-label" for="flexSwitchCheckChecked"
                     >Rport Issue
                         <a href="#"><i class="bi-pencil-fill"></i></a>
@@ -22,7 +22,7 @@ function ManagementConsole() {
                 <div class="col-4">
                     <div class="form-check form-switch">
                         <label class="form-check-label" for="flexSwitchCheckChecked"
-                        >Request Service <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
+                        >Request Service <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" />
                             <a href="#"><i class="bi-pencil-fill"></i></a>
                         </label>
                     </div>
