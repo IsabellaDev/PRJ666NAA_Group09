@@ -1,23 +1,23 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { Navigation,Footer}from "./components";
-import Home from "./pages/Home";
-import NewTicket from "./pages/createNewTicket";
-import CloseTicket from "./pages/closeTicket";
-import TransferTicket from "./pages/ticketTransferring";
-import  MoreInfo  from "./pages/requestMoreInfo";
-import  EditTicket  from "./pages/modExistTicket";
+import { TicketNavigation,Footer}from "./components/ticketSystem";
+import Dashboard from "./pages/ticketingSystem/Dashboard";
+import NewTicket from "./pages/ticketingSystem/createNewTicket";
+import CloseTicket from "./pages/ticketingSystem/closeTicket";
+import TransferTicket from "./pages/ticketingSystem/ticketTransferring";
+import  MoreInfo  from "./pages/ticketingSystem/requestMoreInfo";
+import  EditTicket  from "./pages/ticketingSystem/modExistTicket";
 import "./index";
 
-import AllTicketList from "./pages/ticketList";
+import AllTicketList from "./pages/ticketingSystem/ticketList";
 import 'bootstrap/dist/css/bootstrap.css';
 function App() {
   return (
     <div className="App">
       <Router>
-        <Navigation />
+        <TicketNavigation />
         <Switch>
-          <Route path="/dashboard" exact component={() => <Home />} />
+          <Route path="/dashboard" exact component={() => <Dashboard />} />
           <Route path="/NewTicket" exact component={() => <NewTicket />} />
           <Route path="/AllTicket" exact component={() => <AllTicketList />} />
           <Route path="/Ticketforyou" exact component={() => <AllTicketList />} />
