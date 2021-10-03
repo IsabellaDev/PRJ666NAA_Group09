@@ -24,8 +24,10 @@
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.reportIssue, .faq{
+  margin-left: 300px;
+  margin-right: 45px;
+  margin-bottom: 45px;
 }
 
 @keyframes App-logo-spin {
