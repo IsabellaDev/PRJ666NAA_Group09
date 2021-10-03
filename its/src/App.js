@@ -1,4 +1,5 @@
 import './App.css';
+
 import Navbar from './components/Navigation';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import Home from './pages/Home'
@@ -8,9 +9,11 @@ import Articles from './pages/Articles';
 import RequestService from './pages/requestService';
 import Contact from './pages/contact';
 import Faq from './pages/faq';
+import ManagementConsole from './pages/ManagementConsole';
 
 function App() {
   return (
+  
     <>
     <Router>
       <Navbar/>
@@ -22,9 +25,13 @@ function App() {
         <Route path='/requestService' component={RequestService}/>
         <Route path='/contact' component={Contact}/>
         <Route path='/faq' component={Faq}/>
+        <Route exact path="/managementconsole">
+        <ManagementConsole />
+      </Route>
       </Switch>
     </Router>
     </>
+
   );
 }
 
