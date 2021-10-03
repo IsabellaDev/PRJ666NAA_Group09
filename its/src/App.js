@@ -10,6 +10,7 @@ import RequestService from './pages/requestService';
 import Contact from './pages/contact';
 import Faq from './pages/faq';
 import ManagementConsole from './pages/ManagementConsole';
+import LogIn from './pages/LogIn';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
       <Navbar/>
       <Switch>
         <Route path='/' exact component={Home}/>
+        <Route path='/login' component={LogIn} />
         <Route path='/install' component={Install}/>
         <Route path='/reportIssue' component={ReportIssue}/>
         <Route path='/articles' component={Articles}/>

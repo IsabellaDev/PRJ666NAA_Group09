@@ -1,14 +1,13 @@
 import React from 'react';
-import IssueForm from '../components/IssueForm'
+import IssueForm from '../components/IssueForm';
 
 function ReportIssue() {
     return (
-       <div className='report-issue'>
+        <div className='reportIssue'>
             <h1>Report Issue</h1>
-            <IssueForm/>
+            <IssueForm />
         </div>
     );
 }
 
 export default ReportIssue;
-
