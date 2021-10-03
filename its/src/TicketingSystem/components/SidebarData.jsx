@@ -45,6 +45,12 @@ export const SidebarData = [
         path: '/MoreInfoRequest',
         icon: <AiIcons.AiOutlineMore />,
         className: 'nav-text'
+    },
+    {
+        title: 'Back To Self-Service Portal',
+        path: '/',
+        icon: <AiIcons.AiFillEuroCircle />,
+        className: 'nav-text'
     }
 ]
 
