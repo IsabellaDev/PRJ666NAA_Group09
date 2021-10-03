@@ -1,7 +1,7 @@
 
 export { default as Navigation } from "./Navigation";
 export { default as Footer } from "./Footer";
-export { default as Home } from "../pages/Home";
+export { default as Home } from "../pages/Dashboard";
 export { default as MoreInfoRequest } from "../pages/requestMoreInfo";
 export { default as NewTicket } from "../pages/createNewTicket";
 export { default as EditTicket } from "../pages/modExistTicket";
