@@ -1,7 +1,6 @@
 import React from 'react'
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
-import * as IoIcons from 'react-icons/io';
 
 export const SidebarData = [
     {
@@ -38,6 +37,12 @@ export const SidebarData = [
         title: 'Contact Information',
         path: '/contact',
         icon: <AiIcons.AiFillContacts />,
+        className: 'nav-text'
+    },
+    {
+        title: 'FAQ',
+        path: '/faq',
+        icon: <AiIcons.AiFillQuestionCircle />,
         className: 'nav-text'
     }
 ]
