@@ -17,7 +17,7 @@ function App() {
       <Router>
         <Navigation />
         <Switch>
-          <Route path="/ticket" exact component={() => <Home />} />
+          <Route path="/dashboard" exact component={() => <Home />} />
           <Route path="/NewTicket" exact component={() => <NewTicket />} />
           <Route path="/AllTicket" exact component={() => <AllTicketList />} />
           <Route path="/Ticketforyou" exact component={() => <AllTicketList />} />
