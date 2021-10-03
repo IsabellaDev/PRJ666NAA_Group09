@@ -7,6 +7,7 @@ import ReportIssue from './pages/ReportIssue';
 import Articles from './pages/Articles';
 import RequestService from './pages/requestService';
 import Contact from './pages/contact';
+import Faq from './pages/faq';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path='/articles' component={Articles}/>
         <Route path='/requestService' component={RequestService}/>
         <Route path='/contact' component={Contact}/>
+        <Route path='/faq' component={Faq}/>
       </Switch>
     </Router>
     </>
