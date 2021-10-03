@@ -16,17 +16,17 @@ const[devices, setDevices] = useState(data);
             <table className="table table-striped">
                 <thead>
                     <tr>
-                        <th class="col-md-1"></th>
-                        <th class="col-md-2">Equipment</th>
-                        <th class="col-md-2">Available Quantity</th>
+                        <th></th>
+                        <th>Equipment</th>
+                        <th>Available Quantity</th>
                     </tr>
                 </thead>
                 <tbody>
                     {devices.map((device) => (
                         <tr>
-                            <td class="col-md-1"><FaIcons.FaLaptop /></td>
-                            <td class="col-md-1">{device.Equipment}</td>
-                            <td class="col-md-1">{device.AvailableQuantity}</td>
+                            <td><FaIcons.FaLaptop /></td>
+                            <td>{device.Equipment}</td>
+                            <td>{device.AvailableQuantity}</td>
                         </tr>
                     ))}
                     
