@@ -1,7 +1,7 @@
 function TicketManagement(){
     
     return(
-        <div>
+        <div className="ticketManagement">
             <h2>Ticket Management Page</h2>
         </div>
     )

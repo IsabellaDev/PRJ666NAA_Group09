@@ -7,7 +7,7 @@ function DeviceInventory() {
 
     const [devices] = useState(dataDetails);
     return (
-        <div>
+        <div className="deviceInventory">
             <h2>Device Inventory</h2>
 
             <Table striped bordered hover>
