@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 function ManagementConsole() {
 
     return (
-        <div className="managementConsole" class="container">
+        <div className="managementConsole" >
             <div class="col">
                 <div class="py-5 text-left">
                     <h2>Admin Dashboard</h2><br /><br />
