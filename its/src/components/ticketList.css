@@ -15,14 +15,15 @@
 }
 
 .filterButtons{
-    display: flex;
-    border-collapse: collapse;
-    flex-direction: row;
+    /*display: flex;*/
+    /*border-collapse: collapse;*/
+    /*flex-direction: row;
     align-items: left;
-    justify-content: left;
+    justify-content: left;*/
     position: relative;
     right: 500px;
     margin-top: 40px;
+    font-size: 2rem;
 }
 
 .filterButton{
@@ -32,14 +33,12 @@
 
 .filterLists{
     display: flex;
-    border-collapse: collapse;
     flex-direction: row;
-    align-items: left;
-    justify-content: left;
     position: relative;
     right: 500px;
     margin-top: 10px;
     margin-right: 2px;
+    font-size: 1.5rem;
 }
 
 .filterList{
