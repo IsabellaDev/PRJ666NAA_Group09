@@ -3,15 +3,22 @@
   font-family: 'Lato', sans-serif;
 }
 
-.home, .install, .articles, .requestService, .contact{
+.home, .install, .articles, .requestService, .contact, .managementConsole{
   display: flex;
   height: 90vh;
-  align-items: center;
-  justify-content: center;
+  align-items: left;
+  justify-content: left;
+  margin-left: 20rem;
   font-size: 3rem;
 }
 
-.report-issue, .faq{
+.reportIssue, .faq, .managementConsole, .deviceInventory, .articleList, .ticketManagement{
+  margin-left: 300px;
+  margin-right: 45px;
+  margin-bottom: 45px;
+}
+
+.jotform-form{
   margin-left: 300px;
   margin-right: 45px;
   margin-bottom: 45px;
