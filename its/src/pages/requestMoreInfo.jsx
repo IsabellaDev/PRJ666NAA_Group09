@@ -1,5 +1,5 @@
 import React from "react";
-
+import {withRouter} from 'react-router-dom';
 function MoreInfo() {
   return (
     <div className="MoreInfo">
@@ -279,4 +279,4 @@ function MoreInfo() {
   );
 }
 
-export default MoreInfo;
+export default withRouter(MoreInfo);

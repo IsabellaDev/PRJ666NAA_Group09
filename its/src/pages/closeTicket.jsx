@@ -1,5 +1,5 @@
 import React from "react";
-
+import {withRouter} from 'react-router-dom';
 function CloseTicket() {
   return (
     
@@ -166,4 +166,4 @@ function CloseTicket() {
   );
 }
 
-export default CloseTicket;
+export default withRouter(CloseTicket);

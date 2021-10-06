@@ -1,5 +1,5 @@
 import React from "react";
-
+import {withRouter} from 'react-router-dom';
 function NewTicket() {
   return (
     <div>
@@ -240,4 +240,4 @@ function NewTicket() {
   );
 }
 
-export default NewTicket;
+export default withRouter(NewTicket);
