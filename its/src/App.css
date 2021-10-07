@@ -3,7 +3,7 @@
   font-family: 'Lato', sans-serif;
 }
 
-.home, .install, .articles, .requestService, .contact, .managementConsole{
+.home, .articles, .requestService, .contact{
   display: flex;
   height: 90vh;
   align-items: left;
@@ -12,7 +12,7 @@
   font-size: 3rem;
 }
 
-.reportIssue, .faq, .managementConsole, .deviceInventory, .articleList, .ticketManagement{
+.reportIssue, .faq, .managementConsole, .deviceInventory, .articleList, .ticketManagement, .install{
   margin-left: 300px;
   margin-right: 45px;
   margin-bottom: 45px;
