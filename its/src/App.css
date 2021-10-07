@@ -12,7 +12,7 @@
   font-size: 3rem;
 }
 
-.reportIssue, .faq, .managementConsole, .deviceInventory, .articleList, .ticketManagement, .install{
+.reportIssue, .faq, .managementConsole, .deviceInventory, .articleList, .ticketManagement, .install, .passwordReset{
   margin-left: 300px;
   margin-right: 45px;
   margin-bottom: 45px;
