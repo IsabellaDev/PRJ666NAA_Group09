@@ -1,0 +1,46 @@
+.header{
+    display: flex;
+    align-items: left;
+    justify-content: left;
+    position: relative;
+    right: 500px;
+}
+
+.ticketTable{
+    position: relative;
+    right: 37rem;
+    margin: 5rem;
+    font-size: 1rem;
+    
+}
+
+.filterButtons{
+    /*display: flex;*/
+    /*border-collapse: collapse;*/
+    /*flex-direction: row;
+    align-items: left;
+    justify-content: left;*/
+    position: relative;
+    right: 500px;
+    margin-top: 40px;
+    font-size: 2rem;
+}
+
+.filterButton{
+    margin-right: 10px;
+    margin-left: 20px;
+}
+
+.filterLists{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    right: 500px;
+    margin-top: 10px;
+    margin-right: 2px;
+    font-size: 1.5rem;
+}
+
+.filterList{
+    margin-right: 10px;
+}

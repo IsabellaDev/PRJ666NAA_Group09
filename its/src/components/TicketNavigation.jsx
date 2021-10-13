@@ -7,13 +7,11 @@ import { SidebarData } from './SidebarData'
 import './Navigation.css';
 import { IconContext } from 'react-icons'
 import {TicketSidebarData} from './ticketSidebarData'
-import {withRouter} from 'react-router-dom';
-function Navbar(){
+function TicketNavbar(){
   const [sidebar, sectSidebar] = useState(false)
   
   
   const showSidebar = () => sectSidebar(!sidebar)
-  let location=window.location.pathname;
   return (
     <>
     <IconContext.Provider value={{color: 'black'}}>
@@ -29,12 +27,9 @@ function Navbar(){
               <AiIcons.AiOutlineClose/>
             </Link>
           </li> */}
-         
-          {
-           
-          SidebarData.map((item, index) => {
+          {TicketSidebarData.map((item, index) => {
             return (
-             
+              
               <li key={index} className={item.className}>
                 <Link to={item.path}>
                   {item.icon}
@@ -50,4 +45,4 @@ function Navbar(){
   );
 }
 
-export default withRouter(Navbar)
+export default TicketNavbar
