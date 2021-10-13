@@ -8,10 +8,6 @@ import ReportIssue from './pages/ReportIssue';
 import Articles from './pages/Articles';
 import RequestService from './pages/requestService';
 import Contact from './pages/contact';
-<<<<<<< HEAD
-import ManagementConsole from './pages/ManagementConsole';
-import Faq from './pages/faq';
-=======
 import Faq from './pages/faq';
 import ManagementConsole from './pages/ManagementConsole';
 import LogIn from './pages/LogIn';
@@ -24,7 +20,6 @@ import CloseTicket from './pages/closeTicket';
 import TransferTicket from './pages/ticketTransferring';
 import MoreInfo from './pages/requestMoreInfo';
 
->>>>>>> 7dbf6b5aa767a47b2d5cb2b52ded6c7098023fe6
 
 function App() {
   return (
@@ -41,11 +36,6 @@ function App() {
         <Route path='/requestService' component={RequestService}/>
         <Route path='/contact' component={Contact}/>
         <Route path='/faq' component={Faq}/>
-<<<<<<< HEAD
-        <Route exact path="/managementconsole">
-        <ManagementConsole />
-      </Route>
-=======
         <Route path="/NewTicket" exact component={() => <NewTicket />} />
         <Route path="/AllTicket" exact component={() => <AllTicketList />} />
         <Route path="/Ticketforyou" exact component={() => <AllTicketList />} />
@@ -57,7 +47,6 @@ function App() {
           <Route exact path="/deviceInventory"><DeviceInventory /></Route>
           <Route exact path="/articleList"><ArticleList /></Route>
           <Route exact path="/ticketManagement"><TicketManagement /></Route>
->>>>>>> 7dbf6b5aa767a47b2d5cb2b52ded6c7098023fe6
       </Switch>
     </Router>
     </>
