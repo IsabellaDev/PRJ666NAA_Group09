@@ -24,6 +24,7 @@ import TicketDashboard from './pages/Dashboard';
 import TicketNavbar from './components/TicketNavigation';
 import EditTicket from './pages/modExistTicket';
 import PasswordReset from './pages/PasswordReset';
+import Registration from './pages/Registration';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
         <Switch>
           <Route path='/' exact component={Home} {...IsTicket()} />
           <Route path='/login' component={LogIn} id="S" />
+          <Route path='/register' component={Registration} id="S" />
           <Route path='/install' component={Install} id="S" />
           <Route path='/reportIssue' component={ReportIssue} id="S" />
           <Route path='/articles' component={Articles} id="S" />

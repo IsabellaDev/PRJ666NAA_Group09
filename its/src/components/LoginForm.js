@@ -22,9 +22,7 @@ function LoginForm() {
         <Button type="submit" className="btn btn-success col-12">Log In</Button>
       </div>
       <div className="text-center links">
-        <a className="links" href="#">Sign Up</a>
-        <span className="p-2">|</span>
-        <a className="links" href="#">Forgot Password</a>
+        <a className="links" href="/register">Sign Up</a>
       </div>
     </Form>
   );
