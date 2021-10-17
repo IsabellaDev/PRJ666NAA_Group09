@@ -58,12 +58,12 @@ function IssueForm(){
 
         <Form.Group as={Col} controlId="formGridFirstName">
           <Form.Label>First Name</Form.Label>
-          <Form.Control placeholder="Enter first name" name="firstName" value={formData.firstName} onChange={handleChange} />
+          <Form.Control placeholder="Enter first name" required name="firstName" value={formData.firstName} onChange={handleChange} />
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridID">
           <Form.Label>ID</Form.Label>
-          <Form.Control placeholder="Enter student ID" name="id" value={formData.id} onChange={handleChange} />
+          <Form.Control placeholder="Enter student ID" required name="id" type="number" value={formData.id} onChange={handleChange} />
         </Form.Group>
   
       </Row>
@@ -72,12 +72,12 @@ function IssueForm(){
 
         <Form.Group as={Col} controlId="formGridLastName">
           <Form.Label>Last Name</Form.Label>
-          <Form.Control placeholder="Enter last name" name="lastName" value={formData.lastName} onChange={handleChange} />
+          <Form.Control placeholder="Enter last name" required name="lastName" value={formData.lastName} onChange={handleChange} />
         </Form.Group>
     
         <Form.Group as={Col} controlId="formGridPhone">
           <Form.Label>Phone</Form.Label>
-          <Form.Control placeholder="+1 (416)-254-1234" name="phone" value={formData.phone} onChange={handleChange} />
+          <Form.Control placeholder="+1 (416)-254-1234" required name="phone" value={formData.phone} onChange={handleChange} />
         </Form.Group>
 
       </Row>
@@ -86,12 +86,12 @@ function IssueForm(){
 
         <Form.Group as={Col} controlId="formGridEmail">
           <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" name="email" value={formData.email} onChange={handleChange} />
+          <Form.Control type="email" required placeholder="Enter email" name="email" value={formData.email} onChange={handleChange} />
         </Form.Group>
 
         <Form.Group as={Col} controlId="formGridContact">
           <Form.Label>Contact Type</Form.Label>
-          <Form.Select name="preferredContact" value={formData.preferredContact} defaultValue="Phone" onChange={handleChange}>
+          <Form.Select name="preferredContact" required value={formData.preferredContact} defaultValue="Phone" onChange={handleChange}>
             <option>Phone</option>
             <option>Email</option>
           </Form.Select>
@@ -103,7 +103,7 @@ function IssueForm(){
 
         <Form.Group as={Col} controlId="formGridUserType">
           <Form.Label>User Type</Form.Label>
-          <Form.Select name="userType" value={formData.userType} defaultValue="Student" onChange={handleChange}>
+          <Form.Select name="userType" required value={formData.userType} defaultValue="Student" onChange={handleChange}>
             <option>Student</option>
             <option>Teacher</option>
             <option>Guest</option>
@@ -112,7 +112,7 @@ function IssueForm(){
 
         <Form.Group as={Col} controlId="formGridAvailability">
           <Form.Label>Availability</Form.Label>
-          <Form.Select name="availability" value={formData.availability} defaultValue="Monday" onChange={handleChange}>
+          <Form.Select name="availability" required value={formData.availability} defaultValue="Monday" onChange={handleChange}>
             <option>Monday</option>
             <option>Tuesday</option>
             <option>Wednesday</option>
@@ -127,7 +127,7 @@ function IssueForm(){
 
       <Form.Group className="mb-3" controlId="formGridSubject">
         <Form.Label>Subject</Form.Label>
-        <Form.Control placeholder="Enter subject line" name="subject" value={formData.subject} onChange={handleChange}/>
+        <Form.Control placeholder="Enter subject line" name="subject" required value={formData.subject} onChange={handleChange}/>
       </Form.Group>
     
       <Form.Group controlId="formFileSm" className="mb-3">
@@ -136,7 +136,7 @@ function IssueForm(){
 
       <Form.Group className="mb-3" controlId="formGridDescription">
         <Form.Label>Description</Form.Label>
-        <Form.Control as="textarea" rows={6} name="problemDescription" value={formData.problemDescription} onChange={handleChange}/>
+        <Form.Control as="textarea" rows={6} name="problemDescription" required value={formData.problemDescription} onChange={handleChange}/>
       </Form.Group>
     
       <Button variant="primary" type="submit">
