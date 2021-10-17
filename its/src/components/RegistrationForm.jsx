@@ -60,16 +60,16 @@ function RegistrationForm() {
   function handle(e){
     const newData = {...data}
     if(newData.isAdmin.checked){
-      newData.isAdmin = true;
+      newData.isAdmin = "true";
     }
     else{
-      newData.isAdmin = false;
+      newData.isAdmin = "false";
     }
     if(newData.isFaculty.checked){
-      newData.isFaculty = true;
+      newData.isFaculty = "true";
     }
     else{
-      newData.isFaculty = false;
+      newData.isFaculty = "false";
     }
     newData[e.target.id] = e.target.value
     setData(newData);
