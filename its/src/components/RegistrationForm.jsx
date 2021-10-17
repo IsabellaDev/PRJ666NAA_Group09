@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router';
 import Axios from 'axios';
 import './RegistrationForm.css';
 import 'bootstrap/dist/css/bootstrap.css'
@@ -7,15 +8,35 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap'
 
 function RegistrationForm() {
   const url = "https://damp-river-45159.herokuapp.com/users"
+  let history = useHistory();
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
     email: "",
-    username: "",
+    userName: "",
     password: "",
-    userType: "",
-    idNumber: ""
+    isFaculty: false,
+    isAdmin: false,
+    id: ""
   })
+
+  var onSiteChanged = (e) => {
+    this.setState({
+      userType: e.currentTarget.value
+      });
+  }
+
+  var strToBool = (val) => {
+    if(val.checked && typeof val === "string"){
+      if(val.toLowerCase() === "true"){
+        return true;
+      }
+      if(val.toLowerCase() === "false"){
+        return false;
+      }
+    }
+    return val;
+  }
 
   function submit(e){
     e.preventDefault();
@@ -23,18 +44,33 @@ function RegistrationForm() {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
-      username: data.username,
+      userName: data.userName,
       password: data.password,
-      userType: data.userType,
-      idNumber: parseInt(data.idNumber)
+      isFaculty: strToBool(data.isFaculty),
+      isAdmin: strToBool(data.isAdmin),
+      id: parseInt(data.id)
     })
     .then(res=>{
+      alert("Congratulations! You have successfully registered!");
       console.log(res.data);
+      history.push("/login")
     })
   }
 
   function handle(e){
     const newData = {...data}
+    if(newData.isAdmin.checked){
+      newData.isAdmin = true;
+    }
+    else{
+      newData.isAdmin = false;
+    }
+    if(newData.isFaculty.checked){
+      newData.isFaculty = true;
+    }
+    else{
+      newData.isFaculty = false;
+    }
     newData[e.target.id] = e.target.value
     setData(newData);
     console.log(newData)
@@ -60,7 +96,7 @@ function RegistrationForm() {
 
       <FormGroup>
         <Label className="username-label">Username</Label>
-        <Input onChange={(e)=>handle(e)} id="username" value={data.username} type="text" required placeholder="Username"/>
+        <Input onChange={(e)=>handle(e)} id="userName" value={data.userName} type="text" required placeholder="Username"/>
       </FormGroup>
 
       <FormGroup>
@@ -71,23 +107,24 @@ function RegistrationForm() {
       <FormGroup>
         <Label className="user-type-label">Select which one you are:</Label> <br />
           <fieldset>
-            <Label for="userTypeStudent" id="student-label">Student</Label> 
-            <Input onChange={(e)=>handle(e)} id="userType" value={data.userType} type="radio" name="userType" value="student" />   
+            <Label for="userTypeStudent" id="admin-label">Admin</Label> 
+            <Input onChange={(e)=>handle(e)} id="isAdmin" value={data.isAdmin == null ? false : true} type="radio" name="userType" />   
 
             <Label for="userTypeFaculty " id="faculty-label">Faculty</Label>
-            <Input onChange={(e)=>handle(e)} id="userType" value={data.userType} type="radio" name="userType" value="faculty" /> 
+            <Input onChange={(e)=>handle(e)} id="isFaculty" value={data.isFaculty == null ? false : true} type="radio" name="userType" /> 
           </fieldset>          
       </FormGroup>
 
       <FormGroup>
         <Label className="identification-number">Identification Number</Label>
-        <Input onChange={(e)=>handle(e)} id="idNumber" value={data.idNumber} type="text" required placeholder="Example: 585917494"/>
+        <Input onChange={(e)=>handle(e)} id="id" value={data.id} type="text" required placeholder="Example: 585917494"/>
       </FormGroup>
 
       <div className="register-btn">
         <Button type="submit" className="btn btn-success col-12">Register</Button>
       </div>
     </Form>
+
   );
 }
 
