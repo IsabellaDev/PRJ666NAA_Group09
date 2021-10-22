@@ -4,6 +4,12 @@ import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
 
 export const TicketSidebarData = [
+/*     {
+        title: 'managementConsole',
+        path: '/managementConsole',
+        icon: <AiIcons.AiFillAlert />,
+        className: 'nav-text'
+    }, */
     {
         title: 'Dashboard',
         path: '/dashboard',
