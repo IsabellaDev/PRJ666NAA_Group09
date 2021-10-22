@@ -1,5 +1,8 @@
 import './App.css';
 
+import React, { useContext } from 'react';
+import { AuthContext } from './Context/AuthContext';
+
 import Navbar from './components/Navigation';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
@@ -27,7 +30,14 @@ import PasswordReset from './pages/PasswordReset';
 import Registration from './pages/Registration';
 
 
+
+
+
 function App() {
+
+  const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  console.log(isAuthenticated);
+
   function IsTicket() {
     let isTicket = false;
     let initRoute = useLocation().pathname;
@@ -47,15 +57,17 @@ function App() {
     return isTicket
   }
 
+  
+
   return (
 
     <>
 
       <Router>
-
-        {!IsTicket() ? <Navbar /> : <TicketNavbar />}
+        {isAuthenticated? <TicketNavbar /> : <Navbar />}
+        {/* !IsTicket() ? <Navbar /> : <TicketNavbar /> */}
         <Switch>
-          <Route path='/' exact component={Home} {...IsTicket()} />
+          <Route path='/' exact component={Home} {...isAuthenticated} />
           <Route path='/login' component={LogIn} id="S" />
           <Route path='/register' component={Registration} id="S" />
           <Route path='/install' component={Install} id="S" />

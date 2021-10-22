@@ -30,7 +30,7 @@ html, body{
         padding-bottom: 10px;
       }
     
-    .user-name-label{
+    .userName-label{
       padding-top: 10px;
       padding-bottom: 10px;
     }
@@ -44,12 +44,12 @@ html, body{
         padding-top: 10px;
     }
 
-    #admin-label{
+    .admin-label{
         padding-right: 10px;
         padding-left: 5px;
     }
 
-    #faculty-label{
+    .faculty-label{
         padding-right: 10px;
         padding-left: 5px;
     }

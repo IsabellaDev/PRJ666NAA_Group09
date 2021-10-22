@@ -56,7 +56,7 @@ function ManagementConsole() {
                                 </div>
                                 <h2>Ticket Management</h2>
                                 <p>Click below to view all the tickets and manage the tickets as neededs. </p>
-                                <Link to="/allTicket" class="icon-link">
+                                <Link to="/dashboard" class="icon-link">
                                     Go to tickets
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi" width="1em" height="1em"><use xlinkHref="#chevron-right" /><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                                     </svg>
@@ -64,63 +64,6 @@ function ManagementConsole() {
                             </div>
                         </div>
                     </div>
-
-                    {/*<div class="form-check form-switch" >
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" />
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Rport Issue
-                        <a href="#"><i class="bi-pencil-fill"></i></a>
-                    </label>
-                </div><br />
-                <div class="col-4">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="flexSwitchCheckChecked"
-                        >Request Service <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" />
-                            <a href="#"><i class="bi-pencil-fill"></i></a>
-                        </label>
-                    </div>
-                </div><br />
-
-                <div class="col-sm-4">
-                    <div class="form-check form-switch">
-                        <label class="form-check-label" for="flexSwitchCheckChecked"
-                        >Troubleshooting Articles <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-                            <a href="#"><i class="bi-pencil-fill"></i></a>
-                        </label>
-                    </div>
-                </div><br />
-
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Install Software <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-                        <a href="#"><i class="bi-pencil-fill"></i></a>
-                    </label>
-                </div><br />
-
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Contact Information <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked />
-                        <a href="#"><i class="bi-pencil-fill"></i></a>
-                    </label>
-                </div><br />
-
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Chat <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" disabled />
-                    </label>
-                </div><br />
-
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Bills <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" disabled />
-                    </label>
-                </div><br />
-
-                <div class="form-check form-switch">
-                    <label class="form-check-label" for="flexSwitchCheckChecked"
-                    >Default Option <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" disabled />
-                    </label>
-                </div>*/}
 
                 </div>
             </div>
