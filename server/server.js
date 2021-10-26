@@ -19,6 +19,7 @@ app.use(cookieParser()); // newly added
 app.use(passport.initialize());
 
 
+
 app.use(cors())
 
 const usersRouter = require('./controllers/userController')

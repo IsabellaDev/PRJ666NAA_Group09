@@ -6,6 +6,7 @@ export default {
             headers: {
                 'Content-Type': 'application/json'
             }
+            // credentials: 'include'
         }).then(res => {
             if (res.status !== 401)
                 return res.json().then(data => data);

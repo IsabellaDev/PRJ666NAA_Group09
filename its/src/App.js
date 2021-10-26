@@ -61,7 +61,7 @@ function App() {
 
   return (
 
-    <>
+    <div className="container">
 
       <Router>
         {isAuthenticated? <TicketNavbar /> : <Navbar />}
@@ -92,7 +92,7 @@ function App() {
 
         </Switch>
       </Router>
-    </>
+    </div>
 
   );
 }
