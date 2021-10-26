@@ -87,7 +87,10 @@ function RegistrationForm(props) {
       resetForm();
       if (!message.msgError) {
         timerID = setTimeout(() => {
+<<<<<<< HEAD
           alert("Congratulations! You have successfully registered!");
+=======
+>>>>>>> aab4fe1d254848a43c6a5296cd6e3d11ad94b432
           props.history.push('/login');
         }, 2000)
       }
