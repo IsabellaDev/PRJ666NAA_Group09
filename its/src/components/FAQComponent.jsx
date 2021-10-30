@@ -1,11 +1,12 @@
 import { Accordion } from 'react-bootstrap';
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter,useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
 
 function FAQComponent( props) {
+  const history = useHistory();
   const [faqs, setFaqs] = useState([]);
 
   function getFAQData() {
@@ -45,6 +46,10 @@ function deleteFAQRecord(id) {
   
 }
 
+function AddNewFaq(){
+  history.push('/faqadd');
+}
+
 useEffect(() => {
   getFAQData().then(result => {
       if (result) {
@@ -60,14 +65,14 @@ if (faqs.length > 0) {
 
   return (
     <>
-    <button className="btn btn-success">Add new FAQ article</button>
+    <button className="btn btn-success" onClick={() => {AddNewFaq();}}>Add new FAQ article</button>
     <p> </p>
       <Accordion defaultActiveKey="0">
     {faqs.map((faq) =>
     
        <Accordion.Item eventKey={faq._id} >  
           <Accordion.Header>{faq.articleTitle}</Accordion.Header>
-          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {deleteFAQRecord(faq._id); window.location.reload(false); alert("Deleted completed"); }} >Delete this article</button>  <button className="btn btn-outline-warning" onClick={() => { props.history.push(`/FAQEditing/${faq._id}`) }}>Edit this article</button></Accordion.Body>
+          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {deleteFAQRecord(faq._id); window.location.reload(false); alert("Deleted completed"); }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
           </Accordion.Item>
       
   )

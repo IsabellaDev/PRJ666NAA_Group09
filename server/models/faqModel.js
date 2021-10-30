@@ -9,11 +9,11 @@ var FaqSchema = new Schema({
     
     "articleTitle": {
         type: String,
-        required: true
+        
     },
     "body": {
         type: String,
-        required: true
+        
     }
 });
 

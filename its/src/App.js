@@ -13,6 +13,8 @@ import Articles from './pages/Articles';
 import RequestService from './pages/requestService';
 import Contact from './pages/contact';
 import Faq from './pages/faq';
+import FaqAdd from './pages/FAQAdd';
+import FaqEdit from './pages/FAQEditing';
 import ManagementConsole from './pages/ManagementConsole';
 import LogIn from './pages/LogIn';
 import DeviceInventory from './pages/DeviceInventory';
@@ -76,6 +78,8 @@ function App() {
           <Route path='/requestService' component={RequestService} id="S" />
           <Route path='/contact' component={Contact} id="S" />
           <Route path='/faq' component={Faq} id="S" />
+          <Route path='/faqadd' component={FaqAdd} id="S" />
+          <Route path='/faqedit/:id' component={FaqEdit} id="S" />
           <Route path="/Dashboard" exact component={() => <TicketDashboard />} {...IsTicket()} />
           <Route path="/NewTicket" exact component={() => <NewTicket />} {...IsTicket()} />
           <Route path="/AllTicket" exact component={() => <AllTicketList />} {...IsTicket()} />

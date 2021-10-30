@@ -7,19 +7,24 @@ const passport = require('passport')
 
 const mongoose = require('mongoose')
 var cors = require('cors')
-
+app.use(cors())
 var port_number = app.listen(process.env.PORT || 5000);
 
 mongoose.connect(process.env.DB_URL)
+app.use(express.urlencoded({extended: true}))
 const db = mongoose.connection
 db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to Database'))
 app.use(express.json())
 app.use(cookieParser()); // newly added
 app.use(passport.initialize());
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+  });
 
 
-app.use(cors())
 
 const usersRouter = require('./controllers/userController')
 const reportIssueRouter = require('./controllers/reportIssueController')

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const FAQ = require('../models/FaqModel')
 
+
 // Get all
 router.get('/', async (req, res) => {
     try {
@@ -22,16 +23,14 @@ router.get('/:id', getFaq, (req, res) => {
 
 // Create one
 router.post('/', async (req, res) => {
-    const faq = new FAQ({
-        
-        category: req.body.category,
-        articleTitle: req.body.articleTitle,
-        body: req.body.body
-    })
+   
+    const SaveFAQ = new FAQ(req.body)
 
     try{
-        const newFAQ = await faq.save()
+        const newFAQ = await SaveFAQ.save()
         res.status(201).json(newFAQ)
+        
+
     } catch (err) {
         res.status(400).json({ message : err.message })
     }
@@ -39,8 +38,11 @@ router.post('/', async (req, res) => {
 
 // Update one
 router.patch('/:id', getFaq, async (req, res) => {
+  
     if (req.body.articleTitle != null) {
-        res.article.articleTitle = req.body.articleTitle
+        res.faq.articleTitle = req.body.articleTitle
+        res.faq.body = req.body.body
+        res.faq.category = req.body.category
     }
     try {
         const updatedFaq = await res.faq.save()
