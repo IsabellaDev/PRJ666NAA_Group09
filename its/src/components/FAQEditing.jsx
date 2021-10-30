@@ -5,12 +5,12 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 
-function FAQComponent( props) {
+function FAQEditing(prop) {
   const [faqs, setFaqs] = useState([]);
 
   function getFAQData() {
     return new Promise(function (resolve, reject) {
-        fetch(`http://localhost:5000/faq`)
+        fetch(`http://localhost:5000/faq/:id`)
             .then(res => res.json())
             .then(result => {
                 if (result) {
@@ -20,30 +20,8 @@ function FAQComponent( props) {
                 }
             })
     });
-
-    
 }
 
-function deleteFAQRecord(id) {
-  const requestOptions = {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json' },
-   
-};
-  return new Promise(function (resolve, reject) {
-      fetch(`http://localhost:5000/faq/${id}`, requestOptions)
-          .then(res => res.json())
-          .then(result => {
-              if (result) {
-                console.log(result);  
-                resolve(result);
-
-              }
-          })
-  });
-
-  
-}
 
 useEffect(() => {
   getFAQData().then(result => {
@@ -54,20 +32,18 @@ useEffect(() => {
   });
 }, []);
 
-
 if (faqs.length > 0) {
- 
-
+  
+  
   return (
     <>
-    <button className="btn btn-success">Add new FAQ article</button>
-    <p> </p>
+    <button>Add new FAQ article</button>
       <Accordion defaultActiveKey="0">
     {faqs.map((faq) =>
     
        <Accordion.Item eventKey={faq._id} >  
           <Accordion.Header>{faq.articleTitle}</Accordion.Header>
-          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {deleteFAQRecord(faq._id); window.location.reload(false); alert("Deleted completed"); }} >Delete this article</button>  <button className="btn btn-outline-warning" onClick={() => { props.history.push(`/FAQEditing/${faq._id}`) }}>Edit this article</button></Accordion.Body>
+          <Accordion.Body>{faq.body}</Accordion.Body>
           </Accordion.Item>
       
   )
@@ -89,4 +65,4 @@ if (faqs.length > 0) {
    
 }
 
-export default FAQComponent;
+export default FAQEditing;
