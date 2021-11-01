@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 function Install() {
     return (
-        <div className='install' class="container">
+        <div className='install' >
             <form>
                 <div class="py-5 text-left">
 

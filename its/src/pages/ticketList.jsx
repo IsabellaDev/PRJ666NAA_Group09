@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import data from "../SampleData/SampleData.json"
 import "../components/ticketList.css"
 import 'bootstrap/dist/css/bootstrap.css';
-
+import {withRouter} from 'react-router-dom';
 const AllTicket = () => {
   const [customers, setCustomers] = useState(data);
 
@@ -83,4 +83,4 @@ const AllTicket = () => {
   );
 }
 
-export default AllTicket;
+export default withRouter(AllTicket);

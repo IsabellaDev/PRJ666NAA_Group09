@@ -44,6 +44,18 @@ export const SidebarData = [
         path: '/faq',
         icon: <AiIcons.AiFillQuestionCircle />,
         className: 'nav-text'
+    },
+/*     {
+        title: 'To Ticket System',
+        path: '/dashboard',
+        icon: <AiIcons.AiFillFile />,
+        className: 'nav-text'
+    },  */
+    {
+        title: 'Login', 
+        path: '/login', 
+        icon: <AiIcons.AiOutlineLogin />,
+        className: 'nav-text'
     }
 ]
 

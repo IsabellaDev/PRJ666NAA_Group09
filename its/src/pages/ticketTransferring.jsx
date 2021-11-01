@@ -1,6 +1,7 @@
 import React from "react";
-
+import {withRouter} from 'react-router-dom';
 function TransferTicket() {
+  
   return (
     <div>
       <style type="text/css" dangerouslySetInnerHTML={{__html: "@media print{.form-section{display:inline!important}.form-pagebreak{display:none!important}.form-section-closed{height:auto!important}.page-section{position:initial!important}}" }} />
@@ -145,4 +146,4 @@ function TransferTicket() {
   );
 }
 
-export default TransferTicket;
+export default withRouter(TransferTicket);

@@ -1,7 +1,11 @@
 import './App.css';
 
+import React, { useContext } from 'react';
+import { AuthContext } from './Context/AuthContext';
+
 import Navbar from './components/Navigation';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Home from './pages/Home'
 import Install from './pages/Install'
 import ReportIssue from './pages/ReportIssue';
@@ -19,37 +23,76 @@ import AllTicketList from './pages/ticketList';
 import CloseTicket from './pages/closeTicket';
 import TransferTicket from './pages/ticketTransferring';
 import MoreInfo from './pages/requestMoreInfo';
+import TicketDashboard from './pages/Dashboard';
+import TicketNavbar from './components/TicketNavigation';
+import EditTicket from './pages/modExistTicket';
+import PasswordReset from './pages/PasswordReset';
+import Registration from './pages/Registration';
+
+
+
 
 
 function App() {
+
+  const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  console.log(isAuthenticated);
+
+  function IsTicket() {
+    let isTicket = false;
+    let initRoute = useLocation().pathname;
+    if (useLocation().pathname === "/dashboard") {
+      isTicket = true;
+
+    }
+    if (useLocation().pathname === "/") {
+      isTicket = false;
+
+    }
+    if (initRoute !== useLocation().pathname) {
+      window.reload();
+
+    }
+    initRoute = useLocation().pathname
+    return isTicket
+  }
+
+  
+
   return (
+    <div className="container">
 
-    <>
-    <Router>
-      <Navbar/>
-      <Switch>
-        <Route path='/' exact component={Home}/>
-        <Route path='/login' component={LogIn} />
-        <Route path='/install' component={Install}/>
-        <Route path='/reportIssue' component={ReportIssue}/>
-        <Route path='/articles' component={Articles}/>
-        <Route path='/requestService' component={RequestService}/>
-        <Route path='/contact' component={Contact}/>
-        <Route path='/faq' component={Faq}/>
-        <Route path="/NewTicket" exact component={() => <NewTicket />} />
-        <Route path="/AllTicket" exact component={() => <AllTicketList />} />
-        <Route path="/Ticketforyou" exact component={() => <AllTicketList />} />
-        <Route path="/CloseTicket" exact component={() => <CloseTicket />} />
-        <Route path="/TransferTicket" exact component={() => <TransferTicket />} />
-        <Route path="/MoreInfoRequest" exact component={() => <MoreInfo />} />
+      <Router>
+        {isAuthenticated? <TicketNavbar /> : <Navbar />}
+        {/* !IsTicket() ? <Navbar /> : <TicketNavbar /> */}
+        <Switch>
+          <Route path='/' exact component={Home} {...isAuthenticated} />
+          <Route path='/login' component={LogIn} id="S" />
+          <Route path='/register' component={Registration} id="S" />
+          <Route path='/install' component={Install} id="S" />
+          <Route path='/reportIssue' component={ReportIssue} id="S" />
+          <Route path='/articles' component={Articles} id="S" />
+          <Route path="/Ticketforyou" exact component={() => <AllTicketList />} />
+          <Route path='/requestService' component={RequestService} id="S" />
+          <Route path='/contact' component={Contact} id="S" />
+          <Route path='/faq' component={Faq} id="S" />
+          <Route path="/Dashboard" exact component={() => <TicketDashboard />} {...IsTicket()} />
+          <Route path="/NewTicket" exact component={() => <NewTicket />} {...IsTicket()} />
+          <Route path="/AllTicket" exact component={() => <AllTicketList />} {...IsTicket()} />
+          <Route path="/edit" exact component={() => <EditTicket />} {...IsTicket()} />
+          <Route path="/CloseTicket" exact component={() => <CloseTicket />} {...IsTicket()} />
+          <Route path="/TransferTicket" exact component={() => <TransferTicket />} {...IsTicket()} />
+          <Route path="/MoreInfoRequest" exact component={() => <MoreInfo />} {...IsTicket()} />
 
-        <Route exact path="/managementconsole"><ManagementConsole /></Route>
+          <Route exact path="/managementconsole"><ManagementConsole /></Route>
           <Route exact path="/deviceInventory"><DeviceInventory /></Route>
           <Route exact path="/articleList"><ArticleList /></Route>
           <Route exact path="/ticketManagement"><TicketManagement /></Route>
-      </Switch>
-    </Router>
-    </>
+          <Route exact path="/PasswordReset"><PasswordReset /></Route>
+
+        </Switch>
+      </Router>
+    </div>
 
   );
 }
