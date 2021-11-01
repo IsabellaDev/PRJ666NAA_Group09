@@ -1,72 +1,97 @@
 import { Accordion } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { withRouter,useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
-function FAQComponent() {
 
-    return (
+
+function FAQComponent( props) {
+  const history = useHistory();
+  const [faqs, setFaqs] = useState([]);
+
+  function getFAQData() {
+    return new Promise(function (resolve, reject) {
+        fetch(`http://localhost:5000/faq`)
+            .then(res => res.json())
+            .then(result => {
+                if (result) {
+                  console.log(result);  
+                  resolve(result);
+
+                }
+            })
+    });
+
+    
+}
+
+function deleteFAQRecord(id) {
+  const requestOptions = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+   
+};
+  return new Promise(function (resolve, reject) {
+      fetch(`http://localhost:5000/faq/${id}`, requestOptions)
+          .then(res => res.json())
+          .then(result => {
+              if (result) {
+                console.log(result);  
+                resolve(result);
+
+              }
+          })
+  });
+
+  
+}
+
+function AddNewFaq(){
+  history.push('/faqadd');
+}
+
+useEffect(() => {
+  getFAQData().then(result => {
+      if (result) {
+        console.log(result);
+          setFaqs(result);
+      }
+  });
+}, []);
+
+
+if (faqs.length > 0) {
+ 
+
+  return (
+    <>
+    <button className="btn btn-success" onClick={() => {AddNewFaq();}}>Add new FAQ article</button>
+    <p> </p>
       <Accordion defaultActiveKey="0">
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>Question #1</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-            est laborum.
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>Question #2</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-            est laborum.
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="2">
-          <Accordion.Header>Question #3</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-            est laborum.
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="3">
-          <Accordion.Header>Question #4</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-            est laborum.
-          </Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="4">
-          <Accordion.Header>Question #5</Accordion.Header>
-          <Accordion.Body>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-            veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-            commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-            velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-            cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-            est laborum.
-          </Accordion.Body>
-        </Accordion.Item>
-      </Accordion>
-    );
+    {faqs.map((faq) =>
+    
+       <Accordion.Item eventKey={faq._id} >  
+          <Accordion.Header>{faq.articleTitle}</Accordion.Header>
+          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {deleteFAQRecord(faq._id); window.location.reload(false); alert("Deleted completed"); }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
+          </Accordion.Item>
+      
+  )
+  }
+  
+  </Accordion>
+
+  
+    </>
+  );
+
+}else{
+  return (
+    <>
+    <p>loading please wait...</p>
+    </>
+);
+}
+   
 }
 
 export default FAQComponent;
