@@ -19,10 +19,14 @@ router.get('/:id', getHardware, (req, res) => {
 
 // Create one
 router.post('/', async (req, res) => {
+   // const hardware = new Hardware(req.body)
+        // equipmentName: req.body.equipmentName,
+        // quantity: req.body.quantity,
+        // icon: req.body.icon
     const hardware = new Hardware({
+        icon: req.body.icon,
         equipmentName: req.body.equipmentName,
-        quantity: req.body.quantity,
-        icon: req.body.icon
+        quantity: req.body.quantity
     })
 
     try{
