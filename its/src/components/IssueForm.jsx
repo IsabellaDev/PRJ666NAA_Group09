@@ -1,10 +1,11 @@
 import { Form, Row, Col, Button } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.css';
-import {useState } from 'react';
+import {useState, useRef } from 'react';
 import Axios from 'axios';
 
 function IssueForm(){
   const databaseURL = "https://damp-river-45159.herokuapp.com/reportIssue"
+  //const databaseURL = "http://localhost:3000/reportIssue"
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -15,28 +16,67 @@ function IssueForm(){
     preferredContact: "Phone",
     availability: "Monday",
     subject: "",
-    problemDescription: ""
+    problemDescription: "",
+    file: ""
   });
+
+  const fileInput = useRef(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    Axios.post(databaseURL, {
-      firstName: formData.firstName,
-      lastName: formData.lastName,
-      email: formData.email,
-      id: parseInt(formData.id),
-      phone: formData.phone,
-      userType: formData.userType,
-      preferredContact: formData.preferredContact,
-      availability: formData.availability,
-      subject: formData.subject,
-      problemDescription: formData.problemDescription
+
+    const data = new FormData();
+
+    data.append('firstName', formData.firstName);
+    data.append('lastName', formData.lastName);
+    data.append('email', formData.email);
+    data.append('id', parseInt(formData.id));
+    data.append('phone', formData.phone);
+    data.append('userType', formData.userType);
+    data.append('preferredContact', formData.preferredContact);
+    data.append('availability', formData.availability);
+    data.append('subject', formData.subject);
+    data.append('problemDescription', formData.problemDescription);
+    data.append('file', formData.file);
+
+
+    Axios.post(databaseURL, data)
+    .then((e) => {
+      console.log('File Upload successful....')
     })
-    .then(res=>{
-      console.log(res.data)
-    })
+
+    // Clear form on submit
+    setFormData(formData => {
+      return {
+        firstName: "",
+        lastName: "",
+        email: "",
+        id: "",
+        phone: "",
+        userType: "Student",
+        preferredContact: "Phone",
+        availability: "Monday",
+        subject: "",
+        problemDescription: "",
+        file: ""
+      };
+    });
+    fileInput.current.value = ""
+
+    // pop-up confimation alert
+    alert("Ticket submitted.")
     
-    console.log('The Form was Submitted: ' + JSON.stringify(formData));
+    console.log('The Form was Submitted: ' + JSON.stringify(data));
+  }
+
+  const handleUploadChange = (e) => {
+    let target = e.target;
+    let value = target.files[0];
+    let name = target.name;
+
+    setFormData(formData => {
+      return {...formData, [name]: value};
+    });
   }
 
   const handleChange = (e) => {
@@ -53,7 +93,7 @@ function IssueForm(){
     return null;
   }
   return (
-      <Form onSubmit={handleSubmit}>
+      <Form onSubmit={handleSubmit} enctype="multipart/form-data">
       <Row className="mb-3">
 
         <Form.Group as={Col} controlId="formGridFirstName">
@@ -131,7 +171,7 @@ function IssueForm(){
       </Form.Group>
     
       <Form.Group controlId="formFileSm" className="mb-3">
-        <Form.Control type="file" size="sm" />
+        <Form.Control name="file" filename="file" ref={fileInput} onChange={handleUploadChange} type="file" size="sm" />
       </Form.Group>
 
       <Form.Group className="mb-3" controlId="formGridDescription">
