@@ -13,21 +13,23 @@ import AuthContext from '../Context/AuthContext';
 import { propTypes } from 'react-bootstrap/esm/Image';
 
 function TicketNavbar(props) {
+  // const {user, setUser, isAuthenticated, setIsAuthenticated} = useContext(AuthContext);
   const [sidebar, sectSidebar] = useState(false);
-  // const {isAuthenticated, user, setIsAuthenticated, setUser} = useContext(AuthContext);
 
   const showSidebar = () => sectSidebar(!sidebar)
 
   const onClickLogoutHandler = () => {
-    props.history.push('/')
-    window.location.reload(false);
-
-    /* AuthService.logout().then(data=>{
+     AuthService.logout().then(data=>{
       if(data.success){
-        setUser(data.user);
-        setIsAuthenticated(false);
+        // setUser(data.user);
+        // setIsAuthenticated(false);
+
+        props.history.push('/')
+        window.location.reload(false);
       }
-    }); */
+    }); 
+
+
   }
 
   return (
@@ -59,12 +61,6 @@ function TicketNavbar(props) {
             <button type="button"
               className="btn btn-link nav-item nav-link" onClick={onClickLogoutHandler}><AiIcons.AiOutlineLogout />Logout
             </button>
-  {/*   {
-        title: 'Logut', 
-        path: '/', 
-        icon: <AiIcons.AiOutlineLogout />,
-        className: 'nav-text'
-    } */}
 
           </ul>
         </nav>

@@ -39,6 +39,7 @@ function App() {
 
   const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   console.log(isAuthenticated);
+  console.log("user's isAdmin is: " + user.isAdmin)
 
   function IsTicket() {
     let isTicket = false;
@@ -59,18 +60,19 @@ function App() {
     return isTicket
   }
 
-  
+
 
   return (
 
     <div className="container">
 
       <Router>
-        {isAuthenticated? <TicketNavbar /> : <Navbar />}
+        <Navbar />
+        {/* {         (isAuthenticated  && user.isAdmin )? <TicketNavbar /> : <Navbar />}  */}
         {/* !IsTicket() ? <Navbar /> : <TicketNavbar /> */}
-        <Switch>
-          <Route path='/' exact component={Home} {...isAuthenticated} />
-          <Route path='/login' component={LogIn} id="S" />
+{/*         <Switch> */}
+          <Route exact path='/'><Home /></Route>
+          <Route pexact path='/login'><LogIn /></Route>
           <Route path='/register' component={Registration} id="S" />
           <Route path='/install' component={Install} id="S" />
           <Route path='/reportIssue' component={ReportIssue} id="S" />
@@ -94,7 +96,7 @@ function App() {
           <Route exact path="/ticketManagement"><TicketManagement /></Route>
           <Route exact path="/PasswordReset"><PasswordReset /></Route>
 
-        </Switch>
+{/*        </Switch> */}
       </Router>
     </div>
 

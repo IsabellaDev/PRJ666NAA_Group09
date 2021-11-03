@@ -27,7 +27,7 @@ router.post('/register', (req, res) => {
         }
         if (user) {
             console.log("sth. wrong here")
-            res.status(400).json({ message: { msgBody: "Username is already taken", msgError: true } });
+            return res.status(400).send({ message: { msgBody: "Username is already taken", msgError: true } });
         } else {
             const newUser = new User({
                 lastName,
@@ -41,9 +41,9 @@ router.post('/register', (req, res) => {
             });
             newUser.save(err => {
                 if (err) {
-                    res.status(500).json({ message: { msgBody: "Error 2 has occured", msgError: true } });
+                    res.status(500).json({ message: { msgBody: "There is something wrong with your information, please re-enter and try again. ", msgError: true } });
                 } else {
-                    res.status(201).json({ message: { msgBody: "Account successfully created!", msgError: false } });
+                    res.status(201).json({ message: { msgBody: "Account successfully created! Please log in through log in page.", msgError: false } });
                 }
             })
         }
@@ -56,15 +56,17 @@ router.post('/login', passport.authenticate('local', {session : false}), (req,re
     if(req.isAuthenticated()){
         const {_id, userName, isAdmin} = req.user;
         const token = signToken(_id);
-        res.cookie('access_token', token, {httpOnly: true, sameSite: true});
+        res.cookie('access_token', token, {httpOnly: true, sameSite: false});
         res.status(200).json({isAuthenticated: true, user: {userName, isAdmin}});
+    } else {
+        res.status(401).json({message: {msgBody: "Wrong username or password, please try again. ", msgError: true}});
     }
 });
 
 // logout                                                                           ////////==> for logout <===/////
 router.get('/logout', passport.authenticate('jwt', {session : false}), (req, res)=>{
     res.clearCookie('access_token');
-    res.json({user: {userName : ""}, success: true});
+    res.json({user: {userName : ""}, success: true, isAuthenticated: false});
 })
 
 router.get('/admin', passport.authenticate('jwt', {session : false}), (req, res)=>{      ////// not sure if it works yet //////

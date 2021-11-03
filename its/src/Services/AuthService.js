@@ -1,6 +1,9 @@
 export default {
     login: user => {
-        return fetch('http://localhost:5000/users/login', {
+        return fetch('/users/login', {
+        //return fetch('http://localhost:5000/users/login', {
+            mode: "cors",
+            withCredentials: 'true',
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -10,11 +13,12 @@ export default {
             if (res.status !== 401)
                 return res.json().then(data => data);
             else
-                return { isAuthenticated: false, user: { userName: "" } };
+                 return { isAuthenticated: false, user: { userName: "" , isAdmin: false}, message: {msgBody: "Wrong username or password, please try again. ", msgError: true} };
         });
     },
     register: user => {
-        return fetch('http://localhost:5000/users/register', {
+        return fetch('/users/register', {
+            mode: "cors",
             method: "POST",
             body: JSON.stringify(user),
             headers: {
@@ -28,21 +32,22 @@ export default {
         });
     },
     logout: () => {
-        return fetch('http://localhost:5000/users/logout')
+        return fetch('/users/logout', {mode: "cors"})
             .then(res => res.json())
             .then(data => data);
     },
     isAuthenticated: () => {
-        return fetch('http://localhost:5000/users/authenticated')
+        return fetch('/users/authenticated', {mode: "cors"})
+        //return fetch('http://localhost:5000/users/authenticated')
             .then(res => {
                 if (res.status !== 401)
                     return res.json().then(data => data);
                 else
-                    return { isAuthenticated: false, user: { userName: "" } };
+                    return { isAuthenticated: false, user: { userName: "", isAdmin: false } };
             })
     },
     isAdmin: () => {
-        return fetch('http://localhost:5000/users/admin')
+        return fetch('/users/admin', {mode: "cors"})
             .then(
                 res => {
                     if (res.status !== 401)

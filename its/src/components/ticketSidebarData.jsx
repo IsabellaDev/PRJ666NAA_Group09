@@ -2,20 +2,20 @@ import React from 'react'
 import * as FaIcons from 'react-icons/fa';
 import * as AiIcons from 'react-icons/ai';
 import * as IoIcons from 'react-icons/io';
-
+import {MdNoteAdd} from 'react-icons/md';
 export const TicketSidebarData = [
-/*     {
+    {
         title: 'managementConsole',
         path: '/managementConsole',
-        icon: <AiIcons.AiFillAlert />,
+        icon: <MdNoteAdd />,
         className: 'nav-text'
-    }, */
-    {
+    },
+/*     {
         title: 'Dashboard',
         path: '/dashboard',
         icon: <AiIcons.AiFillDashboard />,
         className: 'nav-text'
-    },
+    }, */
     {
         title: 'Create New Ticket',
         path: '/NewTicket',
@@ -51,12 +51,12 @@ export const TicketSidebarData = [
         path: '/MoreInfoRequest',
         icon: <AiIcons.AiOutlineMore />,
         className: 'nav-text'
-    },
+    }/* ,
     {
         title: 'Back To Self-Service Portal',
         path: '/',
         icon: <AiIcons.AiFillEuroCircle />,
         className: 'nav-text'
-    }
+    } */
 ]
 

@@ -31,7 +31,11 @@ function LoginForm(props) {
         if (isAuthenticated) {
           authContext.setUser(user);
           authContext.setIsAuthenticated(isAuthenticated);
-          props.history.push('/managementConsole');
+          if(user.isAdmin){
+            props.history.push('/managementConsole');
+          } else {
+            props.history.push('/');
+          }
         } else {
           setMessage(message);
         }
@@ -64,11 +68,12 @@ function LoginForm(props) {
         <div className="login-btn">
           <Button type="submit" className="btn btn-success col-12">Log In</Button>
         </div>
+        {message ? <Message message={message} /> : null}
         <div className="text-center links">
           <a className="links" href="/register">Sign Up</a>
         </div>
       </Form>
-      {message ? <Message message={message} /> : null}
+
     </div>
   );
 }
