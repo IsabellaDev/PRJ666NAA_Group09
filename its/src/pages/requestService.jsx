@@ -11,11 +11,13 @@ require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
     function RequestService() {
-        const url = "https://damp-river-45159.herokuapp.com/requestService"
+       //const url = "https://damp-river-45159.herokuapp.com/requestService"
+        const url = "http://localhost:5000/requestService"
         const[devices, setDevices] = useState([]);
 
         useEffect(() => {
-            fetch("https://damp-river-45159.herokuapp.com/hardware")
+            //fetch("https://damp-river-45159.herokuapp.com/hardware")
+            fetch("http://localhost:5000/hardware")
             .then(response => response.json())
             .then(json => setDevices(json))
         }, [])
@@ -23,14 +25,21 @@ require("isomorphic-fetch");
         const clearFields = (event) => {
             Array.from(event.target).forEach((e) => (e.value = ""));
         }
+       
+        function decreaseQuantity (idevicenm)  {
+            let devArray=devices.map(D=>D);
+            let devSelect;
+            for(let i=0;i<devArray.length;i++){
+                if(devArray[i].equipmentName===idevicenm){
+                    devSelect= devArray[i];
+                    break
 
-        // const decreaseQuantity = () => {
-        //     if(devices.equipmentName){
-        //     {devices.map((device) => (    
-        //         device.quantity - 1
-        //     ))}    
-        //     }
-        // }
+                
+                }
+            
+            }
+             return devSelect
+        }
 
         // const getEquipmentId = () =>{
         //     useEffect(() => {
@@ -65,17 +74,22 @@ require("isomorphic-fetch");
             })
             .then(res=>{
                 clearFields(e);
-                // decreaseQuantity();
-                // getEquipmentId();
-                // const decQuantity = {
-                //     method: 'patch',
-                //     headers: {
-                //         'Content-Type': 'application/json'
-                //     },
-                //     body: JSON.stringify(devices)
-                // };
-                // fetch(`https://damp-river-45159.herokuapp.com/hardware/${id}`, decQuantity)
+                let seleDevice= decreaseQuantity(renter.equipment);
+                console.log(renter.equipment)
+                let qty=--seleDevice.quantity;
+                const decQuantity = {
+                    method: 'PATCH',
+                    headers: {'Content-Type': 'application/json' },
+                    body:JSON.stringify({
+                        quantity : qty
+                      })
+                };
+                console.log(seleDevice)
+                fetch(`http://localhost:5000/hardware/${seleDevice._id}`, decQuantity)
                 alert("Congratulations! You have successfully been registered to obtain the equipment you have selected!");
+            })
+            .then(()=>{
+                window.location.reload(false);
             })
         })
         
@@ -94,7 +108,8 @@ require("isomorphic-fetch");
                 {devices.map((device) => (
 
                 //data.filter((devices) => devices.equipmentName === selected);
-                    setSelected(device.quantity - 1)
+                
+                setSelected(device.quantity - 1)
                 //selectedEquipment.quantity - 1
                 ))}
             }, [data, devices]);
