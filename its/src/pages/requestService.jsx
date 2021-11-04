@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import * as AiIcons from 'react-icons/ai'
 import * as FaIcons from 'react-icons/fa'
 import Axios from 'axios';
+import axios from 'axios';
 
 require("es6-promise").polyfill();
 require("isomorphic-fetch");
@@ -23,17 +24,25 @@ require("isomorphic-fetch");
             Array.from(event.target).forEach((e) => (e.value = ""));
         }
 
-        const decreaseQuantity = () => {
-            if(devices.equipmentName){
-            {devices.map((device) => (    
-                device.quantity - 1
-            ))}    
-            }
-        }
+        // const decreaseQuantity = () => {
+        //     if(devices.equipmentName){
+        //     {devices.map((device) => (    
+        //         device.quantity - 1
+        //     ))}    
+        //     }
+        // }
 
-        const getEquipmentId = () =>{
-            
-        }
+        // const getEquipmentId = () =>{
+        //     useEffect(() => {
+        //         axios.get(`https://damp-river-45159.herokuapp.com/hardware/${devices.id}`)
+        //         .then(res => {
+        //             setDevices(res.data)
+        //         })
+        //         .catch(err => {
+        //             console.log(err)
+        //         })
+        //     }, [devices.id]);
+        // }
             
         const[renter, setRenter]  = useState({
             requestingPerson: "",
@@ -56,15 +65,16 @@ require("isomorphic-fetch");
             })
             .then(res=>{
                 clearFields(e);
-                decreaseQuantity();
-                const decQuantity = {
-                    method: 'patch',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(devices)
-                };
-                fetch(`https://damp-river-45159.herokuapp.com/hardware/${id}`, decQuantity)
+                // decreaseQuantity();
+                // getEquipmentId();
+                // const decQuantity = {
+                //     method: 'patch',
+                //     headers: {
+                //         'Content-Type': 'application/json'
+                //     },
+                //     body: JSON.stringify(devices)
+                // };
+                // fetch(`https://damp-river-45159.herokuapp.com/hardware/${id}`, decQuantity)
                 alert("Congratulations! You have successfully been registered to obtain the equipment you have selected!");
             })
         })
@@ -156,60 +166,11 @@ require("isomorphic-fetch");
                             </select>
         
                             <div class="btns">
-                                <button onclick={Equipment} type="submit" class="btn btn-space btn-success">Submit</button>
+                                <button onSubmit={(e)=>submit(e)} type="submit" class="btn btn-space btn-success">Submit</button>
                                 <button type="reset" class="btn btn-space btn-success">Clear</button>
                             </div>
                         </form>          
-                    </div>
-        
-                    <div>                
-                        <form onSubmit={(e)=> submit(e)} className="requestServiceForm">
-                            <label className="label">Requesting Person</label>
-                            <input onChange={(e)=>handle(e)} id="requestingPerson" type="text" name="requestingPerson" placeholder="John Smith" />
-        
-                            <label className="label">ID</label> 
-                            <input onChange={(e)=>handle(e)} id="id" type="text" name="id" placeholder="1664836548" />
-        
-                            <label className="label">Equipment</label> 
-                            <select onChange={(e)=>handle(e)} id="equipment" name="equipment">
-                                <option>     </option>
-                                <option>
-                                {devices.map((device) => (
-                                    device.equipmentName 
-                                ))} 
-                                </option><br />
-                            </select>
-        
-                            <label className="label">Duration</label> 
-                            <select onChange={(e)=>handle(e)} id="duration" name="duration">
-                                <option>      </option>
-                                <option>placeholder</option>
-                                <option>placeholder</option>
-                            </select>
-        
-                            <label className="label">Program</label> 
-                            <select onChange={(e)=>handle(e)} id="program" name="program">
-                                <option>       </option>
-                                <option>CPA</option>
-                                <option>CPP</option>
-                            </select>
-        
-                            <label className="label">Campus</label> 
-                            <select onChange={(e)=>handle(e)} id="campus" name="campus">
-                                <option>       </option>
-                                <option>Newnham</option>
-                                <option>Seneca@York</option>
-                                <option>Markham</option>
-                                <option>King</option>
-                            </select>
-        
-                            <div class="btns">
-                                <button type="submit" class="btn btn-space btn-success">Submit</button>
-                                <button type="reset" class="btn btn-space btn-success">Clear</button>
-                            </div>
-                        </form>          
-                    </div>
-                    
+                    </div> 
                 </div>
             );
         }
