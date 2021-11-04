@@ -19,6 +19,9 @@ router.get('/:id', getService, (req, res) => {
 
 // Create one
 router.post('/', async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+ 
     const service = new Service({
         requestingPerson: req.body.requestingPerson,
         id: req.body.id,
@@ -39,6 +42,9 @@ router.post('/', async (req, res) => {
 
 // Update one
 router.patch('/:id', getService, async (req, res) => {
+    res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+  
     if (req.body.equipment != null) {
         res.user.equipment = req.body.equipment
     }
@@ -60,6 +66,9 @@ router.delete('/:id', getService, async (req, res) => {
 })
 
 async function getService(req, res, next) {
+    res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+  next();
     let service
     try {
         service = await Service.findById(req.params.id)
