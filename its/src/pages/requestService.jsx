@@ -14,30 +14,35 @@ require("isomorphic-fetch");
         const[devices, setDevices] = useState([]);
 
         useEffect(() => {
-            fetch("http://localhost:5000/hardware")
+            fetch("https://damp-river-45159.herokuapp.com/hardware")
             .then(response => response.json())
             .then(json => setDevices(json))
         }, [])
+
+        const clearFields = (event) => {
+            Array.from(event.target).forEach((e) => (e.value = ""));
+        }
+
+        const decreaseQuantity = () => {
+            if(devices.equipmentName){
+            {devices.map((device) => (    
+                device.quantity - 1
+            ))}    
+            }
+        }
+
+        const getEquipmentId = () =>{
+            
+        }
             
         const[renter, setRenter]  = useState({
             requestingPerson: "",
             id: "",
             equipment: "",
-            duration: "",
-            program: "",
+           // duration: "",
+           // program: "",
             campus: ""
         })
-
-        const resetForm = () => {
-            setRenter({
-                requestingPerson: "",
-                id: "",
-                equipment: "",
-                duration: "",
-                program: "",
-                campus: ""
-            })
-        }
         
         var submit = ((e)=>{
             e.preventDefault();
@@ -50,8 +55,16 @@ require("isomorphic-fetch");
                 campus: renter.campus
             })
             .then(res=>{
-                console.log(res.renter)
-                resetForm()
+                clearFields(e);
+                decreaseQuantity();
+                const decQuantity = {
+                    method: 'patch',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(devices)
+                };
+                fetch(`https://damp-river-45159.herokuapp.com/hardware/${id}`, decQuantity)
                 alert("Congratulations! You have successfully been registered to obtain the equipment you have selected!");
             })
         })
@@ -64,18 +77,17 @@ require("isomorphic-fetch");
         })
         
         const Equipment = ({ data }) => {
-            const [selected, setSelected] = React.useState(data[0].equipment[0]);
-            const [selectedEquipment, setSelectedEquipment] = React.useState(data);
+             const [selected, setSelected] = useState([]);
+            const [selectedEquipment, setSelectedEquipment] = useState(devices);
 
-            React.useEffect(() => {
-                const singleEquipment = data.filter((item) => item.equipment[0] === selected);
+            useEffect(() => {
+                {devices.map((device) => (
 
-                setSelectedEquipment(singleEquipment);
-            }, [data, selected]);
-
-            const handleSelect = (e) => {
-                setSelected(e.target.value);
-            };
+                //data.filter((devices) => devices.equipmentName === selected);
+                    setSelected(device.quantity - 1)
+                //selectedEquipment.quantity - 1
+                ))}
+            }, [data, devices]);
         }
             return (
                 <div className="requestService">
@@ -96,11 +108,58 @@ require("isomorphic-fetch");
                                 <tr>
                                     <td><FaIcons.FaLaptop /></td> 
                                     <td>{device.equipmentName}</td>
-                                    <td>{device.quantity}</td>
+                                    <td>{device.quantity}</td>        
                                 </tr> 
                             ))}  
                         </tbody>
                     </table> 
+                    </div>
+        
+                    <div>                
+                        <form onSubmit={(e)=> submit(e)} className="requestServiceForm">
+                            <label className="label">Requesting Person</label>
+                            <input onChange={(e)=>handle(e)} required id="requestingPerson" type="text" name="requestingPerson" placeholder="John Smith" />
+        
+                            <label className="label">ID</label> 
+                            <input onChange={(e)=>handle(e)} required id="id" type="text" name="id" placeholder="1664836548" />
+        
+                            <label className="label">Equipment</label> 
+                            
+                            <select onChange={(e)=>handle(e)} required id="equipment" name="equipment">
+                                <option> </option>
+                            {devices.map((device) => (
+                                <option>{device.equipmentName}</option>
+                            ))}
+                            </select>
+                            
+                            {/* <label className="label">Duration</label> 
+                            <select onChange={(e)=>handle(e)} id="duration" name="duration">
+                                <option>      </option>
+                                <option>placeholder</option>
+                                <option>placeholder</option>
+                            </select> */}
+         
+                            {/* <label className="label">Program</label> 
+                            <select onChange={(e)=>handle(e)} id="program" name="program">
+                                <option>       </option>
+                                <option>CPA</option>
+                                <option>CPP</option>
+                            </select> */}
+        
+                            <label className="label">Campus</label> 
+                            <select onChange={(e)=>handle(e)} required id="campus" name="campus">
+                                <option>       </option>
+                                <option>Newnham</option>
+                                <option>Seneca@York</option>
+                                <option>Markham</option>
+                                <option>King</option>
+                            </select>
+        
+                            <div class="btns">
+                                <button onclick={Equipment} type="submit" class="btn btn-space btn-success">Submit</button>
+                                <button type="reset" class="btn btn-space btn-success">Clear</button>
+                            </div>
+                        </form>          
                     </div>
         
                     <div>                
