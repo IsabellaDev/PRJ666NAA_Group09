@@ -20,6 +20,9 @@ function IssueForm(){
     file: ""
   });
 
+  const [message, setMessage] = useState(null)
+  const [isError, setIsError] = useState(true)
+
   const fileInput = useRef(null);
 
   const handleSubmit = (e) => {
@@ -41,10 +44,32 @@ function IssueForm(){
 
 
     Axios.post(databaseURL, data)
-    .then((e) => {
-      console.log('File Upload successful....')
+    .then(result => {
+        console.log(result.data.message)
+        // error message came back from POST
+        if (result.data.message !== undefined){
+          // set message and isError values
+           setMessage(result.data.message.msgBody)
+           setIsError(result.data.message.msgError)
+        }
+        // no error message from POST, log a success message
+        else{
+          setIsError(false)
+          setMessage(null)
+          console.log('File Upload successful....')
+        }
+        console.log('The Form was Submitted: ' + JSON.stringify(data));
     })
 
+     // pop-up confimation alert
+     alert("Submitting ticket...")
+
+    console.log("Message:" +message)
+    console.log("isError:" +isError)
+  }
+
+  if (!isError){
+    setIsError(true);
     // Clear form on submit
     setFormData(formData => {
       return {
@@ -62,12 +87,7 @@ function IssueForm(){
       };
     });
     fileInput.current.value = ""
-
-    // pop-up confimation alert
-    alert("Ticket submitted.")
-    
-    console.log('The Form was Submitted: ' + JSON.stringify(data));
-  }
+  } 
 
   const handleUploadChange = (e) => {
     let target = e.target;
@@ -173,6 +193,8 @@ function IssueForm(){
       <Form.Group controlId="formFileSm" className="mb-3">
         <Form.Control name="file" filename="file" ref={fileInput} onChange={handleUploadChange} type="file" size="sm" />
       </Form.Group>
+
+      {message && <div style={{color: 'red'}}> {message} </div>}
 
       <Form.Group className="mb-3" controlId="formGridDescription">
         <Form.Label>Description</Form.Label>
