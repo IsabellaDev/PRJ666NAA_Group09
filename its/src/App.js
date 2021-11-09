@@ -35,33 +35,11 @@ import AllRentedDevices from './pages/RentedDevice';
 
 
 
-
 function App() {
 
   const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
   console.log(isAuthenticated);
   console.log("user's isAdmin is: " + user.isAdmin)
-
-  function IsTicket() {
-    let isTicket = false;
-    let initRoute = useLocation().pathname;
-    if (useLocation().pathname === "/dashboard") {
-      isTicket = true;
-
-    }
-    if (useLocation().pathname === "/") {
-      isTicket = false;
-
-    }
-    if (initRoute !== useLocation().pathname) {
-      window.reload();
-
-    }
-    initRoute = useLocation().pathname
-    return isTicket
-  }
-
-
 
   return (
 
@@ -69,37 +47,33 @@ function App() {
 
       <Router>
         <Navbar />
-        {/* {         (isAuthenticated  && user.isAdmin )? <TicketNavbar /> : <Navbar />}  */}
-        {/* !IsTicket() ? <Navbar /> : <TicketNavbar /> */}
-{/*         <Switch> */}
-          <Route exact path='/'><Home /></Route>
-          <Route pexact path='/login'><LogIn /></Route>
-          <Route path='/register' component={Registration} id="S" />
-          <Route path='/install' component={Install} id="S" />
-          <Route path='/reportIssue' component={ReportIssue} id="S" />
-          <Route path='/articles' component={Articles} id="S" />
-          <Route path='/requestService' component={RequestService} id="S" />
-          <Route path='/contact' component={Contact} id="S" />
-          <Route path='/faq' component={Faq} id="S" />
-          <Route path='/faqadd' component={FaqAdd} id="S" />
-          <Route path='/faqedit/:id' component={FaqEdit} id="S" />
-          <Route path="/rentedDevice" component={AllRentedDevices} />
-          <Route path="/Dashboard" exact component={() => <TicketDashboard />} {...IsTicket()} />
-          <Route path="/NewTicket" exact component={() => <NewTicket />} {...IsTicket()} />
-          <Route path="/AllTicket" exact component={() => <AllTicketList />} {...IsTicket()} />
-          <Route path="/edit" exact component={() => <EditTicket />} {...IsTicket()} />
-          <Route path="/CloseTicket" exact component={() => <CloseTicket />} {...IsTicket()} />
-          <Route path="/TransferTicket" exact component={() => <TransferTicket />} {...IsTicket()} />
-          <Route path="/MoreInfoRequest" exact component={() => <MoreInfo />} {...IsTicket()} />
-          
 
-          <Route exact path="/managementconsole"><ManagementConsole /></Route>
-          <Route exact path="/deviceInventory"><DeviceInventory /></Route>
-          <Route exact path="/articleList"><ArticleList /></Route>
-          <Route exact path="/ticketManagement"><TicketManagement /></Route>
-          <Route exact path="/PasswordReset"><PasswordReset /></Route>
+        <Route exact path='/'><Home /></Route>
+        <Route exact path='/login'>{!isAuthenticated ? <LogIn /> : <Home />}</Route>
+        <Route path='/register'>{!isAuthenticated ? <Registration /> : <Home />}</Route>
+        <Route path='/install' component={Install} id="S" />
+        <Route path='/reportIssue' component={ReportIssue} id="S" />
+        <Route path='/articles' component={Articles} id="S" />
+        <Route path='/requestService' component={RequestService} id="S" />
+        <Route path='/contact' component={Contact} id="S" />
+        <Route path='/faq' component={Faq} id="S" />
+        <Route path='/faqadd' component={FaqAdd} id="S" />
+        <Route path='/faqedit/:id' component={FaqEdit} id="S" />
 
-{/*        </Switch> */}
+        <Route path="/Dashboard" >{user.isAdmin ? <TicketDashboard /> : <Home />}</Route>
+        <Route path="/NewTicket" >{user.isAdmin ? <NewTicket /> : <Home />}</Route>
+        <Route path="/AllTicket" >{user.isAdmin ? <AllTicketList /> : <Home />}</Route>
+        <Route path="/edit" >{user.isAdmin ? <EditTicket /> : <Home />}</Route>
+        <Route path="/CloseTicket" >{user.isAdmin ? <CloseTicket /> : <Home />}</Route>
+        <Route path="/TransferTicket" >{user.isAdmin ? <TransferTicket /> : <Home />}</Route>
+        <Route path="/MoreInfoRequest" >{user.isAdmin ? <MoreInfo /> : <Home />}</Route>
+
+        <Route exact path="/managementconsole">{user.isAdmin ? <ManagementConsole /> : <Home />}</Route>
+        <Route exact path="/deviceInventory">{user.isAdmin ? <DeviceInventory /> : <Home />}</Route>
+        <Route exact path="/articleList">{user.isAdmin ? <ArticleList /> : <Home />}</Route>
+        <Route exact path="/ticketManagement">{user.isAdmin ? <TicketManagement /> : <Home />}</Route>
+        <Route exact path="/PasswordReset">{isAuthenticated ? <PasswordReset /> : <LogIn />}</Route>
+
       </Router>
     </div>
 
