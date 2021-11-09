@@ -7,10 +7,10 @@ const getStyle = (props)=>{
     } else{
         baseClass = baseClass + " alert-primary";
     }
-    return baseClass + "text-center";
+    return baseClass + " text-center";
 }
 
-function Message(props){
+const Message = props => {
     return(
         <div className={getStyle(props)} role="alert">
             {props.message.msgBody}
