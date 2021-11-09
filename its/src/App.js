@@ -30,6 +30,7 @@ import TicketNavbar from './components/TicketNavigation';
 import EditTicket from './pages/modExistTicket';
 import PasswordReset from './pages/PasswordReset';
 import Registration from './pages/Registration';
+import AllRentedDevices from './pages/RentedDevice';
 
 
 
@@ -82,6 +83,7 @@ function App() {
           <Route path='/faq' component={Faq} id="S" />
           <Route path='/faqadd' component={FaqAdd} id="S" />
           <Route path='/faqedit/:id' component={FaqEdit} id="S" />
+          <Route path="/rentedDevice" component={AllRentedDevices} />
           <Route path="/Dashboard" exact component={() => <TicketDashboard />} {...IsTicket()} />
           <Route path="/NewTicket" exact component={() => <NewTicket />} {...IsTicket()} />
           <Route path="/AllTicket" exact component={() => <AllTicketList />} {...IsTicket()} />
@@ -89,6 +91,7 @@ function App() {
           <Route path="/CloseTicket" exact component={() => <CloseTicket />} {...IsTicket()} />
           <Route path="/TransferTicket" exact component={() => <TransferTicket />} {...IsTicket()} />
           <Route path="/MoreInfoRequest" exact component={() => <MoreInfo />} {...IsTicket()} />
+          
 
           <Route exact path="/managementconsole"><ManagementConsole /></Route>
           <Route exact path="/deviceInventory"><DeviceInventory /></Route>

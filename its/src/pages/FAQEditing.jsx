@@ -70,7 +70,7 @@ function FAQEdit(props) {
     return(
     <div className="container px-5 my-5">
         <form id="NewFAQForm" onSubmit={handleSubmit}>
-            <h2>Add a new FAQ article</h2>
+            <h2> Editing Article</h2>
           <div className="form-floating mb-3">
             <input className="form-control articleTitle" id="articleTitle" name="articleTitle" type="text" placeholder="Input Title Here" value={FAQData.articleTitle} onChange={handleChange} />
             <label htmlFor="articleTitle">FAQ Title</label>

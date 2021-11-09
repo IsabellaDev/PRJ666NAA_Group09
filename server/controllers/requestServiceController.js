@@ -1,6 +1,8 @@
 const express = require('express')
 const router = express.Router()
 const Service = require('../models/requestServiceModel')
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 // Get all
 router.get('/', async (req, res) => {
@@ -22,19 +24,27 @@ router.post('/', async (req, res) => {
     res.header('Access-Control-Allow-Origin', '*');
   res.header('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
  
-    const service = new Service({
-        requestingPerson: req.body.requestingPerson,
-        id: req.body.id,
-        equipment: req.body.equipment,
-        duration: req.body.duration,
-        program: req.body.program,
-        isAdmin: req.body.isAdmin,
-        campus: req.body.campus
-    })
+    const service = new Service(req.body)
+    const msg = {
+        to: `${req.body.email}`, // Change to your recipient
+        from: 'dmao6@myseneca.ca', // Change to your verified sender
+        subject: 'Device is Ready',
+        text: `Dear ${req.body.requestingPerson}`,
+        html: ` This email is to inform you that the device you requested ${req.body.equipment} is ready to pick up.`,
+      }
+     
 
     try{
         const newService = await service.save()
-        res.status(201).json(newService)
+        res.status(201).json(newService) 
+        sgMail
+        .send(msg)
+        .then(() => {
+          console.log('Email sent')
+        })
+        .catch((error) => {
+          console.error(error)
+        })
     } catch (err) {
         res.status(400).json({ message : err.message })
     }
