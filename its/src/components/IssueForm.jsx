@@ -97,6 +97,7 @@ function IssueForm(){
     setFormData(formData => {
       return {...formData, [name]: value};
     });
+    console.log(formData)
   }
 
   const handleChange = (e) => {
@@ -107,6 +108,7 @@ function IssueForm(){
     setFormData(formData => {
       return {...formData, [name]: value};
     });
+    console.log(formData)
   }
 
   if (!formData){

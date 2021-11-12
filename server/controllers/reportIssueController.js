@@ -78,6 +78,7 @@ router.get('/:id', getIssue, (req, res) => {
 
 // Create one
 router.post('/', (req, res) => {
+    console.log(req.file)
     upload(req, res, err => {
         if (err instanceof multer.MulterError){
             res.json({ message: { msgBody: "File is too large. Can only attach 1MB file.", msgError: true }});
