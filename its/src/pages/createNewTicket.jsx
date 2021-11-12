@@ -1,19 +1,105 @@
-import React from "react";
-import {withRouter} from 'react-router-dom';
-function NewTicket() {
+import React, { useState, useRef } from "react";
+import { withRouter } from 'react-router-dom';
+
+import { Input, Label } from 'reactstrap';
+import { Form } from 'react-bootstrap';
+import TicketService from '../Services/TicketService';
+import Message from '../components/Message';
+
+
+function NewTicket(props) {
+
+  const [ticket, setTicket] = useState({
+    studentID: "",
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    deviceID: "",
+    specialCase: "",
+    file: {},
+    subject: "",
+    description: "",
+    internalComment: ""
+  });
+  const [message, setMessage] = useState(null);
+  const fileInput = useRef(null);
+  let timerID = useRef(null);
+
+  const resetForm = () =>{
+    setTicket({
+      studentID: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      deviceID: "",
+      specialCase: "",
+      file: {},
+      subject: "",
+      description: "",
+      internalComment: ""
+    });
+  }
+
+  const handle = e => {
+    setTicket({ ...ticket, [e.target.name]: e.target.value });
+    console.log(ticket)
+  }
+
+  const handleUpload = e => {
+    setTicket({...ticket, [e.target.name]: e.target.files[0]});
+    console.log(ticket)
+  }
+
+  const submit = e => {
+    e.preventDefault();
+
+    const ticketForm = new FormData();
+
+    ticketForm.set('studentID', ticket.studentID);
+    ticketForm.set('firstName', ticket.firstName);
+    ticketForm.set('lastName', ticket.lastName);
+    ticketForm.set('email', ticket.email);
+    ticketForm.set('phone', ticket.phone);
+    ticketForm.set('deviceID', ticket.deviceID);
+    ticketForm.set('specialCase', ticket.specialCase);
+    ticketForm.set('file', ticket.file);
+    ticketForm.set('subject', ticket.subject);
+    ticketForm.set('description', ticket.description);
+    ticketForm.set('internalComment', ticket.internalComment);
+
+
+
+    TicketService.new(ticketForm).then(data => {
+      const {message} = data;
+      setMessage(message);
+      resetForm();
+      if (!message.msgError){
+        timerID = setTimeout(() => {
+          props.history.push('/managementConsole');
+        }, 2000);
+      }
+
+    });
+
+  }
+
   return (
     <div>
-      <style type="text/css" dangerouslySetInnerHTML={{__html: "@media print{.form-section{display:inline!important}.form-pagebreak{display:none!important}.form-section-closed{height:auto!important}.page-section{position:initial!important}}" }} />
+      <style type="text/css" dangerouslySetInnerHTML={{ __html: "@media print{.form-section{display:inline!important}.form-pagebreak{display:none!important}.form-section-closed{height:auto!important}.page-section{position:initial!important}}" }} />
       <link type="text/css" rel="stylesheet" href="https://cdn01.jotfor.ms/themes/CSS/defaultV2.css?" />
       <link type="text/css" rel="stylesheet" href="https://cdn02.jotfor.ms/themes/CSS/548b1325700cc48d318b4567.css?themeRevisionID=60d3156fd82983013b471ba1" />
       <link type="text/css" rel="stylesheet" href="https://cdn03.jotfor.ms/css/styles/payment/payment_styles.css?3.3.28156" />
       <link type="text/css" rel="stylesheet" href="https://cdn01.jotfor.ms/css/styles/payment/payment_feature.css?3.3.28156" />
-      <form className="jotform-form" action="https://submit.jotform.com/submit/212767694504262/" method="post" encType="multipart/form-data" name="form_212767694504262" id={212767694504262} acceptCharset="utf-8" autoComplete="on">
+
+
+      <Form className="jotform-form" /* action="https://submit.jotform.com/submit/212767694504262/" method="post" */ onSubmit={submit} encType="multipart/form-data" name="form_212767694504262" id={212767694504262} acceptCharset="utf-8" autoComplete="on">
         <input type="hidden" name="formID" defaultValue={212767694504262} />
         <input type="hidden" id="JWTContainer" defaultValue />
         <input type="hidden" id="cardinalOrderNumber" defaultValue />
         <div role="main" className="form-all">
-          <style dangerouslySetInnerHTML={{__html: "\n      .form-all:before { background: none;}\n    " }} />
+          <style dangerouslySetInnerHTML={{ __html: "\n      .form-all:before { background: none;}\n    " }} />
           <ul className="form-section page-section">
             <li id="cid_1" className="form-input-wide" data-type="control_head">
               <div className="form-header-group  header-large">
@@ -27,102 +113,109 @@ function NewTicket() {
                 </div>
               </div>
             </li>
-            <li className="form-line form-line-column form-col-1" data-type="control_textbox" id="id_11">
+            {/*             <li className="form-line form-line-column form-col-1" data-type="control_textbox" id="id_11">
               <label className="form-label form-label-top form-label-auto" id="label_11" > Ticket Number (Auto-Generated) </label>
               <div id="cid_11" className="form-input-wide" data-layout="half">
                 <input type="text" id="input_11" name="q11_ticketNumber" data-type="input-textbox" className="form-textbox" style={{width: '310px'}} size={310}  data-component="textbox" aria-labelledby="label_11" />
               </div>
-            </li>
+            </li> */}
             <li className="form-line form-line-column form-col-2" data-type="control_textbox" id="id_15">
-              <label className="form-label form-label-top form-label-auto" id="label_15" htmlFor="input_15"> Student/Employee ID </label>
+              <Label className="form-label form-label-top form-label-auto" id="label_15" htmlFor="studentID"> Student ID </Label>
               <div id="cid_15" className="form-input-wide" data-layout="half">
-                <input type="text" id="input_15" name="q15_studentemployeeId" data-type="input-textbox" className="form-textbox" data-defaultvalue style={{width: '310px'}} size={310}  data-component="textbox" aria-labelledby="label_15" />
+                <Input type="text" id="studentID" name="studentID" onChange={handle} required data-type="input-textbox" className="form-textbox" data-defaultvalue style={{ width: '310px' }} size={310} data-component="textbox" aria-labelledby="label_15" />
               </div>
             </li>
             <li className="form-line form-line-column form-col-3" data-type="control_fullname" id="id_3">
-              <label className="form-label form-label-top form-label-auto" id="label_3" htmlFor="first_3"> Contact Name </label>
+              <Label className="form-label form-label-top form-label-auto" id="label_3" htmlFor="first_3"> Contact Name </Label>
               <div id="cid_3" className="form-input-wide" data-layout="full">
                 <div data-wrapper-react="true">
-                  <span className="form-sub-label-container" style={{verticalAlign: 'top'}} data-input-type="first">
-                    <input type="text" id="first_3" name="q3_contactName[first]" className="form-textbox" data-defaultvalue size={10}  data-component="first" aria-labelledby="label_3 sublabel_3_first" />
-                    <label className="form-sub-label" htmlFor="first_3" id="sublabel_3_first" style={{minHeight: '13px'}} aria-hidden="false"> First Name </label>
+                  <span className="form-sub-label-container" style={{ verticalAlign: 'top' }} data-input-type="first">
+                    <Input type="text" id="firstName" name="firstName" onChange={handle} className="form-textbox" data-defaultvalue size={10} data-component="first" aria-labelledby="label_3 sublabel_3_first" />
+                    <Label className="form-sub-label" htmlFor="firstName" id="sublabel_3_first" style={{ minHeight: '13px' }} aria-hidden="false"> First Name </Label>
                   </span>
-                  <span className="form-sub-label-container" style={{verticalAlign: 'top'}} data-input-type="last">
-                    <input type="text" id="last_3" name="q3_contactName[last]" className="form-textbox" data-defaultvalue size={15}  data-component="last" aria-labelledby="label_3 sublabel_3_last" />
-                    <label className="form-sub-label" htmlFor="last_3" id="sublabel_3_last" style={{minHeight: '13px'}} aria-hidden="false"> Last Name </label>
+                  <span className="form-sub-label-container" style={{ verticalAlign: 'top' }} data-input-type="last">
+                    <Input type="text" id="lastName" name="lastName" onChange={handle} className="form-textbox" data-defaultvalue size={15} data-component="last" aria-labelledby="label_3 sublabel_3_last" />
+                    <Label className="form-sub-label" htmlFor="lastName" id="sublabel_3_last" style={{ minHeight: '13px' }} aria-hidden="false"> Last Name </Label>
                   </span>
                 </div>
               </div>
             </li>
             <li className="form-line form-line-column form-col-4" data-type="control_email" id="id_5">
-              <label className="form-label form-label-top form-label-auto" id="label_5" htmlFor="input_5"> Primary E-mail </label>
+              <Label className="form-label form-label-top form-label-auto" id="label_5" htmlFor="email"> Primary E-mail </Label>
               <div id="cid_5" className="form-input-wide" data-layout="half">
-                <span className="form-sub-label-container" style={{verticalAlign: 'top'}}>
-                  <input type="email" id="input_5" name="q5_primaryEmail" className="form-textbox validate[Email]" data-defaultvalue style={{width: '310px'}} size={310}  placeholder="ex: myname@example.com" data-component="email" aria-labelledby="label_5 sublabel_input_5" />
-                  <label className="form-sub-label" htmlFor="input_5" id="sublabel_input_5" style={{minHeight: '13px'}} aria-hidden="false"> example@example.com </label>
+                <span className="form-sub-label-container" style={{ verticalAlign: 'top' }}>
+                  <Input type="email" id="email" name="email" onChange={handle} className="form-textbox validate[Email]" data-defaultvalue style={{ width: '310px' }} size={310} placeholder="ex: myname@example.com" data-component="email" aria-labelledby="label_5 sublabel_input_5" />
+                  <Label className="form-sub-label" htmlFor="email" id="sublabel_input_5" style={{ minHeight: '13px' }} aria-hidden="false"> example@example.com </Label>
                 </span>
               </div>
             </li>
             <li className="form-line form-line-column form-col-5" data-type="control_phone" id="id_9">
-              <label className="form-label form-label-top form-label-auto" id="label_9" htmlFor="input_9_full"> Phone Number </label>
+              <Label className="form-label form-label-top form-label-auto" id="label_9" htmlFor="phone"> Phone Number </Label>
               <div id="cid_9" className="form-input-wide" data-layout="half">
-                <span className="form-sub-label-container" style={{verticalAlign: 'top'}}>
-                  <input type="tel" id="input_9_full" name="q9_phoneNumber[full]" data-type="mask-number" className="mask-phone-number form-textbox validate[Fill Mask]" data-defaultvalue style={{width: '310px'}} data-masked="true"  placeholder="(000) 000-0000" data-component="phone" aria-labelledby="label_9 sublabel_9_masked" />
-                  <label className="form-sub-label" htmlFor="input_9_full" id="sublabel_9_masked" style={{minHeight: '13px'}} aria-hidden="false"> Please enter a valid phone number. </label>
+                <span className="form-sub-label-container" style={{ verticalAlign: 'top' }}>
+                  <Input type="tel" id="phone" name="phone" onChange={handle} data-type="mask-number" className="mask-phone-number form-textbox validate[Fill Mask]" data-defaultvalue style={{ width: '310px' }} data-masked="true" placeholder="(000) 000-0000" data-component="phone" aria-labelledby="label_9 sublabel_9_masked" />
+                  <Label className="form-sub-label" htmlFor="phone" id="sublabel_9_masked" style={{ minHeight: '13px' }} aria-hidden="false"> Please enter a valid phone number. </Label>
                 </span>
               </div>
             </li>
             <li className="form-line form-line-column form-col-6" data-type="control_textbox" id="id_8">
-              <label className="form-label form-label-top form-label-auto" id="label_8" htmlFor="input_8"> Device ID (School Devices only) </label>
+              <Label className="form-label form-label-top form-label-auto" id="label_8" htmlFor="deviceID"> Device ID (School Devices only) </Label>
               <div id="cid_8" className="form-input-wide" data-layout="half">
-                <input type="text" id="input_8" name="q8_deviceId" data-type="input-textbox" className="form-textbox" data-defaultvalue style={{width: '310px'}} size={310}  placeholder=" " data-component="textbox" aria-labelledby="label_8" />
+                <Input type="text" id="deviceID" name="deviceID" onChange={handle} data-type="input-textbox" className="form-textbox" data-defaultvalue style={{ width: '310px' }} size={310} placeholder=" " data-component="textbox" aria-labelledby="label_8" />
               </div>
             </li>
-            <li className="form-line form-line-column form-col-7" data-type="control_dropdown" id="id_13">
-              <label className="form-label form-label-top form-label-auto" id="label_13" htmlFor="input_13"> Device Type </label>
+{/*             <li className="form-line form-line-column form-col-7" data-type="control_dropdown" id="id_13">
+              <Label className="form-label form-label-top form-label-auto" id="label_13" htmlFor="deviceType"> Device Type </Label>
               <div id="cid_13" className="form-input-wide" data-layout="half">
-                <select className="form-dropdown" id="input_13" name="q13_deviceType" style={{width: '310px'}} data-component="dropdown">
+                <select onChange={handle} className="form-dropdown" id="input_13" name="deviceType" style={{ width: '310px' }} data-component="dropdown">
                   <option value> Please Select </option>
                   <option value="Issue Report"> Issue Report </option>
                   <option value="Service Request"> Service Request </option>
                   <option value></option>
                 </select>
               </div>
-            </li>
+            </li> */}
             <li className="form-line form-line-column form-col-8" data-type="control_checkbox" id="id_17">
-              <label className="form-label form-label-top form-label-auto" id="label_17" htmlFor="input_17"> Special Case </label>
-              <div id="cid_17" className="form-input-wide" data-layout="full">
+              <Label className="form-label form-label-top form-label-auto" id="label_17" htmlFor="specialCase"> Special Case </Label>
+              <div id="cid_8" className="form-input-wide" data-layout="half">
+                <Input type="text" id="specialCase" name="specialCase" onChange={handle} data-type="input-textbox" className="form-textbox" data-defaultvalue style={{ width: '310px' }} size={310} placeholder=" " data-component="textbox" aria-labelledby="label_8" />
+              </div>
+{/*               <div id="cid_17" className="form-input-wide" data-layout="full">
                 <div className="form-single-column" role="group" aria-labelledby="label_17" data-component="checkbox">
-                  <span className="form-checkbox-item" style={{clear: 'left'}}>
+                  <span className="form-checkbox-item" style={{ clear: 'left' }}>
                     <span className="dragger-item">
                     </span>
-                    <input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_0" name="q17_specialCase[]" defaultValue="Not an IT issues" />
-                    <label id="label_input_17_0" htmlFor="input_17_0"> Not an IT issues </label>
+                    <Input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_0" name="specialCase"  value="Not an IT issues" />
+                    <Label id="label_input_17_0" htmlFor="input_17_0"> Not an IT issues </Label>
                   </span>
-                  <span className="form-checkbox-item" style={{clear: 'left'}}>
+                  <span className="form-checkbox-item" style={{ clear: 'left' }}>
                     <span className="dragger-item">
                     </span>
-                    <input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_1" name="q17_specialCase[]" defaultValue="Need Accessibility Assisstance" />
-                    <label id="label_input_17_1" htmlFor="input_17_1"> Need Accessibility Assisstance </label>
+                    <Input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_1" name="specialCase" onChange={handle} value="Need Accessibility Assisstance" />
+                    <Label id="label_input_17_1" htmlFor="input_17_1"> Need Accessibility Assisstance </Label>
                   </span>
-                  <span className="form-checkbox-item" style={{clear: 'left'}}>
+                  <span className="form-checkbox-item" style={{ clear: 'left' }}>
                     <span className="dragger-item">
                     </span>
-                    <input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_2" name="q17_specialCase[]" defaultValue="Not an English speaker" />
-                    <label id="label_input_17_2" htmlFor="input_17_2"> Not an English speaker </label>
+                    <Input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_2" name="specialCase" onChange={handle} value="Not an English speaker" />
+                    <Label id="label_input_17_2" htmlFor="input_17_2"> Not an English speaker </Label>
                   </span>
-                  <span className="form-checkbox-item" style={{clear: 'left'}}>
+                  <span className="form-checkbox-item" style={{ clear: 'left' }}>
                     <span className="dragger-item">
                     </span>
-                    <input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_3" name="q17_specialCase[]" defaultValue="Need On-Site Service" />
-                    <label id="label_input_17_3" htmlFor="input_17_3"> Need On-Site Service </label>
+                    <Input type="checkbox" aria-describedby="label_17" className="form-checkbox" id="input_17_3" name="specialCase" onChange={handle} value="Need On-Site Service" />
+                    <Label id="label_input_17_3" htmlFor="input_17_3"> Need On-Site Service </Label>
                   </span>
                 </div>
-              </div>
+              </div> */}
             </li>
             <li className="form-line" data-type="control_fileupload" id="id_7">
               <label className="form-label form-label-top form-label-auto" id="label_7" htmlFor="input_7"> Upload Screenshot or any other files that client provided </label>
-              <div id="cid_7" className="form-input-wide" data-layout="full">
+
+              <Form.Group controlId="formFileSm" className="mb-3">
+                <Form.Control name="file" filename="file" ref={fileInput} onChange={handleUpload} type="file" size="sm" />
+              </Form.Group>
+              {/*        <div id="cid_7" className="form-input-wide" data-layout="full">
                 <div className="jfQuestion-fields" data-wrapper-react="true">
                   <div className="jfField isFilled">
                     <div className="jfUpload-wrapper">
@@ -169,51 +262,53 @@ function NewTicket() {
                     of
                   </span>
                 </div>
-              </div>
+              </div> */}
             </li>
             <li className="form-line form-line-column form-col-1 jf-required" data-type="control_textbox" id="id_12">
-              <label className="form-label form-label-top form-label-auto" id="label_12" htmlFor="input_12">
-                Topic
+              <label className="form-label form-label-top form-label-auto" id="label_12" htmlFor="subject">
+                Subject
                 <span className="form-required">
                   *
                 </span>
               </label>
               <div id="cid_12" className="form-input-wide jf-required" data-layout="half">
-                <input type="text" id="input_12" name="q12_topic" data-type="input-textbox" className="form-textbox validate[required]" data-defaultvalue style={{width: '310px'}} size={310}  data-component="textbox" aria-labelledby="label_12" required />
+                <Input type="text" id="subject" name="subject" onChange={handle} data-type="input-textbox" className="form-textbox validate[required]" data-defaultvalue style={{ width: '310px' }} size={310} data-component="textbox" aria-labelledby="label_12" required />
               </div>
             </li>
-            <li className="form-line form-line-column form-col-2" data-type="control_dropdown" id="id_16">
+           {/*  <li className="form-line form-line-column form-col-2" data-type="control_dropdown" id="id_16">
               <label className="form-label form-label-top form-label-auto" id="label_16" htmlFor="input_16"> Select a category </label>
               <div id="cid_16" className="form-input-wide" data-layout="half">
-                <select className="form-dropdown" id="input_16" name="q16_selectA16" style={{width: '310px'}} data-component="dropdown">
+                <select className="form-dropdown" id="input_16" name="q16_selectA16" style={{ width: '310px' }} data-component="dropdown">
                   <option value> Please Select </option>
                   <option value></option>
                 </select>
               </div>
-            </li>
+            </li> */}
             <li className="form-line jf-required" data-type="control_textarea" id="id_6">
-              <label className="form-label form-label-top form-label-auto" id="label_6" htmlFor="input_6">
+              <label className="form-label form-label-top form-label-auto" id="label_6" htmlFor="description">
                 Describe the Problem in Detail (Client will see this)
                 <span className="form-required">
                   *
                 </span>
               </label>
               <div id="cid_6" className="form-input-wide jf-required" data-layout="full">
-                <textarea id="input_6" className="form-textarea validate[required]" name="q6_describeThe" style={{width: '648px', height: '163px'}} data-component="textarea" required aria-labelledby="label_6" defaultValue={""} />
+                <textarea id="description" className="form-textarea validate[required]" name="description" onChange={handle} style={{ width: '648px', height: '163px' }} data-component="textarea" required aria-labelledby="label_6" defaultValue={""} />
               </div>
             </li>
             <li className="form-line" data-type="control_textarea" id="id_14">
-              <label className="form-label form-label-top form-label-auto" id="label_14" htmlFor="input_14"> Internal ITS Comment (Client will NOT see this) </label>
+              <label className="form-label form-label-top form-label-auto" id="label_14" htmlFor="internalComment"> Internal ITS Comment (Client will NOT see this) </label>
               <div id="cid_14" className="form-input-wide" data-layout="full">
-                <textarea id="input_14" className="form-textarea" name="q14_internalIts14" style={{width: '648px', height: '163px'}} data-component="textarea" aria-labelledby="label_14" defaultValue={""} />
+                <textarea id="internalComment" className="form-textarea" name="internalComment" onChange={handle} style={{ width: '648px', height: '163px' }} data-component="textarea" aria-labelledby="label_14" defaultValue={""} />
               </div>
             </li>
             <li className="form-line" data-type="control_textarea" id="id_18">
               <label className="form-label form-label-top" id="label_18" htmlFor="input_18"> Ticket History (Display Only) </label>
               <div id="cid_18" className="form-input-wide" data-layout="full">
-                <textarea id="input_18" className="form-readonly form-textarea" name="q18_ticketHistory18" style={{width: '648px', height: '163px'}} tabIndex={-1} data-component="textarea" readOnly aria-labelledby="label_18" defaultValue={""} />
+                <textarea id="input_18" className="form-readonly form-textarea" name="q18_ticketHistory18" style={{ width: '648px', height: '163px' }} tabIndex={-1} data-component="textarea" readOnly aria-labelledby="label_18" defaultValue={""} />
               </div>
             </li>
+
+            {message? <Message message={message} /> : null}
             <li className="form-line" data-type="control_button" id="id_20">
               <div id="cid_20" className="form-input-wide" data-layout="full">
                 <div data-align="auto" className="form-buttons-wrapper form-buttons-auto   jsTest-button-wrapperField">
@@ -223,9 +318,9 @@ function NewTicket() {
                 </div>
               </div>
             </li>
-            <li style={{clear: 'both'}}>
+            <li style={{ clear: 'both' }}>
             </li>
-            <li style={{display: 'none'}}>
+            <li style={{ display: 'none' }}>
               Should be Empty:
               <input type="text" name="website" />
             </li>
@@ -234,8 +329,8 @@ function NewTicket() {
         <input type="hidden" className="simple_spc" id="simple_spc" name="simple_spc" defaultValue={212767694504262} />
         <div className="formFooter-heightMask">
         </div>
-        
-      </form>
+
+      </Form>
     </div>
   );
 }

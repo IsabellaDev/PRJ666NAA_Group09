@@ -26,6 +26,6 @@
     "underscore": "^1.13.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.15"
   }
 }
