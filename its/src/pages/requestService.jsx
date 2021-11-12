@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {withRouter,useHistory} from 'react-router-dom';
 import '../components/requestService.css';
 import data from '../mock-data/mock-data.json';
 import 'bootstrap/dist/css/bootstrap.css';
@@ -11,6 +12,8 @@ require("es6-promise").polyfill();
 require("isomorphic-fetch");
 
     function RequestService() {
+        const history=useHistory();
+        let newDate=new Date();
        //const url = "https://damp-river-45159.herokuapp.com/requestService"
         const url = "http://localhost:5000/requestService"
         const[devices, setDevices] = useState([]);
@@ -52,14 +55,16 @@ require("isomorphic-fetch");
         //         })
         //     }, [devices.id]);
         // }
-            
+        var DToptions = { weekday: 'short', year: 'numeric', month: 'numeric', day: 'numeric',timeZoneName : 'short' };   
         const[renter, setRenter]  = useState({
             requestingPerson: "",
             id: "",
             equipment: "",
            // duration: "",
            // program: "",
-            campus: ""
+            campus: "",
+            DateRented: " "+newDate.getFullYear()+"-"+(newDate.getMonth()+1)+"-"+newDate.getDate(),
+            DateReturned: ""
         })
         
         var submit = ((e)=>{
@@ -70,7 +75,9 @@ require("isomorphic-fetch");
                 equipment: renter.equipment,
                 duration: renter.duration,
                 program: renter.program,
-                campus: renter.campus
+                campus: renter.campus,
+                DateRented: renter.DateRented,
+                email:renter.email
             })
             .then(res=>{
                 clearFields(e);
@@ -117,7 +124,7 @@ require("isomorphic-fetch");
             return (
                 <div className="requestService">
         
-                    <h1>Request Service</h1>
+                    <h1>Request Device Rental</h1>
         
                     <div className="requestServiceTable">
                      <table devices={devices} className="table table-striped">
@@ -137,7 +144,9 @@ require("isomorphic-fetch");
                                 </tr> 
                             ))}  
                         </tbody>
+                       
                     </table> 
+                    <span><button className="btn btn-primary btn-lg btn-block" onClick={() => { history.push(`/rentedDevice`) }}>Manage Rented Devices</button></span>
                     </div>
         
                     <div>                
@@ -156,9 +165,11 @@ require("isomorphic-fetch");
                                 <option>{device.equipmentName}</option>
                             ))}
                             </select>
-                            
-                            {/* <label className="label">Duration</label> 
-                            <select onChange={(e)=>handle(e)} id="duration" name="duration">
+                            <label className="label">Email</label>
+                            <input onChange={(e)=>handle(e)} required id="email" type="text" name="email" placeholder="jsmith@mail.com" />
+        
+                            {/* <label className="label">Email</label> 
+                            <select onChange={(e)=>handle(e)} id="email" name="email">
                                 <option>      </option>
                                 <option>placeholder</option>
                                 <option>placeholder</option>
@@ -179,8 +190,10 @@ require("isomorphic-fetch");
                                 <option>Markham</option>
                                 <option>King</option>
                             </select>
+                            
         
                             <div class="btns">
+                                
                                 <button onSubmit={(e)=>submit(e)} type="submit" class="btn btn-space btn-success">Submit</button>
                                 <button type="reset" class="btn btn-space btn-success">Clear</button>
                             </div>

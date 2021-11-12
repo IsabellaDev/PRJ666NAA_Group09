@@ -38,6 +38,7 @@ const hardwareRouter = require('./controllers/hardwareController')
 const articleRouter = require('./controllers/articleController')
 const requestServiceRouter = require('./controllers/requestServiceController')
 const FaqRouter = require('./controllers/faqController')
+const ticketRouter = require('./controllers/ticketController')
 
 app.use('/users', usersRouter)
 app.use('/reportIssue', reportIssueRouter)
@@ -45,6 +46,7 @@ app.use('/hardware', hardwareRouter)
 app.use('/articles', articleRouter)
 app.use('/requestService', requestServiceRouter)
 app.use('/faq', FaqRouter)
+app.use('/ticket', ticketRouter)
 
 
 app.listen(port_number, () => console.log('Server running...'))
