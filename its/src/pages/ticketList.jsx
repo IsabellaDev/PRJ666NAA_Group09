@@ -1,10 +1,39 @@
-import React, {useState} from "react";
-import data from "../SampleData/SampleData.json"
+import React, { useState, useEffect } from "react";
 import "../components/ticketList.css"
 import 'bootstrap/dist/css/bootstrap.css';
 import {withRouter} from 'react-router-dom';
+import axios from "axios";
+
+require("es6-promise").polyfill()
+require("isomorphic-fetch")
+
 const AllTicket = () => {
-  const [customers, setCustomers] = useState(data);
+  const [tickets, setTickets] = useState([]);
+
+useEffect(() => {
+  fetch("https://damp-river-45159.herokuapp.com/ticket")
+  .then(response => response.json())
+  .then(json => setTickets(json));
+}, [])
+
+const deleteTicket = (id) => {
+  const delTicket = {
+    method: 'DELETE',
+    headers: { 'Content-Type': 'application/json' },
+  };
+  
+  return new Promise(function (resolve, reject) {
+    fetch(`https://damp-river-45159.herokuapp.com/ticket/${id}`, delTicket)
+        .then(res => res.json())
+        .then(result => {
+            if (result) {
+              console.log(result);  
+              resolve(result);
+
+            }
+        })
+  });
+}
 
   return (
     <div className="home">
@@ -16,7 +45,7 @@ const AllTicket = () => {
           <div class="col-lg-5">
             <h1 class="font-weight-light header">All Tickets</h1>
 
-            <form className="filterButtons">
+            {/* <form className="filterButtons">
               <label>Filter</label>
               <button type="submit" class="btn btn-success filterButton">AND</button>
               <button type="submit" class="btn btn-success filterButton">OR</button>
@@ -46,32 +75,32 @@ const AllTicket = () => {
                 <option>Awaiting Vender</option>
                 <option>Escalated</option>
               </select>
-            </form>
+            </form> */}
 
             <table className="table table-striped ticketTable">
               <thead>
                 <tr>
-                  <th class="col-md-3">#</th>
-                  <th class="col-md-3">Ticket Number</th>
-                  <th class="col-md-3">Requested By</th>
-                  <th class="col-md-3">Short Description</th>
-                  <th class="col-md-3">Assigned To</th>
-                  <th class="col-md-3">Priority</th>
-                  <th class="col-md-3">State</th>
-                  <th class="col-md-3"></th>
+                  <th class="col-md-4">Requester's ID</th>
+                  <th class="col-md-4">Requested By</th>
+                  {/* <th class="col-md-4">Requester's Email</th> */}
+                  <th class="col-md-4">Ticket Subject</th>
+                  <th class="col-md-4">Short Description</th>
+                  {/* <th class="col-md-4">Assigned To</th> */}
+                  <th class="col-md-4">Date Created On</th>
+                  <th class="col-md-4"></th>  
                 </tr>
               </thead>
               <tbody>
-                {customers.map((customer)=> (
+                {tickets.map((ticket)=> (
                   <tr>
-                    <th class="col-md-2">{customer.id}</th>
-                    <td class="col-md-2">{customer.ticketNumber}</td>
-                    <td class="col-md-2">{customer.requestedBy}</td>
-                    <td class="col-md-2">{customer.shortDescription}</td>
-                    <td class="col-md-2">{customer.assignedTo}</td>
-                    <td class="col-md-2">{customer.priority}</td>
-                    <td class="col-md-2">{customer.state}</td>
-                    <td class="col-md-2"><button type="submit" class="btn btn-danger">Delete</button></td>
+                    <th class="col-md-3">{ticket.studentID}</th>
+                    <td class="col-md-3">{ticket.firstName} {ticket.lastName}</td>
+                    {/* <td class="col-md-3">{ticket.email}</td> */}
+                    <td class="col-md-2">{ticket.subject}</td> 
+                    <td class="col-md-3">{ticket.description}</td>
+                    {/* <td class="col-md-3"><img src={ticket.file} /></td> */}
+                    <td class="col-md-3">{ticket.createOn}</td>
+                    <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {deleteTicket(ticket._id); window.location.reload(false); alert("Ticket Successfully Deleted")}}>Delete</button></td>
                   </tr>
                 ))}
               </tbody>

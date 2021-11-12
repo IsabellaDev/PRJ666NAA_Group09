@@ -34,7 +34,7 @@ require("isomorphic-fetch");
                     devSelect= devArray[i];
                     break
 
-                
+                    
                 }
             
             }
