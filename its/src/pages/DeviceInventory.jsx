@@ -1,19 +1,71 @@
-import { useState } from 'react';
+import { React, useEffect,useState } from 'react';
 import { Table, Button } from 'react-bootstrap';
-
-import dataDetails from '../mock-data/deviceDetails.json';
-
+import { Accordion } from 'react-bootstrap';
+import { withRouter,useHistory } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
 function DeviceInventory() {
+    const history = useHistory();
+    const [devices,setDevice] = useState([]);
+    function getDeviceData() {
+        return new Promise(function (resolve, reject) {
+            fetch(`http://localhost:5000/hardware`)
+                .then(res => res.json())
+                .then(result => {
+                    if (result) {
+                      console.log(result);  
+                      resolve(result);
+    
+                    }
+                })
+        });
+    
+        
+    }
+    
+    function AddNewDevice(){
+        history.push('/deviceInventory/AddNew');
+    }
 
-    const [devices] = useState(dataDetails);
+    function deleteDevice(id) {
+        const requestOptions = {
+          method: 'DELETE',
+          headers: { 'Content-Type': 'application/json' },
+         
+      };
+        return new Promise(function (resolve, reject) {
+            fetch(`http://localhost:5000/hardware/${id}`, requestOptions)
+                .then(res => res.json())
+                .then(result => {
+                    if (result) {
+                      console.log(result);  
+                      resolve(result);
+      
+                    }
+                })
+        });
+      
+        
+      }
+
+    useEffect(() => {
+        getDeviceData().then(result => {
+            if (result) {
+              console.log(result);
+                setDevice(result);
+            }
+        });
+      }, []);
+
     return (
         <div className="deviceInventory">
             <h2>Device Inventory</h2>
-
+            <p></p>
+            <button type="button" class="btn btn-primary" onClick={() => {AddNewDevice();}}>Add a new devices</button>
+            <p></p>
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>Device ID</th>
+                       
                         <th>Device Name</th>
                         <th>Category</th>
                         <th>Quantity</th>
@@ -25,13 +77,13 @@ function DeviceInventory() {
 
                     {devices.map((device) => (
                         <tr>
-                            <td>{device.id}</td>
-                            <td class="col-md-2">{device.Equipment}</td>
-                            <td>{device.Category}</td>
-                            <td class="col-md-2">{device.AvailableQuantity}</td>
+                         
+                            <td class="col-md-2">{device.equipmentName}</td>
+                            <td>{device.category}</td>
+                            <td class="col-md-2">{device.quantity}</td>
                             <td>
-                                <Button>Edit</Button>
-                                <span><Button>Save</Button></span>
+                            <button type="button" class="btn btn-secondary" key={device._id} onClick={() => { history.push(`/deviceInventory/edit/${device._id}`) }}>Edit</button>
+                                <span><button type="button" class="btn btn-danger" key={device._id} onClick={() => {deleteDevice(device._id); window.location.reload(false); alert("Deleted completed");}}>Delete</button></span>
                             </td>
                         </tr>
                     ))}

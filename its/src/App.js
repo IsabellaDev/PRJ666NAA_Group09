@@ -31,8 +31,8 @@ import EditTicket from './pages/modExistTicket';
 import PasswordReset from './pages/PasswordReset';
 import Registration from './pages/Registration';
 import AllRentedDevices from './pages/RentedDevice';
-
-
+import DeviceInventoryAdd from './pages/DeviceInventoryAdd';
+import DeviceInventoryEdit from './pages/DeviceInventoryEdit';
 
 
 function App() {
@@ -59,6 +59,9 @@ function App() {
         <Route path='/faq' component={Faq} id="S" />
         <Route path='/faqadd' component={FaqAdd} id="S" />
         <Route path='/faqedit/:id' component={FaqEdit} id="S" />
+        <Route path='/rentedDevice' component={AllRentedDevices} id="S" />
+        
+
 
         <Route path="/Dashboard" >{user.isAdmin ? <TicketDashboard /> : <Home />}</Route>
         <Route path="/NewTicket" >{user.isAdmin ? <NewTicket /> : <Home />}</Route>
@@ -70,6 +73,8 @@ function App() {
 
         <Route exact path="/managementconsole">{user.isAdmin ? <ManagementConsole /> : <Home />}</Route>
         <Route exact path="/deviceInventory">{user.isAdmin ? <DeviceInventory /> : <Home />}</Route>
+        <Route path='/deviceInventory/AddNew' component={DeviceInventoryAdd} id="S" />
+        <Route path='/deviceInventory/edit/:id' component={DeviceInventoryEdit} id="S" />
         <Route exact path="/articleList">{user.isAdmin ? <ArticleList /> : <Home />}</Route>
         <Route exact path="/ticketManagement">{user.isAdmin ? <TicketManagement /> : <Home />}</Route>
         <Route exact path="/PasswordReset">{isAuthenticated ? <PasswordReset /> : <LogIn />}</Route>
