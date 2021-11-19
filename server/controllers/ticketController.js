@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
 // Create one
 router.post('/', (req, res) => {
 
-    upload(req, res, err => {
+    /*upload(req, res, err => {
         if (err instanceof multer.MulterError) {
             res.status(500).json({ message: { msgBody: "File is too large. Can only attach 1MB file.", msgError: true } });
             console.log("File is too large, error was caught.");
@@ -75,23 +75,10 @@ router.post('/', (req, res) => {
         else if (err) {
             res.status(500).json({ message: { msgBody: "Unsupported file type, please try again.", msgError: true } });
             console.log("Unsupported file type.")
-        }
-        else {
+        } */
+       // else {
              console.log(req.body)
-            const ticket = new Ticket({
-                studentID: req.body.studentID,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                phone: req.body.phone,
-                deviceID: req.body.deviceID,
-                // deviceType: req.body.deviceType,
-                specialCase: req.body.specialCase,
-                subject: req.body.subject,
-                description: req.body.description,
-                internalComment: req.body.internalComment, 
-                file: req.file.filename
-            })
+            const ticket = new Ticket(req.body)
             console.log(ticket)
 
             ticket.save(err => {
@@ -140,10 +127,10 @@ router.post('/', (req, res) => {
 
 
 
-        }
+       // }
 
     })
-})
+//})
 
 
 

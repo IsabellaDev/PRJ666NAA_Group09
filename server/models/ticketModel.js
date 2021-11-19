@@ -45,8 +45,8 @@ var TicketSchema = new Schema({
     "createOn": {
         type: Date, 
         default: Date.now()
-    }
-
+    },
+    
 
 });
 

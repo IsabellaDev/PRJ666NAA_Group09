@@ -42,8 +42,9 @@ function IssueForm(){
     data.append('problemDescription', formData.problemDescription);
     data.append('file', formData.file);
 
+    
 
-    Axios.post(databaseURL, data)
+    /*Axios.post(databaseURL, data)
     .then(result => {
         console.log(result.data.message)
         // error message came back from POST
@@ -59,13 +60,52 @@ function IssueForm(){
           console.log('File Upload successful....')
         }
         console.log('The Form was Submitted: ' + JSON.stringify(data));
-    })
+    })*/
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:JSON.stringify({
+        studentID:formData.id,
+        firstName:formData.firstName,
+        lastName:formData.lastName,
+        email:formData.email,
+        phone:formData.phone,
+        specialCase:"",
+        deviceID:"",
+        //file:formData.file,
+        subject:formData.subject,
+        description:formData.problemDescription,
+        internalComment:"",
+        createOn:Date.now(),
+       // History:[]
+      })
+      
+  };
+ 
+  console.log('The issue Was Submitted as ticket: ' + JSON.stringify(data));
+    return new Promise(function (resolve, reject) {
+        fetch(`http://localhost:5000/ticket/`, requestOptions)
+        .then((response) => {
+          return response.json();
+      })
+            
+            .then(result => {
+                if (result) {
+                  console.log(result);  
+                  resolve(result);
+  
+                }
+            })
+           .then(()=>{alert("Submitting ticket...")
 
+            console.log("Message:" +message)
+            console.log("isError:" +isError)
+               alert('Convert Ticket Successful');
+             // history.push('/reportIssue');
+           })
+          });
      // pop-up confimation alert
-     alert("Submitting ticket...")
-
-    console.log("Message:" +message)
-    console.log("isError:" +isError)
+     
   }
 
   if (!isError){
