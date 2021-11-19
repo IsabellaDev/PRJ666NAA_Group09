@@ -19,17 +19,7 @@ router.get('/:id', getArticle, (req, res) => {
 
 // Create one
 router.post('/', async (req, res) => {
-    const article = new Article({
-        submittedBy: req.body.submittedBy,
-        articleNumber: req.body.articleNumber,
-        requestingPerson: req.body.requestingPerson,
-        createdOn: req.body.createdOn,
-        category: req.body.category,
-        status: req.body.status,
-        assignedTo: req.body.assignedTo,
-        articleTitle: req.body.articleTitle,
-        body: req.body.body
-    })
+    const article = new Article(req.body)
 
     try{
         const newArticle = await article.save()
