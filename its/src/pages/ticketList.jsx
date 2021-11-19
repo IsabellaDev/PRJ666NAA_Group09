@@ -100,7 +100,7 @@ const deleteTicket = (id) => {
                     <td class="col-md-3">{ticket.description}</td>
                     {/* <td class="col-md-3"><img src={ticket.file} /></td> */}
                     <td class="col-md-3">{ticket.createOn}</td>
-                    <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {deleteTicket(ticket._id); window.location.reload(false); alert("Ticket Successfully Deleted")}}>Delete</button></td>
+                    <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {if(window.confirm("Are you sure? If you already got a solution for this ticket, please consider to close it first! ")){deleteTicket(ticket._id); window.location.reload(false);} }}>Delete</button></td>
                   </tr>
                 ))}
               </tbody>

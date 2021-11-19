@@ -83,7 +83,7 @@ function DeviceInventory() {
                             <td class="col-md-2">{device.quantity}</td>
                             <td>
                             <button type="button" class="btn btn-secondary" key={device._id} onClick={() => { history.push(`/deviceInventory/edit/${device._id}`) }}>Edit</button>
-                                <span><button type="button" class="btn btn-danger" key={device._id} onClick={() => {deleteDevice(device._id); window.location.reload(false); alert("Deleted completed");}}>Delete</button></span>
+                                <span><button type="button" class="btn btn-danger" key={device._id} onClick={() => {if(window.confirm("Are you sure you want to delete this category? There is no `OOPS` button later !")){deleteDevice(device._id); window.location.reload(false);} }}>Delete</button></span>
                             </td>
                         </tr>
                     ))}

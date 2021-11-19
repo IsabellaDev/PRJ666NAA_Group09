@@ -72,7 +72,7 @@ if (faqs.length > 0) {
     
        <Accordion.Item eventKey={faq._id} >  
           <Accordion.Header>{faq.articleTitle}</Accordion.Header>
-          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {deleteFAQRecord(faq._id); window.location.reload(false); alert("Deleted completed"); }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
+          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {if(window.confirm("Are you sure you want to delete this FAQ Article? This CANNOT be undone!")){deleteFAQRecord(faq._id); window.location.reload(false);};  }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
           </Accordion.Item>
       
   )
