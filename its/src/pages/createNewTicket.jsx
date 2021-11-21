@@ -73,6 +73,7 @@ function NewTicket(props) {
 
     TicketService.new(ticketForm).then(data => {
       const {message} = data;
+      console.log(message)
       setMessage(message);
       resetForm();
       if (!message.msgError){

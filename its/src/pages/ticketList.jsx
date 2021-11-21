@@ -11,7 +11,7 @@ const AllTicket = () => {
   const [tickets, setTickets] = useState([]);
 
 useEffect(() => {
-  fetch("https://damp-river-45159.herokuapp.com/ticket")
+  fetch("/ticket")
   .then(response => response.json())
   .then(json => setTickets(json));
 }, [])
@@ -23,7 +23,7 @@ const deleteTicket = (id) => {
   };
   
   return new Promise(function (resolve, reject) {
-    fetch(`https://damp-river-45159.herokuapp.com/ticket/${id}`, delTicket)
+    fetch(`/ticket/${id}`, delTicket)
         .then(res => res.json())
         .then(result => {
             if (result) {

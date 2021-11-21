@@ -11,7 +11,7 @@ function DeviceInventoryEdit() {
     const history = useHistory();
     
     useEffect(() => {
-      fetch(`http://localhost:5000/hardware/${params.id}`)
+      fetch(`/hardware/${params.id}`)
           .then(res => res.json())
           .then(result => {
               if (result) {
@@ -32,7 +32,7 @@ function DeviceInventoryEdit() {
       };
         console.log('The Device Was Submitted: ' + JSON.stringify(devices));
           return new Promise(function (resolve, reject) {
-            fetch(`http://localhost:5000/hardware/${params.id}`, requestOptions)
+            fetch(`/hardware/${params.id}`, requestOptions)
               .then((response) => {
                 return response.json();
             })

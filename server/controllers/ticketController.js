@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
 // Create one
 router.post('/', (req, res) => {
 
-    /*upload(req, res, err => {
+    upload(req, res, err => {
         if (err instanceof multer.MulterError) {
             res.status(500).json({ message: { msgBody: "File is too large. Can only attach 1MB file.", msgError: true } });
             console.log("File is too large, error was caught.");
@@ -75,15 +75,29 @@ router.post('/', (req, res) => {
         else if (err) {
             res.status(500).json({ message: { msgBody: "Unsupported file type, please try again.", msgError: true } });
             console.log("Unsupported file type.")
-        } */
-       // else {
+        } 
+       else {
              console.log(req.body)
-            const ticket = new Ticket(req.body)
+             const ticket = new Ticket({
+                studentID: req.body.studentID,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                email: req.body.email,
+                phone: req.body.phone,
+                deviceID: req.body.deviceID,
+                // deviceType: req.body.deviceType,
+                specialCase: req.body.specialCase,
+                subject: req.body.subject,
+                description: req.body.description,
+                internalComment: req.body.internalComment, 
+                file: req.file.filename
+            })
+            // const ticket = new Ticket(req.body)
             console.log(ticket)
 
             ticket.save(err => {
                 if (err) {
-                    res.status(400).json({ message: { msgBody: "There is something wrong with your information, please re-enter and try again. ", msgError: true } })
+                    res.status(400).json({ message: { msgBody: "There is something wrong with your information (400), please re-enter and try again. ", msgError: true } })
                 } else {
 
                     let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully submitted, here is the ticket information: </p><br>" +
@@ -113,7 +127,7 @@ router.post('/', (req, res) => {
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
                             console.log("ERROR: " + error);
-                            res.status(500).json({ message: { msgBody: "There is something wrong with your information, please re-enter and try again. ", msgError: true } });
+                            res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
                         }
                         else {
                             console.log("SUCCESS: " + info.response);
@@ -127,10 +141,47 @@ router.post('/', (req, res) => {
 
 
 
-       // }
+       }
 
     })
-//})
+})
+
+// Update one
+router.patch('/:id', getTicket, async (req, res) => {
+    if (req.body.lastName != null) {
+        res.user.lastName = req.body.lastName
+    }
+    try {
+        const updatedTicket = await res.ticket.save()
+        res.json(updatedTicket)
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+// Delete one
+router.delete('/:id', getTicket, async (req, res) => {
+    try {
+        await res.ticket.remove()
+        res.json({ message: 'Deleted ticket'})
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
+async function getTicket(req, res, next) {
+    let issue
+    try {
+        ticket = await Ticket.findById(req.params.id)
+        if (ticket == null){
+            return res.status(404).json({ message: 'Cannot find the ticket' })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+
+    res.ticket = ticket
+    next()
+}
 
 
 

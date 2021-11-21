@@ -8,7 +8,7 @@ function DeviceInventory() {
     const [devices,setDevice] = useState([]);
     function getDeviceData() {
         return new Promise(function (resolve, reject) {
-            fetch(`http://localhost:5000/hardware`)
+            fetch(`/hardware`)
                 .then(res => res.json())
                 .then(result => {
                     if (result) {
@@ -33,7 +33,7 @@ function DeviceInventory() {
          
       };
         return new Promise(function (resolve, reject) {
-            fetch(`http://localhost:5000/hardware/${id}`, requestOptions)
+            fetch(`/hardware/${id}`, requestOptions)
                 .then(res => res.json())
                 .then(result => {
                     if (result) {
