@@ -11,7 +11,7 @@ const AllRentedDevices = () => {
   
   function getRentData() {
     return new Promise(function (resolve, reject) {
-        fetch(`http://localhost:5000/requestService`)
+        fetch(`/requestService`)
             .then(res => res.json())
             .then(result => {
                 if (result) {

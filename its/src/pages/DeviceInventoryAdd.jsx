@@ -27,7 +27,7 @@ function DeviceInventoryAdd() {
         };
         console.log('The Device Was Submitted: ' + JSON.stringify(devices));
           return new Promise(function (resolve, reject) {
-              fetch(`http://localhost:5000/hardware/`, requestOptions)
+              fetch(`/hardware/`, requestOptions)
               .then((response) => {
                 return response.json();
             })

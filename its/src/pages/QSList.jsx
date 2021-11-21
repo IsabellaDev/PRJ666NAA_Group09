@@ -11,7 +11,7 @@ function QSList( props) {
 
   function getQSData() {
     return new Promise(function (resolve, reject) {
-        fetch(`http://localhost:5000/articles`)
+        fetch(`/articles`)
             .then(res => res.json())
             .then(result => {
                 if (result) {
@@ -32,7 +32,7 @@ function deleteQSRecord(id) {
    
 };
   return new Promise(function (resolve, reject) {
-      fetch(`http://localhost:5000/articles/${id}`, requestOptions)
+      fetch(`/articles/${id}`, requestOptions)
           .then(res => res.json())
           .then(result => {
               if (result) {

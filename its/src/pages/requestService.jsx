@@ -20,7 +20,7 @@ require("isomorphic-fetch");
 
         useEffect(() => {
             //fetch("https://damp-river-45159.herokuapp.com/hardware")
-            fetch("http://localhost:5000/hardware")
+            fetch("/hardware")
             .then(response => response.json())
             .then(json => setDevices(json))
         }, [])
@@ -92,7 +92,7 @@ require("isomorphic-fetch");
                       })
                 };
                 console.log(seleDevice)
-                fetch(`http://localhost:5000/hardware/${seleDevice._id}`, decQuantity)
+                fetch(`/hardware/${seleDevice._id}`, decQuantity)
                 alert("Congratulations! You have successfully been registered to obtain the equipment you have selected!");
             })
             .then(()=>{

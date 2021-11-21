@@ -45,13 +45,13 @@ var TicketSchema = new Schema({
     "createOn": {
         type: Date, 
         default: Date.now()
-    },
+    }/* ,
     "status":{
         type:String,
     },
     "solution":{
         type:String
-    }
+    } */
 
     
 
