@@ -55,13 +55,23 @@ var transporter = nodemailer.createTransport({
 });
 
 // Get all
-router.get('/', async (req, res) => {
-    try {
-        const tickets = await Ticket.find()
-        res.json(tickets)
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
+// router.get('/', async (req, res) => {
+//     try {
+//         const tickets = await Ticket.find()
+//         res.json(tickets)
+//     } catch (err) {
+//         res.status(500).json({ message: err.message })
+//     }
+// })
+
+// Get one
+router.get('/:id', getTicket, (req, res) => {
+    res.json(res.ticket)
+})
+
+// Get all
+router.get('/', getAllTickets, (req, res) => {
+    res.json(res.tickets)
 })
 
 // Create one
@@ -148,8 +158,11 @@ router.post('/', (req, res) => {
 
 // Update one
 router.patch('/:id', getTicket, async (req, res) => {
-    if (req.body.lastName != null) {
-        res.user.lastName = req.body.lastName
+    if (req.body.status != null) {
+        res.ticket.status = req.body.status
+    }
+    if (req.body.solution != null) {
+        res.ticket.solution = req.body.solution
     }
     try {
         const updatedTicket = await res.ticket.save()
@@ -169,7 +182,7 @@ router.delete('/:id', getTicket, async (req, res) => {
 })
 
 async function getTicket(req, res, next) {
-    let issue
+    let ticket
     try {
         ticket = await Ticket.findById(req.params.id)
         if (ticket == null){
@@ -178,10 +191,28 @@ async function getTicket(req, res, next) {
     } catch (err) {
         return res.status(500).json({ message: err.message })
     }
-
     res.ticket = ticket
     next()
 }
+
+async function getAllTickets(req, res, next){
+    // if ticketNo is passed, findBy is set to ticketNo, empty otherwise
+    let ticketNumber = req.query.ticketNumber
+    let findBy = ticketNumber ? { ticketNumber } : {}
+    let tickets
+    try {
+        tickets = await Ticket.find(findBy)
+        if (tickets == null){
+            return res.status(404).json({ message: 'Cannot find the ticket' })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+    res.tickets = tickets
+    next()
+}
+
+
 
 
 
