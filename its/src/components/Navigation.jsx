@@ -80,15 +80,15 @@ function Navbar(props) {
         <li className="nav-text">
           <Link to='/requestService'><FaIcons.FaLaptop /><span>Request Service</span></Link>
         </li>
-        <li className="nav-text">
+        {/* <li className="nav-text">
           <Link to='/articles'><FaIcons.FaBookOpen /><span>Troubleshooting Articles</span></Link>
-        </li>
+        </li> */}
         <li className="nav-text">
           <Link to='/install'><FaIcons.FaDownload /><span>Install Software</span></Link>
         </li>
-        <li className="nav-text">
+        {/* <li className="nav-text">
           <Link to='/contact'><AiIcons.AiFillContacts /><span>Contact Information</span></Link>
-        </li>
+        </li> */}
         <li className="nav-text">
           <Link to='/faq'><AiIcons.AiFillQuestionCircle /><span>FAQ</span></Link>
         </li>
@@ -115,15 +115,15 @@ function Navbar(props) {
         <li className="nav-text">
           <Link to='/requestService'><FaIcons.FaLaptop /><span>Request Service</span></Link>
         </li>
-        <li className="nav-text">
+        {/* <li className="nav-text">
           <Link to='/articles'><FaIcons.FaBookOpen /><span>Troubleshooting Articles</span></Link>
-        </li>
+        </li> */}
         <li className="nav-text">
           <Link to='/install'><FaIcons.FaDownload /><span>Install Software</span></Link>
         </li>
-        <li className="nav-text">
+        {/* <li className="nav-text">
           <Link to='/contact'><AiIcons.AiFillContacts /><span>Contact Information</span></Link>
-        </li>
+        </li> */}
         <li className="nav-text">
           <Link to='/faq'><AiIcons.AiFillQuestionCircle /><span>FAQ</span></Link>
         </li>

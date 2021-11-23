@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 import "../components/ticketList.css"
 import 'bootstrap/dist/css/bootstrap.css';
 import {withRouter} from 'react-router-dom';
@@ -7,11 +9,13 @@ import axios from "axios";
 require("es6-promise").polyfill()
 require("isomorphic-fetch")
 
+
 const AllTicket = () => {
+  let history = useHistory();
   const [tickets, setTickets] = useState([]);
 
 useEffect(() => {
-  fetch("https://damp-river-45159.herokuapp.com/ticket")
+  fetch("/ticket")
   .then(response => response.json())
   .then(json => setTickets(json));
 }, [])
@@ -23,7 +27,7 @@ const deleteTicket = (id) => {
   };
   
   return new Promise(function (resolve, reject) {
-    fetch(`https://damp-river-45159.herokuapp.com/ticket/${id}`, delTicket)
+    fetch(`/ticket/${id}`, delTicket)
         .then(res => res.json())
         .then(result => {
             if (result) {
@@ -87,6 +91,7 @@ const deleteTicket = (id) => {
                   <th class="col-md-4">Short Description</th>
                   {/* <th class="col-md-4">Assigned To</th> */}
                   <th class="col-md-4">Date Created On</th>
+                  <th class="col-md-4"></th>
                   <th class="col-md-4"></th>  
                 </tr>
               </thead>
@@ -101,6 +106,8 @@ const deleteTicket = (id) => {
                     {/* <td class="col-md-3"><img src={ticket.file} /></td> */}
                     <td class="col-md-3">{ticket.createOn}</td>
                     <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {deleteTicket(ticket._id); window.location.reload(false); alert("Ticket Successfully Deleted")}}>Delete</button></td>
+                    {/* <Link to={"TicketLogHistory/"+ticket._id}> */}
+                    <td class="col-md-3"><button className="btn btn-primary" key={ticket._id} onClick={() => { history.push(`/TicketLogHistory/${ticket._id}`) }}>Log</button></td>
                   </tr>
                 ))}
               </tbody>

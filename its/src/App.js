@@ -22,6 +22,7 @@ import ArticleList from './pages/ArticleList';
 import TicketManagement from './pages/TicketManagement';
 import NewTicket from './pages/createNewTicket';
 import AllTicketList from './pages/ticketList';
+import TicketLogHistory from './pages/TicketLogHistory';
 import CloseTicket from './pages/closeTicket';
 import TransferTicket from './pages/ticketTransferring';
 import MoreInfo from './pages/requestMoreInfo';
@@ -66,6 +67,7 @@ function App() {
         <Route path="/Dashboard" >{user.isAdmin ? <TicketDashboard /> : <Home />}</Route>
         <Route path="/NewTicket" >{user.isAdmin ? <NewTicket /> : <Home />}</Route>
         <Route path="/AllTicket" >{user.isAdmin ? <AllTicketList /> : <Home />}</Route>
+        <Route path="/TicketLogHistory/:_id" >{user.isAdmin ? <TicketLogHistory /> : <Home />}</Route>
         <Route path="/edit" >{user.isAdmin ? <EditTicket /> : <Home />}</Route>
         <Route path="/CloseTicket" >{user.isAdmin ? <CloseTicket /> : <Home />}</Route>
         <Route path="/TransferTicket" >{user.isAdmin ? <TransferTicket /> : <Home />}</Route>

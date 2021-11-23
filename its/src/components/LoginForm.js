@@ -48,12 +48,12 @@ function LoginForm(props) {
       <Form className="login-form" onSubmit={handleSubmit}>
         <h1 className="text-center">Log In</h1>
         <FormGroup>
-          <Label className="userName-label" htmlFor="userName">userName</Label>
+          <Label className="userName-label" htmlFor="userName">Username</Label>
           <Input type="text"
             name="userName"
             onChange={onChange}
             className="form-control"
-            placeholder="userName" />
+            placeholder="Username" />
         </FormGroup>
 
         <FormGroup>

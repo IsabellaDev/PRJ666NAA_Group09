@@ -38,6 +38,7 @@ const upload = multer({ storage: STORAGE, fileFilter: fileFilter, limits: { file
 
 /* NODE MAILER SETUP */
 var nodemailer = require("nodemailer");
+//const { default: ticketList } = require('../../its/src/pages/ticketList');
 //var {google} = require("googleapis")
 require('dotenv').config({ path: './config/keys.env' })
 
@@ -51,8 +52,11 @@ var transporter = nodemailer.createTransport({
         // clientSecret: CLIENT_SECRET,
         // refreshToken: REFRESH_TOKEN,
         // accessToken: accessToken
-    }
+    },
+    tls: { rejectUnauthorized: false }
 });
+
+
 
 // Get all
 router.get('/', async (req, res) => {
@@ -63,6 +67,38 @@ router.get('/', async (req, res) => {
         res.status(500).json({ message: err.message })
     }
 })
+
+async function getTicket(req, res, next) {
+    let ticket
+    try {
+        ticket = await Ticket.findById(req.params.id)
+        if (ticket == null){
+            return res.status(404).json({ message: 'Cannot find ticket' })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+    res.ticket = ticket
+    next()
+}
+
+router.delete('/:id', getTicket, async (req, res) => {
+    try {
+        await res.ticket.remove()
+        res.json({ message: 'Deleted ticket'})
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
+// router.delete('/:id', getTicket, async (req, res) => {
+//     try {
+//         await res.service.remove()
+//         res.json({ message: 'Deleted service request'})
+//     } catch (err) {
+//         res.status(500).json({ message: err.message })
+//     }
+// })
 
 // Create one
 router.post('/', (req, res) => {
@@ -126,7 +162,7 @@ router.post('/', (req, res) => {
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
                             console.log("ERROR: " + error);
-                            res.status(500).json({ message: { msgBody: "There is something wrong with your information, please re-enter and try again. ", msgError: true } });
+                            res.status(500).json({ message: { msgBody: "Ticket successfully submitted. Cannot send Email", msgError: false } });
                         }
                         else {
                             console.log("SUCCESS: " + info.response);
