@@ -84,6 +84,8 @@ const deleteTicket = (id) => {
             <table className="table table-striped ticketTable">
               <thead>
                 <tr>
+                  <th class="col-md-4">Ticket Number</th>
+                  <th class="col-md-4">Ticket Status</th>
                   <th class="col-md-4">Requester's ID</th>
                   <th class="col-md-4">Requested By</th>
                   {/* <th class="col-md-4">Requester's Email</th> */}
@@ -98,6 +100,8 @@ const deleteTicket = (id) => {
               <tbody>
                 {tickets.map((ticket)=> (
                   <tr>
+                    <th class="col-md-3">{ticket.ticketNumber}</th>
+                    <th class="col-md-3">{ticket.status}</th>
                     <th class="col-md-3">{ticket.studentID}</th>
                     <td class="col-md-3">{ticket.firstName} {ticket.lastName}</td>
                     {/* <td class="col-md-3">{ticket.email}</td> */}

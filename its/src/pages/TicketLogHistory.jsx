@@ -113,6 +113,13 @@ function TicketLogHistory(props) {
               </div>
             </li> */}
             <li className="form-line form-line-column form-col-2" data-type="control_textbox" id="id_15">
+              <label className="form-label form-label-top form-label-auto" id="label_15" htmlFor="input_15"> Ticket Number </label>
+              <div id="cid_15" className="form-input-wide" data-layout="half">
+                <input type="text" value={tickets.ticketNumber} id="ticketNumber" name="ticketNumber" data-type="input-textbox" className="form-textbox" data-defaultvalue style={{width: '310px'}} size={310}  data-component="textbox" aria-labelledby="label_15" />
+              </div>
+            </li>
+
+            <li className="form-line form-line-column form-col-2" data-type="control_textbox" id="id_15">
               <label className="form-label form-label-top form-label-auto" id="label_15" htmlFor="input_15"> Student/Employee ID </label>
               <div id="cid_15" className="form-input-wide" data-layout="half">
                 <input type="text" value={tickets.studentID} id="studentID" name="studentID" data-type="input-textbox" className="form-textbox" data-defaultvalue style={{width: '310px'}} size={310}  data-component="textbox" aria-labelledby="label_15" />
