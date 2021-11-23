@@ -45,9 +45,18 @@ var TicketSchema = new Schema({
     "createOn": {
         type: Date, 
         default: Date.now()
+    } ,
+    "status":{
+        type:String,
+        default: "open"
+    },
+    "solution":{
+        type:String
+    },
+    "ticketNumber":{
+        type:String,
+        default: new Date().valueOf()
     }
-
-
 });
 
 module.exports = mongoose.model("Ticket", TicketSchema);

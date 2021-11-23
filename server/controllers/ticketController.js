@@ -59,13 +59,23 @@ var transporter = nodemailer.createTransport({
 
 
 // Get all
-router.get('/', async (req, res) => {
-    try {
-        const tickets = await Ticket.find()
-        res.json(tickets)
-    } catch (err) {
-        res.status(500).json({ message: err.message })
-    }
+// router.get('/', async (req, res) => {
+//     try {
+//         const tickets = await Ticket.find()
+//         res.json(tickets)
+//     } catch (err) {
+//         res.status(500).json({ message: err.message })
+//     }
+// })
+
+// Get one
+router.get('/:id', getTicket, (req, res) => {
+    res.json(res.ticket)
+})
+
+// Get all
+router.get('/', getAllTickets, (req, res) => {
+    res.json(res.tickets)
 })
 
 async function getTicket(req, res, next) {
@@ -111,10 +121,10 @@ router.post('/', (req, res) => {
         else if (err) {
             res.status(500).json({ message: { msgBody: "Unsupported file type, please try again.", msgError: true } });
             console.log("Unsupported file type.")
-        }
-        else {
+        } 
+       else {
              console.log(req.body)
-            const ticket = new Ticket({
+             const ticket = new Ticket({
                 studentID: req.body.studentID,
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -128,11 +138,12 @@ router.post('/', (req, res) => {
                 internalComment: req.body.internalComment, 
                 file: req.file.filename
             })
+            // const ticket = new Ticket(req.body)
             console.log(ticket)
 
             ticket.save(err => {
                 if (err) {
-                    res.status(400).json({ message: { msgBody: "There is something wrong with your information, please re-enter and try again. ", msgError: true } })
+                    res.status(400).json({ message: { msgBody: "There is something wrong with your information (400), please re-enter and try again. ", msgError: true } })
                 } else {
 
                     let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully submitted, here is the ticket information: </p><br>" +
@@ -162,7 +173,7 @@ router.post('/', (req, res) => {
                     transporter.sendMail(mailOptions, (error, info) => {
                         if (error) {
                             console.log("ERROR: " + error);
-                            res.status(500).json({ message: { msgBody: "Ticket successfully submitted. Cannot send Email", msgError: false } });
+                            res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
                         }
                         else {
                             console.log("SUCCESS: " + info.response);
@@ -176,10 +187,68 @@ router.post('/', (req, res) => {
 
 
 
-        }
+       }
 
     })
 })
+
+// Update one
+router.patch('/:id', getTicket, async (req, res) => {
+    if (req.body.status != null) {
+        res.ticket.status = req.body.status
+    }
+    if (req.body.solution != null) {
+        res.ticket.solution = req.body.solution
+    }
+    try {
+        const updatedTicket = await res.ticket.save()
+        res.json(updatedTicket)
+    } catch (err) {
+        res.status(400).json({ message: err.message })
+    }
+})
+// Delete one
+router.delete('/:id', getTicket, async (req, res) => {
+    try {
+        await res.ticket.remove()
+        res.json({ message: 'Deleted ticket'})
+    } catch (err) {
+        res.status(500).json({ message: err.message })
+    }
+})
+
+async function getTicket(req, res, next) {
+    let ticket
+    try {
+        ticket = await Ticket.findById(req.params.id)
+        if (ticket == null){
+            return res.status(404).json({ message: 'Cannot find the ticket' })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+    res.ticket = ticket
+    next()
+}
+
+async function getAllTickets(req, res, next){
+    // if ticketNo is passed, findBy is set to ticketNo, empty otherwise
+    let ticketNumber = req.query.ticketNumber
+    let findBy = ticketNumber ? { ticketNumber } : {}
+    let tickets
+    try {
+        tickets = await Ticket.find(findBy)
+        if (tickets == null){
+            return res.status(404).json({ message: 'Cannot find the ticket' })
+        }
+    } catch (err) {
+        return res.status(500).json({ message: err.message })
+    }
+    res.tickets = tickets
+    next()
+}
+
+
 
 
 

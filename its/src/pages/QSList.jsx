@@ -5,13 +5,13 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 
 
-function FAQComponent( props) {
+function QSList( props) {
   const history = useHistory();
-  const [faqs, setFaqs] = useState([]);
+  const [QS, setQS] = useState([]);
 
-  function getFAQData() {
+  function getQSData() {
     return new Promise(function (resolve, reject) {
-        fetch(`http://localhost:5000/faq`)
+        fetch(`/articles`)
             .then(res => res.json())
             .then(result => {
                 if (result) {
@@ -25,14 +25,14 @@ function FAQComponent( props) {
     
 }
 
-function deleteFAQRecord(id) {
+function deleteQSRecord(id) {
   const requestOptions = {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json' },
    
 };
   return new Promise(function (resolve, reject) {
-      fetch(`http://localhost:5000/faq/${id}`, requestOptions)
+      fetch(`/articles/${id}`, requestOptions)
           .then(res => res.json())
           .then(result => {
               if (result) {
@@ -46,7 +46,7 @@ function deleteFAQRecord(id) {
   
 }
 
-function AddNewFaq(){
+function AddNewQS(){
   history.push('/faqadd');
 }
 
@@ -54,7 +54,7 @@ useEffect(() => {
   getFAQData().then(result => {
       if (result) {
         console.log(result);
-          setFaqs(result);
+          setQS(result);
       }
   });
 }, []);
@@ -65,14 +65,14 @@ if (faqs.length > 0) {
 
   return (
     <>
-    <button className="btn btn-success" onClick={() => {AddNewFaq();}}>Add new FAQ article</button>
+    <button className="btn btn-success" onClick={() => {AddNewQS();}}>Add new FAQ article</button>
     <p> </p>
       <Accordion defaultActiveKey="0">
-    {faqs.map((faq) =>
+    {QS.map((qs) =>
     
-       <Accordion.Item eventKey={faq._id} >  
-          <Accordion.Header>{faq.articleTitle}</Accordion.Header>
-          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {if(window.confirm("Are you sure you want to delete this FAQ Article? This CANNOT be undone!")){deleteFAQRecord(faq._id); window.location.reload(false);};  }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
+       <Accordion.Item eventKey={qs._id} >  
+          <Accordion.Header>{qs.articleTitle}</Accordion.Header>
+          <Accordion.Body>{qs.body} <p></p> <button className="btn btn-outline-danger" key={qs._id} onClick={() => {if(window.confirm("Are you sure you want to delete this Quick Solution Article? This CANNOT be undone!")){deleteFAQRecord(qs._id); window.location.reload(false);};  }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
           </Accordion.Item>
       
   )
@@ -94,4 +94,4 @@ if (faqs.length > 0) {
    
 }
 
-export default FAQComponent;
+export default QSList;

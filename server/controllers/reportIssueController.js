@@ -100,7 +100,7 @@ router.post('/', (req, res) => {
                 availability: req.body.availability,
                 subject: req.body.subject,
                 problemDescription: req.body.problemDescription,
-                file: req.file.filename
+               // file: req.file.filename
             })
             try{
                 const newIssue = reportIssue.save()
