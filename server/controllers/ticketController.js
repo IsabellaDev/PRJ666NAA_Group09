@@ -200,6 +200,9 @@ router.patch('/:id', getTicket, async (req, res) => {
     if (req.body.solution != null) {
         res.ticket.solution = req.body.solution
     }
+    if (req.body.internalComment != null) {
+        res.ticket.internalComment = req.body.internalComment
+    }
     try {
         const updatedTicket = await res.ticket.save()
         res.json(updatedTicket)

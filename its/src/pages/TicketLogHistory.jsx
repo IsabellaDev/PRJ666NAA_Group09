@@ -22,14 +22,14 @@ function TicketLogHistory(props) {
             const handleSubmit = (e) => {
                 e.preventDefault();
                 const requestOptions = {
-                    method: 'PUT',
+                    method: 'PATCH',
                     
                     headers: { 'Content-Type': 'application/json' },
                     body:JSON.stringify(tickets)
                 };
                 console.log('Internal comment updated: ' + JSON.stringify(tickets));
                   return new Promise(function (resolve, reject) {
-                      fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`, requestOptions)
+                      fetch(`http://localhost:5000/ticket/${params._id}`, requestOptions)
                       .then((response) => {
                         return response.json();
                       })    
