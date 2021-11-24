@@ -18,13 +18,13 @@
   margin-bottom: 45px;
 }
 
-.jotform-form, .CloseTicket,.container-fluid-dash,.MoreInfo{
+.jotform-form, .form-all, .CloseTicket,.container-fluid-dash,.MoreInfo,.form-section, .page-section{
   margin-left: 300px;
-  margin-right: 45px;
+  margin-right: 25px;
   margin-bottom: 45px;
 }
 
-#NewFAQForm,#NewInventoryForm{
+#NewFAQForm,#NewInventoryForm, #ticketxfr{
   margin-left: 300px;
   margin-right: 45px;
   margin-bottom: 45px;

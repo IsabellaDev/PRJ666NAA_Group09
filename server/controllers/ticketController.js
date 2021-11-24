@@ -12,11 +12,12 @@ var _ = require("underscore");
 
 // multer storage
 const STORAGE = multer.diskStorage({
+    
     destination: FILESDIRECTORY,
     filename: function (req, file, cb) {
         //cb(null, Date.now() + path.extname(file.originalname));
-        cb(null, file.originalname);
-    }
+        cb("", file.originalname);
+    }||""
 });
 
 // file type limitations
@@ -123,6 +124,7 @@ router.post('/', (req, res) => {
             console.log("Unsupported file type.")
         } 
        else {
+          
              console.log(req.body)
              const ticket = new Ticket({
                 studentID: req.body.studentID,
@@ -136,7 +138,8 @@ router.post('/', (req, res) => {
                 subject: req.body.subject,
                 description: req.body.description,
                 internalComment: req.body.internalComment, 
-                file: req.file.filename
+               
+                file: req.file?req.file.filename:""
             })
             // const ticket = new Ticket(req.body)
             console.log(ticket)

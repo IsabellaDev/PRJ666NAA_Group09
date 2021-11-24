@@ -109,7 +109,7 @@ const deleteTicket = (id) => {
                     <td class="col-md-3">{ticket.firstName} {ticket.lastName}</td>
                     {/* <td class="col-md-3">{ticket.email}</td> */}
                     <td class="col-md-2">{ticket.subject}</td> 
-                    <td class="col-md-3">{ticket.description}</td>
+                    <td class="col-md-3">{ticket.description.slice(0, 100)}</td>
                     {/* <td class="col-md-3"><img src={ticket.file} /></td> */}
                     <td class="col-md-3"><Moment format="YYYY/MM/DD">{ticket.createOn}</Moment></td>
                     <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {if(window.confirm("Are you sure? If you already got a solution for this ticket, please consider to close it first! ")){deleteTicket(ticket._id); window.location.reload(false);} }}>Delete</button></td>
