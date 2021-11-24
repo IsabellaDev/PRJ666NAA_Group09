@@ -1,4 +1,9 @@
+import { useHistory } from 'react-router-dom';
+import Moment from 'react-moment';
+
 export default function SearchResults({ results }) {
+    let history = useHistory();
+
     if (!results) {
         return null;
     }
@@ -23,6 +28,7 @@ export default function SearchResults({ results }) {
                       <th class="col-md-4">Short description</th>
                       <th class="col-md-4">Created on</th>
                       <th class="col-md-4">Status</th>
+                      <th class="col-md-4"></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -32,8 +38,11 @@ export default function SearchResults({ results }) {
                         <td class="col-md-3">{ticket.firstName} {ticket.lastName}</td>
                         <td class="col-md-2">{ticket.subject}</td> 
                         <td class="col-md-3">{ticket.description}</td>
-                        <td class="col-md-3">{ticket.createOn}</td>
+                        <td class="col-md-3">
+                          <Moment format="YYYY/MM/DD">{ticket.createOn}</Moment>
+                        </td>
                         <td class="col-md-3">{ticket.status}</td>
+                        <td class="col-md-3"><button  className="btn btn-warning" disabled={ticket.status === "Closed"} key={ticket._id} onClick={() => { history.push(`/ClosingTicket/${ticket._id}`) }}>Close</button></td>
                       </tr>
                     ))}
                   </tbody>

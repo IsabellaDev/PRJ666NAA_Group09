@@ -48,7 +48,7 @@ var TicketSchema = new Schema({
     } ,
     "status":{
         type:String,
-        default: "open"
+        default: "Open"
     },
     "solution":{
         type:String

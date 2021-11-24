@@ -5,6 +5,7 @@ import "../components/ticketList.css"
 import 'bootstrap/dist/css/bootstrap.css';
 import {withRouter} from 'react-router-dom';
 import axios from "axios";
+import Moment from 'react-moment'
 
 require("es6-promise").polyfill()
 require("isomorphic-fetch")
@@ -84,6 +85,7 @@ const deleteTicket = (id) => {
             <table className="table table-striped ticketTable">
               <thead>
                 <tr>
+              
                   <th class="col-md-4">Ticket Number</th>
                   <th class="col-md-4">Ticket Status</th>
                   <th class="col-md-4">Requester's ID</th>
@@ -94,7 +96,8 @@ const deleteTicket = (id) => {
                   {/* <th class="col-md-4">Assigned To</th> */}
                   <th class="col-md-4">Date Created On</th>
                   <th class="col-md-4"></th>
-                  <th class="col-md-4"></th>  
+                  <th class="col-md-4"></th>
+                  <th class="col-md-4"></th>   
                 </tr>
               </thead>
               <tbody>
@@ -108,9 +111,10 @@ const deleteTicket = (id) => {
                     <td class="col-md-2">{ticket.subject}</td> 
                     <td class="col-md-3">{ticket.description}</td>
                     {/* <td class="col-md-3"><img src={ticket.file} /></td> */}
-                    <td class="col-md-3">{ticket.createOn}</td>
+                    <td class="col-md-3"><Moment format="YYYY/MM/DD">{ticket.createOn}</Moment></td>
                     <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {if(window.confirm("Are you sure? If you already got a solution for this ticket, please consider to close it first! ")){deleteTicket(ticket._id); window.location.reload(false);} }}>Delete</button></td>
                     <td class="col-md-3"><button  className="btn btn-primary" key={ticket._id} onClick={() => { history.push(`/TicketLogHistory/${ticket._id}`) }}>Log</button></td>
+                    <td class="col-md-3"><button  className="btn btn-warning" disabled={ticket.status === "Closed"} key={ticket._id} onClick={() => { history.push(`/ClosingTicket/${ticket._id}`) }}>Close</button></td>
                   </tr>
                 ))}
               </tbody>
