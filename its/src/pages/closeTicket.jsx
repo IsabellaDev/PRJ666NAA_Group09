@@ -16,10 +16,6 @@ function CloseTicket() {
       setResults(null);
       return;
     }
-    if (query.length < 3) {
-      // don't have enough to start searching
-      return;
-    }
 
     search(query).then(results => {
       if(results) {

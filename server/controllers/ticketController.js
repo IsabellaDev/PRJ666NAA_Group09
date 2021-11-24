@@ -206,6 +206,45 @@ router.patch('/:id', getTicket, async (req, res) => {
     try {
         const updatedTicket = await res.ticket.save()
         res.json(updatedTicket)
+        // send email if ticket is successfully closed
+        if (req.body.status === "Closed") {
+            let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully closed, here is the ticket information: </p><br>" +
+            '<table border="1" class = "text">' +
+            '<thead>' +
+            '<tr>' +
+            '<td>Email address</td>' +
+            '<td>Subject</td>' +
+            '<td>Problem description</td>' +
+            '<td>Closing notes</td>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+            '<tr>' +
+            '<td>' + req.body.email + '</td>' +
+            '<td>' + req.body.subject + '</td>' +
+            '<td>' + req.body.description + '</td>' +
+            '<td>' + req.body.solution + '</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>'
+
+            var mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: req.body.email,
+                subject: 'ServiceTicket - Your issue ticket has been closed.',
+                html: message
+            }
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log("ERROR: " + error);
+                    res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
+                }
+                else {
+                    console.log("SUCCESS: " + info.response);
+                    res.status(201).json({ message: { msgBody: "The ticket is closed successfully! You will be redirected to the dashboard in a second!", msgError: false } });
+                }
+            });
+        }
     } catch (err) {
         res.status(400).json({ message: err.message })
     }

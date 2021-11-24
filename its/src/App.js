@@ -34,6 +34,7 @@ import Registration from './pages/Registration';
 import AllRentedDevices from './pages/RentedDevice';
 import DeviceInventoryAdd from './pages/DeviceInventoryAdd';
 import DeviceInventoryEdit from './pages/DeviceInventoryEdit';
+import ClosingTicket from './pages/closingTicket';
 
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
         <Route path="/NewTicket" >{user.isAdmin ? <NewTicket /> : <Home />}</Route>
         <Route path="/AllTicket" >{user.isAdmin ? <AllTicketList /> : <Home />}</Route>
         <Route path="/TicketLogHistory/:_id" >{user.isAdmin ? <TicketLogHistory /> : <Home />}</Route>
+        <Route path="/ClosingTicket/:_id" >{user.isAdmin ? <ClosingTicket /> : <Home />}</Route>
         <Route path="/edit" >{user.isAdmin ? <EditTicket /> : <Home />}</Route>
         <Route path="/CloseTicket" >{user.isAdmin ? <CloseTicket /> : <Home />}</Route>
         <Route path="/TransferTicket" >{user.isAdmin ? <TransferTicket /> : <Home />}</Route>
