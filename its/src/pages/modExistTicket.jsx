@@ -1,4 +1,46 @@
-import React from "react";
+import { useState, useEffect } from "react";
+import {withRouter} from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+
+import Search from "../components/Search";
+import SearchResultsEdit from "../components/SearchResultsEdit";
+import { search } from "../components/getTickets";
+
+function EditTicket() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState(null);
+  
+  useEffect(() =>{
+    if(!(query || query.length)) {
+      // clears if nothing in search box
+      setResults(null);
+      return;
+    }
+
+    search(query).then(results => {
+      if(results) {
+        setResults(results)
+      }
+    }).catch(err => console.log(err))
+  }, [query]);
+
+  return (
+    <div className="CloseTicket">
+      <h1 className="display-6">Edit Ticket</h1>
+      <Search query={query} onChange={(e) => setQuery(e.target.value)} />
+      <Container fluid>
+        <SearchResultsEdit results={results}/>
+      </Container>
+    </div>
+  );
+}
+
+export default withRouter(EditTicket);
+
+
+
+
+/* import React from "react";
 import {withRouter} from 'react-router-dom';
 function EditTicket() {
   return(
@@ -240,4 +282,4 @@ function EditTicket() {
   );
 }
 
-export default withRouter(EditTicket);
+export default withRouter(EditTicket); */
