@@ -127,11 +127,12 @@ router.post('/', (req, res) => {
           
              console.log(req.body)
              const ticket = new Ticket({
-                studentID: req.body.studentID,
-                firstName: req.body.firstName,
-                lastName: req.body.lastName,
-                email: req.body.email,
-                phone: req.body.phone,
+                ticketNumber:req.body.ticketNumber?req.body.ticketNumber:generateString(12),
+                studentID: req.body.studentID?req.body.studentID:"eml"+generateString(10),
+                firstName: req.body.firstName?req.body.firstName:"",
+                lastName: req.body.lastName?req.body.lastName:"",
+                email: req.body.email?req.body.email:"",
+                phone: req.body.phone?req.body.phone:"",
                 deviceID: req.body.deviceID,
                 // deviceType: req.body.deviceType,
                 specialCase: req.body.specialCase,
@@ -293,6 +294,20 @@ async function getAllTickets(req, res, next){
     next()
 }
 
+// program to generate random strings
+
+// declare all characters
+const characters ='0123456789';
+
+function generateString(length) {
+    let result = ' ';
+    const charactersLength = characters.length;
+    for ( let i = 0; i < length; i++ ) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+
+    return result;
+}
 
 
 
