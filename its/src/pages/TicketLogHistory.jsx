@@ -184,7 +184,7 @@ function TicketLogHistory(props) {
                   <button type="submit" className="btn btn-primary" data-component="button" data-content>
                     Update
                   </button>
-                  <button className="btn btn-secondary" onClick={()=>{tickets.status=="Closed"? alert('This ticket has been closed, please re-open first if you need to do this action'):alert('We will reopen it ')}}>
+                  <button className="btn btn-secondary" onClick={()=>{tickets.status=="Closed"? alert('This ticket has been closed, please re-open first if you need to do this action'):history.push(`/moreInfoReq/${tickets._id}`)}}>
                     Request More Information
                   </button>
                   <button type="submit" className="btn btn-info" data-component="button" data-content>

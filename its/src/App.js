@@ -70,6 +70,8 @@ function App() {
         <Route path="/AllTicket" >{user.isAdmin ? <AllTicketList /> : <Home />}</Route>
         <Route path="/TicketLogHistory/:_id" >{user.isAdmin ? <TicketLogHistory /> : <Home />}</Route>
         <Route path="/ClosingTicket/:_id" >{user.isAdmin ? <ClosingTicket /> : <Home />}</Route>
+        <Route path="/moreInfoReq/:_id" >{user.isAdmin ? <MoreInfo /> : <Home />}</Route>
+        <Route path="/xfrTo/:_id" >{user.isAdmin ? <ClosingTicket /> : <Home />}</Route>
         <Route path="/edit" >{user.isAdmin ? <EditTicket /> : <Home />}</Route>
         <Route path="/CloseTicket" >{user.isAdmin ? <CloseTicket /> : <Home />}</Route>
         <Route path="/TransferTicket" >{user.isAdmin ? <TransferTicket /> : <Home />}</Route>

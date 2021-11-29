@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Ticket = require('../models/ticketModel');
-
+const sgMail = require('@sendgrid/mail')
+sgMail.setApiKey(process.env.SENDGRID_API_KEY)
 
 
 /*MULTER SETUP*/
@@ -127,19 +128,18 @@ router.post('/', (req, res) => {
           
              console.log(req.body)
              const ticket = new Ticket({
-                ticketNumber:req.body.ticketNumber?req.body.ticketNumber:generateString(12),
-                studentID: req.body.studentID?req.body.studentID:"eml"+generateString(10),
+                studentID: req.body.studentID?req.body.studentID:"Not Provided",
                 firstName: req.body.firstName?req.body.firstName:"",
                 lastName: req.body.lastName?req.body.lastName:"",
                 email: req.body.email?req.body.email:"",
-                phone: req.body.phone?req.body.phone:"",
-                deviceID: req.body.deviceID,
+                phone: req.body.phone?req.body.phone:"not provided",
+                deviceID: req.body.deviceID?req.body.deviceID:"not provided",
                 // deviceType: req.body.deviceType,
-                specialCase: req.body.specialCase,
-                subject: req.body.subject,
-                description: req.body.description,
-                internalComment: req.body.internalComment, 
-               
+                specialCase: req.body.specialCase?req.body.specialCase:"",
+                subject: req.body.subject? req.body.subject:"Not provided",
+                description: req.body.description?req.body.description:"Not provided",
+                internalComment: req.body.internalComment?req.body.internalComment:"", 
+                ticketNumber:req.body.ticketNumber?req.body.ticketNumber:new Date().valueOf(),
                 file: req.file?req.file.filename:""
             })
             // const ticket = new Ticket(req.body)
@@ -248,10 +248,33 @@ router.patch('/:id', getTicket, async (req, res) => {
                     res.status(201).json({ message: { msgBody: "The ticket is closed successfully! You will be redirected to the dashboard in a second!", msgError: false } });
                 }
             });
+
+
+
+
+
+        }else if(req.body.status==="pending respond"){
+            let msg = {
+                to: req.body.email, // Change to your recipient
+                from: 'dmao6@myseneca.ca', // Change to your verified sender
+                subject: 'Sending with SendGrid is Fun',
+                text: 'and easy to do anywhere, even with Node.js',
+                html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+              }
+              sgMail
+                .send(msg)
+                .then(() => {
+                  console.log('Email sent')
+                })
+                .catch((error) => {
+                  console.error(error)
+                })
         }
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
+ 
+    
 })
 // Delete one
 router.delete('/:id', getTicket, async (req, res) => {
@@ -294,20 +317,6 @@ async function getAllTickets(req, res, next){
     next()
 }
 
-// program to generate random strings
-
-// declare all characters
-const characters ='0123456789';
-
-function generateString(length) {
-    let result = ' ';
-    const charactersLength = characters.length;
-    for ( let i = 0; i < length; i++ ) {
-        result += characters.charAt(Math.floor(Math.random() * charactersLength));
-    }
-
-    return result;
-}
 
 
 

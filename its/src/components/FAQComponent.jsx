@@ -1,11 +1,14 @@
 import { Accordion } from 'react-bootstrap';
-import React, { useEffect, useState } from 'react';
+import { AuthContext } from '../Context/AuthContext';
+import React, { useEffect, useState, useContext } from 'react';
 import { withRouter,useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.css';
 
 
 
 function FAQComponent( props) {
+  const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+  console.log(isAuthenticated);
   const history = useHistory();
   const [faqs, setFaqs] = useState([]);
 
@@ -65,14 +68,17 @@ if (faqs.length > 0) {
 
   return (
     <>
-    <button className="btn btn-success" onClick={() => {AddNewFaq();}}>Add new FAQ article</button>
+    {isAuthenticated? <button className="btn btn-success" onClick={() => {AddNewFaq();}}>Add new FAQ article</button>:""}
+   
     <p> </p>
       <Accordion defaultActiveKey="0">
     {faqs.map((faq) =>
     
        <Accordion.Item eventKey={faq._id} >  
           <Accordion.Header>{faq.articleTitle}</Accordion.Header>
-          <Accordion.Body>{faq.body} <p></p> <button className="btn btn-outline-danger" key={faq._id} onClick={() => {if(window.confirm("Are you sure you want to delete this FAQ Article? This CANNOT be undone!")){deleteFAQRecord(faq._id); window.location.reload(false);};  }} >Delete this article</button>  <button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button></Accordion.Body>
+          <Accordion.Body>{faq.body} <p></p>  {isAuthenticated? <button className="btn btn-outline-danger" key={faq._id} onClick={() => {if(window.confirm("Are you sure you want to delete this FAQ Article? This CANNOT be undone!")){deleteFAQRecord(faq._id); window.location.reload(false);};  }} >Delete this article</button>:""  }
+           {isAuthenticated?<button className="btn btn-outline-primary" key={faq._id} onClick={() => { history.push(`/faqedit/${faq._id}`) }}>Edit this article</button>:""}
+          </Accordion.Body>
           </Accordion.Item>
       
   )
