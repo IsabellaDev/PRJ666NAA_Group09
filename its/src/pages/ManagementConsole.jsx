@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
+
 import { Link } from 'react-router-dom';
+
 
 import './ManagementConsole.css';
 
+
+
 function ManagementConsole() {
+
 
     return (
         <div className="managementConsole" >
             <div class="col">
                 <div class="py-5 text-left">
                     <h2>Admin Dashboard</h2><br /><br />
-                    <Link to="/PasswordReset"><button type="button" class="btn btn-primary me-md-2" href="#">Reset Password</button></Link>
+                    <Link to='/PasswordReset'><button type="button" class="btn btn-primary me-md-2" href="#">Reset Password</button></Link>
 
                 </div>
                 <div class="col-md-7 col-lg-8">

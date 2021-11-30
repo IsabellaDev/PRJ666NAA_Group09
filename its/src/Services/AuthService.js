@@ -55,5 +55,22 @@ export default {
                     else
                         return { isAuthenticated: false, user: { userName: "" } };
                 })
+    }, 
+    changePassword: user =>{
+        return fetch('/users/update', {
+
+                mode: "cors",
+                withCredentials: 'true',
+                method: "PATCH",
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }).then(res => {
+                if (res.status !== 401)
+                    return res.json().then(data => data);
+                else
+                     return { isAuthenticated: false, user: { userName: "" , isAdmin: false}, message: {msgBody: "Wrong username or password, please try again. ", msgError: true} };
+            });
     }
 }
