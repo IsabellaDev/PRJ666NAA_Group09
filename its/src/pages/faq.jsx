@@ -1,3 +1,5 @@
+import React from "react";
+
 import FAQComponent from '../components/FAQComponent';
 
 function Faqs() {
