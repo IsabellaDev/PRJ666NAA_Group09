@@ -1,3 +1,5 @@
+import React from "react";
+
 import { SearchInput } from 'evergreen-ui';
 
 export default function Search({ query, onChange }) {
