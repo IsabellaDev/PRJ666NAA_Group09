@@ -167,20 +167,7 @@ require("isomorphic-fetch");
                             </select>
                             <label className="label">Email</label>
                             <input onChange={(e)=>handle(e)} required id="email" type="text" name="email" placeholder="jsmith@mail.com" />
-        
-                            {/* <label className="label">Email</label> 
-                            <select onChange={(e)=>handle(e)} id="email" name="email">
-                                <option>      </option>
-                                <option>placeholder</option>
-                                <option>placeholder</option>
-                            </select> */}
-         
-                            {/* <label className="label">Program</label> 
-                            <select onChange={(e)=>handle(e)} id="program" name="program">
-                                <option>       </option>
-                                <option>CPA</option>
-                                <option>CPP</option>
-                            </select> */}
+    
         
                             <label className="label">Campus</label> 
                             <select onChange={(e)=>handle(e)} required id="campus" name="campus">

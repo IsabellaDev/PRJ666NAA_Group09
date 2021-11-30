@@ -10,8 +10,9 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 function MoreInfo() {
   const params = useParams();
-  const [TicketData, setTicketData] = useState("");
+  const [TicketData, setTicketData] = useState([]);
   const history = useHistory();
+
   useEffect(() => {
     fetch(`http://localhost:5000/ticket/${params._id}`)
         .then(res => res.json())
@@ -21,9 +22,7 @@ function MoreInfo() {
               setTicketData(result);
             } 
         })
-    
-
-}, []);
+    }, []);
 
 
   const handleSubmit = (e) => {
@@ -51,7 +50,7 @@ function MoreInfo() {
                 
              
                .then(()=>{
-                   alert('Thank you. We already inform user to provide the information you requested.');
+                   alert('Thank you. We already informed the user to provide the information you requested.');
                   history.push('/AllTicket');
                })
               });
@@ -65,20 +64,25 @@ function MoreInfo() {
       let name = target.name; // its name
 
       setTicketData(TicketData => {
+        return {...TicketData, [name]: value};
+      })
+
+      setTicketData(TicketData => {
           // return a new object built with the properties from userData 
           // including a new property name:value.  If name:value exists, it will be 
           // overwritten, ie: let obj1 = {x:5,x:6}; console.log(obj1); // {x: 6}  
-          return {...TicketData, [name]: value, status:"pending respond"}; 
+          //return {...TicketData, [name]: value, ["status"]:"pending respond"};
+          return {...TicketData, ["status"]:"Pending Client Response"}; 
       });
   }
 
   return (
     <div className="MoreInfo">
-     ;<div className="container px-5 my-5">
+     <div className="container px-5 my-5"> 
   <form id="contactForm" onSubmit={handleSubmit}>
   <h1 className="display-6">Request more information</h1>
     <div className="form-floating mb-3">
-      <input
+     <input
         className="form-control"
         id="ticketNumber"
         type="text"
@@ -86,8 +90,8 @@ function MoreInfo() {
         placeholder="Ticket Number"
         data-sb-validations="required"
         disabled
-      />
-      <label htmlFor="ticketNumber">Ticket Number</label>
+      /> 
+      <label htmlFor="ticketNumber">Ticket Number</label> 
       <div
         className="invalid-feedback"
         data-sb-feedback="ticketNumber:required"
@@ -95,6 +99,7 @@ function MoreInfo() {
         Ticket Number is required.
       </div>
     </div>
+
     <div className="form-floating mb-3">
       <textarea
         className="form-control"
@@ -303,6 +308,7 @@ function MoreInfo() {
         type="email"
         placeholder="Email Address (if client provided)"
         data-sb-validations="email"
+        onChange={handleChange}
       />
       <label htmlFor="emailAddressIfClientProvided">
         Email Address (if client provided)

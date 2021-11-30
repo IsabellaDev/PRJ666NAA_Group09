@@ -253,22 +253,61 @@ router.patch('/:id', getTicket, async (req, res) => {
 
 
 
-        }else if(req.body.status==="pending respond"){
-            let msg = {
-                to: req.body.email, // Change to your recipient
-                from: 'dmao6@myseneca.ca', // Change to your verified sender
-                subject: 'Sending with SendGrid is Fun',
-                text: 'and easy to do anywhere, even with Node.js',
-                html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-              }
-              sgMail
-                .send(msg)
-                .then(() => {
-                  console.log('Email sent')
-                })
-                .catch((error) => {
-                  console.error(error)
-                })
+        }
+        else if(req.body.status==="Pending Client Response"){
+            // let msg = {
+            //     to: req.body.email, // Change to your recipient
+            //     from: 'dmao6@myseneca.ca', // Change to your verified sender
+            //     subject: 'Sending with SendGrid is Fun',
+            //     text: 'and easy to do anywhere, even with Node.js',
+            //     html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+            //   }
+            //   sgMail
+            //     .send(msg)
+            //     .then(() => {
+            //       console.log('Email sent')
+            //     })
+            //     .catch((error) => {
+            //       console.error(error)
+            //     })
+
+            let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>The IT Service agent is requesting more information regarding your ticket: </p><br>" +
+            '<table border="1" class = "text">' +
+            '<thead>' +
+            '<tr>' +
+            '<td>Email address</td>' +
+            '<td>Subject</td>' +
+            '<td>Problem description</td>' +
+            '<td>Closing notes</td>' +
+            '</tr>' +
+            '</thead>' +
+            '<tbody>' +
+            '<tr>' +
+            '<td>' + req.body.email + '</td>' +
+            '<td>' + req.body.subject + '</td>' +
+            '<td>' + req.body.description + '</td>' +
+            '<td>' + req.body.solution + '</td>' +
+            '</tr>' +
+            '</tbody>' +
+            '</table>'
+
+            var mailOptions = {
+                from: process.env.EMAIL_USER,
+                to: req.body.email,
+                subject: 'ServiceTicket - Your issue ticket is needing more information.',
+                html: message
+            }
+            transporter.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                    console.log("ERROR: " + error);
+                    res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
+                }
+                else {
+                    console.log("SUCCESS: " + info.response);
+                    res.status(201).json({ message: { msgBody: "The ticket is lacking enough information to be worked on", msgError: false } });
+                }
+            });
+
         }
     } catch (err) {
         res.status(400).json({ message: err.message })
