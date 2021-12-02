@@ -4,8 +4,15 @@ import { Link } from "react-router-dom";
 import "../components/ticketList.css"
 import 'bootstrap/dist/css/bootstrap.css';
 import {withRouter} from 'react-router-dom';
-import axios from "axios";
 import Moment from 'react-moment'
+import dayjs from 'dayjs';
+
+import FilterBar from "../components/filterBar"
+
+var isSameOrAfter = require('dayjs/plugin/isSameOrAfter');
+var isSameOrBefore = require('dayjs/plugin/isSameOrBefore');
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 require("es6-promise").polyfill()
 require("isomorphic-fetch")
@@ -14,11 +21,18 @@ require("isomorphic-fetch")
 const AllTicket = () => {
   let history = useHistory();
   const [tickets, setTickets] = useState([]);
+  const [filterTickets, setFilterTickets] = useState([]);
 
 useEffect(() => {
   fetch("/ticket")
   .then(response => response.json())
-  .then(json => setTickets(json));
+  .then(json => setTickets(json))
+}, [])
+
+useEffect(() => {
+  fetch("/ticket")
+  .then(response => response.json())
+  .then(json => setFilterTickets(json))
 }, [])
 
 const deleteTicket = (id) => {
@@ -40,7 +54,45 @@ const deleteTicket = (id) => {
   });
 }
 
+const generateFilterDataForDropdown = () => {
+  return [...new Set(tickets.map((ticket) => ticket.status))];
+};
+
+const handleFilterName = (name) => {
+  const filteredData = tickets.filter((ticket) => {
+    const fullName = `${ticket.firstName} ${ticket.lastName}`;
+    if(fullName.toLowerCase().includes(name.toLowerCase())) {
+      return ticket;
+    }
+  });
+  setFilterTickets(filteredData);
+}
+
+const handleFilterStatus = (status) => {
+  const filteredData = tickets.filter((ticket) => {
+    if(ticket.status === status) {
+      return ticket;
+    }
+  });
+  setFilterTickets(filteredData);
+}
+
+const handleFilterDate = (date, field) => {
+  const filteredData = tickets.filter((ticket) => {
+    if(field === 'from' && dayjs(ticket.createOn).isSameOrAfter(dayjs(date))) {
+      return ticket;
+    }
+
+    if(field === 'to' && dayjs(ticket.createOn).isSameOrBefore(dayjs(date))) {
+      return ticket;
+    }
+
+  });
+  setFilterTickets(filteredData);
+}
+
   return (
+    <>
     <div className="home">
       <div class="container">
         <div class="row align-items-center my-5">
@@ -48,40 +100,14 @@ const deleteTicket = (id) => {
             
           </div>
           <div class="col-lg-5">
+         
             <h1 class="font-weight-light header">All Tickets</h1>
-
-            {/* <form className="filterButtons">
-              <label>Filter</label>
-              <button type="submit" class="btn btn-success filterButton">AND</button>
-              <button type="submit" class="btn btn-success filterButton">OR</button>
-              <button type="submit" class="btn btn-success filterButton">RUN</button>
-              <button type="submit" class="btn btn-success filterButton">SAVE</button>
-            </form>
-
-            <form className="filterLists">
-              <select className="filterList">
-                <option>State</option>
-                <option>Requested By</option>
-                <option>Short Description</option>
-                <option>Assigned to</option>
-                <option>Priority</option>
-                <option>Ticket Number</option>
-              </select>
-              <select className="filterList">
-                <option>is</option>
-                <option>is not</option>
-              </select>
-              <select className="filterList">
-                <option>Closed</option>
-                <option>Opened</option>
-                <option>New</option>
-                <option>Work Started</option>
-                <option>Pending Customer</option>
-                <option>Awaiting Vender</option>
-                <option>Escalated</option>
-              </select>
-            </form> */}
-
+            <FilterBar
+              statuses={generateFilterDataForDropdown()} 
+              onNameFilter={handleFilterName} 
+              onStatusFilter={handleFilterStatus}
+              onDateFilter={handleFilterDate}
+            />
             <table className="table table-striped ticketTable">
               <thead>
                 <tr>
@@ -101,7 +127,7 @@ const deleteTicket = (id) => {
                 </tr>
               </thead>
               <tbody>
-                {tickets.map((ticket)=> (
+                {filterTickets.map((ticket) => (
                   <tr>
                     <th class="col-md-3">{ticket.ticketNumber}</th>
                     <th class="col-md-3">{ticket.status}</th>
@@ -123,6 +149,7 @@ const deleteTicket = (id) => {
         </div>
       </div>
     </div>
+    </>
   );
 }
 
