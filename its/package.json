@@ -9,6 +9,7 @@
     "axios": "^0.23.0",
     "bootstrap": "^5.1.1",
     "bootstrap-toggle": "^2.2.2",
+    "dayjs": "^1.10.7",
     "es6-promise": "^4.2.8",
     "evergreen-ui": "^2.0.1",
     "isomorphic-fetch": "^3.0.0",
