@@ -149,41 +149,56 @@ router.post('/', (req, res) => {
                 if (err) {
                     res.status(400).json({ message: { msgBody: "There is something wrong with your information (400), please re-enter and try again. ", msgError: true } })
                 } else {
-
-                    let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully submitted, here is the ticket information: </p><br>" +
-                        '<table border="1" class = "text">' +
-                        '<thead>' +
-                        '<tr>' +
-                        '<td>Email address</td>' +
-                        '<td>subject</td>' +
-                        '<td>problem description</td>' +
-                        '</tr>' +
-                        '</thead>' +
-                        '<tbody>' +
-                        '<tr>' +
-                        '<td>' + req.body.email + '</td>' +
-                        '<td>' + req.body.subject + '</td>' +
-                        '<td>' + req.body.description + '</td>' +
-                        '</tr>' +
-                        '</tbody>' +
-                        '</table>'
-
-                    var mailOptions = {
-                        from: process.env.EMAIL_USER,
-                        to: req.body.email,
-                        subject: 'ServiceTicket - Your issue ticket has been successfully submitted.',
-                        html: message
+                    const msg = {
+                        to: `${req.body.email}`, // Change to your recipient
+                        from: 'dmao6@myseneca.ca', // Change to your verified sender
+                        subject: 'ServiceTicket - Your issue ticket has been submitted',
+                        text: `Hi ${req.body.firstName}`,
+                        html: `Thank you for submitted a ticket. You should be contacted by an service agent soon. Description: ${req.body.description}`,
                     }
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                            console.log("ERROR: " + error);
-                            res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
-                        }
-                        else {
-                            console.log("SUCCESS: " + info.response);
-                            res.status(201).json({ message: { msgBody: "The ticket is created successfully! You will be redirected to the dashboard in a second!", msgError: false } });
-                        }
-                    });
+                    sgMail
+                    .send(msg)
+                    .then(() => {
+                        console.log('Email sent')
+                    })
+                    .catch((error) => {
+                        console.error(error)
+                    })
+
+                    // let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully submitted, here is the ticket information: </p><br>" +
+                    //     '<table border="1" class = "text">' +
+                    //     '<thead>' +
+                    //     '<tr>' +
+                    //     '<td>Email address</td>' +
+                    //     '<td>subject</td>' +
+                    //     '<td>problem description</td>' +
+                    //     '</tr>' +
+                    //     '</thead>' +
+                    //     '<tbody>' +
+                    //     '<tr>' +
+                    //     '<td>' + req.body.email + '</td>' +
+                    //     '<td>' + req.body.subject + '</td>' +
+                    //     '<td>' + req.body.description + '</td>' +
+                    //     '</tr>' +
+                    //     '</tbody>' +
+                    //     '</table>'
+
+                    // var mailOptions = {
+                    //     from: process.env.EMAIL_USER,
+                    //     to: req.body.email,
+                    //     subject: 'ServiceTicket - Your issue ticket has been successfully submitted.',
+                    //     html: message
+                    // }
+                    // transporter.sendMail(mailOptions, (error, info) => {
+                    //     if (error) {
+                    //         console.log("ERROR: " + error);
+                    //         res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
+                    //     }
+                    //     else {
+                    //         console.log("SUCCESS: " + info.response);
+                    //         res.status(201).json({ message: { msgBody: "The ticket is created successfully! You will be redirected to the dashboard in a second!", msgError: false } });
+                    //     }
+                    // });
 
 
                 }
@@ -212,49 +227,74 @@ router.patch('/:id', getTicket, async (req, res) => {
         res.json(updatedTicket)
         // send email if ticket is successfully closed
         if (req.body.status === "Closed") {
-            let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully closed, here is the ticket information: </p><br>" +
-            '<table border="1" class = "text">' +
-            '<thead>' +
-            '<tr>' +
-            '<td>Email address</td>' +
-            '<td>Subject</td>' +
-            '<td>Problem description</td>' +
-            '<td>Closing notes</td>' +
-            '</tr>' +
-            '</thead>' +
-            '<tbody>' +
-            '<tr>' +
-            '<td>' + req.body.email + '</td>' +
-            '<td>' + req.body.subject + '</td>' +
-            '<td>' + req.body.description + '</td>' +
-            '<td>' + req.body.solution + '</td>' +
-            '</tr>' +
-            '</tbody>' +
-            '</table>'
-
-            var mailOptions = {
-                from: process.env.EMAIL_USER,
-                to: req.body.email,
-                subject: 'ServiceTicket - Your issue ticket has been closed.',
-                html: message
+            const msg = {
+                to: `${req.body.email}`, // Change to your recipient
+                from: 'dmao6@myseneca.ca', // Change to your verified sender
+                subject: 'ServiceTicket - Your issue ticket has been closed',
+                text: `Hi ${req.body.firstName}`,
+                html: `Your open issue ticket has been closed with the following comment: ${req.body.solution}`,
             }
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.log("ERROR: " + error);
-                    res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
-                }
-                else {
-                    console.log("SUCCESS: " + info.response);
-                    res.status(201).json({ message: { msgBody: "The ticket is closed successfully! You will be redirected to the dashboard in a second!", msgError: false } });
-                }
-            });
+            sgMail
+            .send(msg)
+            .then(() => {
+                console.log('Email sent')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+            // let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>Your ticket was successfully closed, here is the ticket information: </p><br>" +
+            // '<table border="1" class = "text">' +
+            // '<thead>' +
+            // '<tr>' +
+            // '<td>Email address</td>' +
+            // '<td>Subject</td>' +
+            // '<td>Problem description</td>' +
+            // '<td>Closing notes</td>' +
+            // '</tr>' +
+            // '</thead>' +
+            // '<tbody>' +
+            // '<tr>' +
+            // '<td>' + req.body.email + '</td>' +
+            // '<td>' + req.body.subject + '</td>' +
+            // '<td>' + req.body.description + '</td>' +
+            // '<td>' + req.body.solution + '</td>' +
+            // '</tr>' +
+            // '</tbody>' +
+            // '</table>'
 
-
-
-
-
+            // var mailOptions = {
+            //     from: process.env.EMAIL_USER,
+            //     to: req.body.email,
+            //     subject: 'ServiceTicket - Your issue ticket has been closed.',
+            //     html: message
+            // }
+            // transporter.sendMail(mailOptions, (error, info) => {
+            //     if (error) {
+            //         console.log("ERROR: " + error);
+            //         res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
+            //     }
+            //     else {
+            //         console.log("SUCCESS: " + info.response);
+            //         res.status(201).json({ message: { msgBody: "The ticket is closed successfully! You will be redirected to the dashboard in a second!", msgError: false } });
+            //     }
+            // });
         }
         else if(req.body.status==="Pending Client Response"){
+            const msg = {
+                to: `${req.body.email}`, // Change to your recipient
+                from: 'dmao6@myseneca.ca', // Change to your verified sender
+                subject: 'ServiceTicket - Requesting more information',
+                text: `Hi ${req.body.firstName}`,
+                html: `Your open issue ticket needs more information`,
+            }
+            sgMail
+            .send(msg)
+            .then(() => {
+                console.log('Email sent')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
             // let msg = {
             //     to: req.body.email, // Change to your recipient
             //     from: 'dmao6@myseneca.ca', // Change to your verified sender
@@ -271,50 +311,49 @@ router.patch('/:id', getTicket, async (req, res) => {
             //       console.error(error)
             //     })
 
-            let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>The IT Service agent is requesting more information regarding your ticket: </p><br>" +
-            '<table border="1" class = "text">' +
-            '<thead>' +
-            '<tr>' +
-            '<td>Email address</td>' +
-            '<td>Subject</td>' +
-            '<td>Problem description</td>' +
-            '<td>Closing notes</td>' +
-            '</tr>' +
-            '</thead>' +
-            '<tbody>' +
-            '<tr>' +
-            '<td>' + req.body.email + '</td>' +
-            '<td>' + req.body.subject + '</td>' +
-            '<td>' + req.body.description + '</td>' +
-            '<td>' + req.body.solution + '</td>' +
-            '</tr>' +
-            '</tbody>' +
-            '</table>'
+            // let message = '<p>Hello, ' + req.body.firstName + "! </p><br><p>The IT Service agent is requesting more information regarding your ticket: </p><br>" +
+            // '<table border="1" class = "text">' +
+            // '<thead>' +
+            // '<tr>' +
+            // '<td>Email address</td>' +
+            // '<td>Subject</td>' +
+            // '<td>Problem description</td>' +
+            // '<td>Closing notes</td>' +
+            // '</tr>' +
+            // '</thead>' +
+            // '<tbody>' +
+            // '<tr>' +
+            // '<td>' + req.body.email + '</td>' +
+            // '<td>' + req.body.subject + '</td>' +
+            // '<td>' + req.body.description + '</td>' +
+            // '<td>' + req.body.solution + '</td>' +
+            // '</tr>' +
+            // '</tbody>' +
+            // '</table>'
 
-            var mailOptions = {
-                from: process.env.EMAIL_USER,
-                to: req.body.email,
-                subject: 'ServiceTicket - Your issue ticket is needing more information.',
-                html: message
-            }
-            transporter.sendMail(mailOptions, (error, info) => {
-                if (error) {
-                    console.log("ERROR: " + error);
-                    res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
-                }
-                else {
-                    console.log("SUCCESS: " + info.response);
-                    res.status(201).json({ message: { msgBody: "The ticket is lacking enough information to be worked on", msgError: false } });
-                }
-            });
+            // var mailOptions = {
+            //     from: process.env.EMAIL_USER,
+            //     to: req.body.email,
+            //     subject: 'ServiceTicket - Your issue ticket is needing more information.',
+            //     html: message
+            // }
+            // transporter.sendMail(mailOptions, (error, info) => {
+            //     if (error) {
+            //         console.log("ERROR: " + error);
+            //         res.status(500).json({ message: { msgBody: "There is something wrong with your information (500), please re-enter and try again. ", msgError: true } });
+            //     }
+            //     else {
+            //         console.log("SUCCESS: " + info.response);
+            //         res.status(201).json({ message: { msgBody: "The ticket is lacking enough information to be worked on", msgError: false } });
+            //     }
+            // });
 
         }
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
- 
-    
 })
+
 // Delete one
 router.delete('/:id', getTicket, async (req, res) => {
     try {

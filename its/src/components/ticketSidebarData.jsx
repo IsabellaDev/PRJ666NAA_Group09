@@ -28,30 +28,31 @@ export const TicketSidebarData = [
         icon: <FaIcons.FaList />,
         className: 'nav-text'
     },
-    {
-        title: 'Transfer Ticket',
-        path: '/TransferTicket',
-        icon: <IoIcons.IoMdSwap />,
-        className: 'nav-text'
-    },
-    {
-        title: 'Close a ticket',
-        path: '/closeTicket',
-        icon: <FaIcons.FaDoorClosed />,
-        className: 'nav-text'
-    },
-    {
-        title: 'Edit an existing ticket',
-        path: '/edit',
-        icon: <AiIcons.AiFillEdit />,
-        className: 'nav-text'
-    },
-    {
-        title: 'Request More Information',
-        path: '/MoreInfoRequest',
-        icon: <AiIcons.AiOutlineMore />,
-        className: 'nav-text'
-    }/* ,
+    // {
+    //     title: 'Transfer Ticket',
+    //     path: '/TransferTicket',
+    //     icon: <IoIcons.IoMdSwap />,
+    //     className: 'nav-text'
+    // },
+    // {
+    //     title: 'Close a ticket',
+    //     path: '/closeTicket',
+    //     icon: <FaIcons.FaDoorClosed />,
+    //     className: 'nav-text'
+    // },
+    // {
+    //     title: 'Edit an existing ticket',
+    //     path: '/edit',
+    //     icon: <AiIcons.AiFillEdit />,
+    //     className: 'nav-text'
+    // },
+    // {
+    //     title: 'Request More Information',
+    //     path: '/MoreInfoRequest',
+    //     icon: <AiIcons.AiOutlineMore />,
+    //     className: 'nav-text'
+    // }
+    /* ,
     {
         title: 'Back To Self-Service Portal',
         path: '/',
