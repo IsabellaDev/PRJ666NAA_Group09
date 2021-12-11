@@ -14,7 +14,7 @@ function FAQComponent( props) {
 
   function getFAQData() {
     return new Promise(function (resolve, reject) {
-        fetch(`http://localhost:5000/faq`)
+        fetch(`https://damp-river-45159.herokuapp.com/faq`)
             .then(res => res.json())
             .then(result => {
                 if (result) {
@@ -35,7 +35,7 @@ function deleteFAQRecord(id) {
    
 };
   return new Promise(function (resolve, reject) {
-      fetch(`http://localhost:5000/faq/${id}`, requestOptions)
+      fetch(`https://damp-river-45159.herokuapp.com/faq/${id}`, requestOptions)
           .then(res => res.json())
           .then(result => {
               if (result) {

@@ -14,7 +14,7 @@ function CTList( props) {
 
   function getContactData() {
     return new Promise(function (resolve, reject) {
-        fetch(`http://localhost:5000/contacts`)
+        fetch(`https://damp-river-45159.herokuapp.com/contacts`)
             .then(res => res.json())
             .then(result => {
                 if (result) {
@@ -35,7 +35,7 @@ function deleteContactRecord(id) {
    
 };
   return new Promise(function (resolve, reject) {
-      fetch(`http://localhost:5000/contacts/${id}`, requestOptions)
+      fetch(`https://damp-river-45159.herokuapp.com/contacts/${id}`, requestOptions)
           .then(res => res.json())
           .then(result => {
               if (result) {

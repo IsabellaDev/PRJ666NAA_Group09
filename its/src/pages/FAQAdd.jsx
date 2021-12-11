@@ -27,7 +27,7 @@ function FAQAdd() {
         };
         console.log('The FAQ Article Was Submitted: ' + JSON.stringify(FAQData));
           return new Promise(function (resolve, reject) {
-              fetch(`http://localhost:5000/faq/`, requestOptions)
+              fetch(`https://damp-river-45159.herokuapp.com/faq/`, requestOptions)
               .then((response) => {
                 return response.json();
             })

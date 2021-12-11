@@ -15,7 +15,7 @@ require("isomorphic-fetch");
         const history=useHistory();
         let newDate=new Date();
        //const url = "https://damp-river-45159.herokuapp.com/requestService"
-        const url = "http://localhost:5000/requestService"
+        const url = "https://damp-river-45159.herokuapp.com/requestService"
         const[devices, setDevices] = useState([]);
 
         useEffect(() => {

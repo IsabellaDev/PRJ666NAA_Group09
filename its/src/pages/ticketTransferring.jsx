@@ -20,7 +20,7 @@ function TransferTicket() {
             }, []);
             
             useEffect(() => {
-              fetch(`http://localhost:5000/contacts`)
+              fetch(`https://damp-river-45159.herokuapp.com/contacts`)
                   .then(res => res.json())
                   .then(result => {
                       if (result) {
@@ -39,7 +39,7 @@ function TransferTicket() {
                 };
                 console.log('Internal comment updated: ' + JSON.stringify(tickets));
                   return new Promise(function (resolve, reject) {
-                      fetch(`http://localhost:5000/ticket/${params._id}`, requestOptions)
+                      fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`, requestOptions)
                       .then((response) => {
                         return response.json();
                       })    
