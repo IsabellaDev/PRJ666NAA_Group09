@@ -157,6 +157,17 @@ function TicketLogHistory(props) {
          
             <li className="form-line jf-required" data-type="control_textarea" id="id_6">
               <label className="form-label form-label-top form-label-auto" id="label_6" htmlFor="input_6">
+                Attachments:
+                <span className="form-required">
+                  *
+                </span>
+              </label>
+              <div id="cid_6" className="form-input-wide jf-required" data-layout="full">
+                <a href={"localhost:5000/files/"+tickets.file}>{tickets.file}</a>
+              </div>
+            </li>
+            <li className="form-line jf-required" data-type="control_textarea" id="id_6">
+              <label className="form-label form-label-top form-label-auto" id="label_6" htmlFor="input_6">
                 Client's Issue in Detail
                 <span className="form-required">
                   *
@@ -187,7 +198,7 @@ function TicketLogHistory(props) {
                   <button className="btn btn-secondary" onClick={()=>{tickets.status=="Closed"? alert('This ticket has been closed, please re-open first if you need to do this action'):history.push(`/moreInfoReq/${tickets._id}`)}}>
                     Request More Information
                   </button>
-                  <button type="submit" className="btn btn-info" data-component="button" data-content>
+                  <button className="btn btn-info" onClick={()=>{tickets.status=="Closed"? alert('This ticket has been closed, please re-open first if you need to do this action'):history.push(`/xfrTo/${tickets._id}`)}}>
                     Transfer this ticket
                   </button>
                   

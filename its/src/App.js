@@ -11,7 +11,9 @@ import Install from './pages/Install'
 import ReportIssue from './pages/ReportIssue';
 import Articles from './pages/Articles';
 import RequestService from './pages/requestService';
-import Contact from './pages/contact';
+import Contact from './pages/CTList';
+import ContactAdd from './pages/CTAdd';
+import ContactEdit from './pages/CTEdit';
 import Faq from './pages/faq';
 import FaqAdd from './pages/FAQAdd';
 import FaqEdit from './pages/FAQEditing';
@@ -57,7 +59,7 @@ function App() {
         <Route path='/reportIssue' component={ReportIssue} id="S" />
         <Route path='/articles' component={Articles} id="S" />
         <Route path='/requestService' component={RequestService} id="S" />
-        <Route path='/contact' component={Contact} id="S" />
+        
         <Route path='/faq' component={Faq} id="S" />
         <Route path='/faqadd' component={FaqAdd} id="S" />
         <Route path='/faqedit/:id' component={FaqEdit} id="S" />
@@ -71,12 +73,14 @@ function App() {
         <Route path="/TicketLogHistory/:_id" >{user.isAdmin ? <TicketLogHistory /> : <Home />}</Route>
         <Route path="/ClosingTicket/:_id" >{user.isAdmin ? <ClosingTicket /> : <Home />}</Route>
         <Route path="/moreInfoReq/:_id" >{user.isAdmin ? <MoreInfo /> : <Home />}</Route>
-        <Route path="/xfrTo/:_id" >{user.isAdmin ? <ClosingTicket /> : <Home />}</Route>
+        <Route path="/xfrTo/:_id" >{user.isAdmin ? <TransferTicket /> : <Home />}</Route>
         <Route path="/edit" >{user.isAdmin ? <EditTicket /> : <Home />}</Route>
         <Route path="/CloseTicket" >{user.isAdmin ? <CloseTicket /> : <Home />}</Route>
         <Route path="/TransferTicket" >{user.isAdmin ? <TransferTicket /> : <Home />}</Route>
         <Route path="/MoreInfoRequest" >{user.isAdmin ? <MoreInfo /> : <Home />}</Route>
-
+        <Route path="/contacts" >{user.isAdmin ? <Contact /> : <Home />}</Route>
+        <Route path="/contacts/add" >{user.isAdmin ? <ContactAdd /> : <Home />}</Route>
+        <Route path="/contacts/edit/:id" >{user.isAdmin ? <ContactEdit /> : <Home />}</Route>
         <Route exact path="/managementconsole">{user.isAdmin ? <ManagementConsole /> : <Home />}</Route>
         <Route exact path="/deviceInventory">{user.isAdmin ? <DeviceInventory /> : <Home />}</Route>
         <Route path='/deviceInventory/AddNew' component={DeviceInventoryAdd} id="S" />

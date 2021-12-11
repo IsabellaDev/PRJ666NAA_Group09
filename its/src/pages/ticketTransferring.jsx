@@ -1,28 +1,95 @@
-import React from "react";
-import {withRouter} from 'react-router-dom';
+import React,{ useState, useEffect }  from "react";
+import {withRouter, useHistory, useParams} from 'react-router-dom';
+
 function TransferTicket() {
+
+  const params = useParams();
+          const [tickets, setTickets] = useState([]);
+          const [contacts, setContact] = useState([]);
+
+          const history = useHistory();
+          useEffect(() => {
+            fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`)
+                .then(res => res.json())
+                .then(result => {
+                    if (result) {
+                      console.log(result);
+                      setTickets(result);
+                    } 
+                })    
+            }, []);
+            
+            useEffect(() => {
+              fetch(`http://localhost:5000/contacts`)
+                  .then(res => res.json())
+                  .then(result => {
+                      if (result) {
+                        console.log(result);
+                        setContact(result);
+                      } 
+                  })    
+              }, []);
+            const handleSubmit = (e) => {
+                e.preventDefault();
+                const requestOptions = {
+                    method: 'PATCH',
+                    
+                    headers: { 'Content-Type': 'application/json' },
+                    body:JSON.stringify(tickets)
+                };
+                console.log('Internal comment updated: ' + JSON.stringify(tickets));
+                  return new Promise(function (resolve, reject) {
+                      fetch(`http://localhost:5000/ticket/${params._id}`, requestOptions)
+                      .then((response) => {
+                        return response.json();
+                      })    
+                          .then(result => {
+                              if (result) {
+                                console.log(result);  
+                                resolve(result);
+                
+                              }
+                          })
+                          .then(()=>{
+                            alert('Internal comment updated successfully.');
+                            history.push('/AllTicket');
+                        })
+                        });
+                  
+               
+            }
+
+        const handleChange = (e) => {
+            let target = e.target; // the element that initiated the event
+            let value = target.value; // its value
+            let name = target.name; // its name
+    
+            setTickets(tickets => {
+                // return a new object built with the properties from userData 
+                // including a new property name:value.  If name:value exists, it will be 
+                // overwritten, ie: let obj1 = {x:5,x:6}; console.log(obj1); // {x: 6}  
+                return {...tickets, [name]: value}; 
+            });
+        }
+
   
     return (
 
       <div className="container px-5 my-5">
-        <form id="ticketxfr" >
+        <form id="ticketxfr" onSubmit={handleSubmit} >
           <div className="form-floating mb-3">
-            <input className="form-control" id="ticketNumber" type="text" placeholder="Ticket Number" data-sb-validations />
+            <input className="form-control" id="ticketNumber" type="text" value={tickets.ticketNumber} placeholder="Ticket Number" data-sb-validations />
             <label htmlFor="ticketNumber">Ticket Number</label>
           </div>
           <div className="form-floating mb-3">
-            <textarea className="form-control" id="ticketBreifing" type="text" placeholder="Ticket Breifing" style={{height: '10rem'}} data-sb-validations defaultValue={""} />
+            <textarea className="form-control" id="ticketBreifing" type="text" placeholder="Ticket Breifing" value={tickets.subject+"\n"+tickets.description} style={{height: '10rem'}} data-sb-validations defaultValue={""} />
             <label htmlFor="ticketBreifing">Ticket Breifing</label>
           </div>
           <div className="form-floating mb-3">
             <select className="form-select" id="transferTo" aria-label="Transfer to">
-              <option value="IT Service Manager">IT Service Manager</option>
-              <option value="Network Office">Network Office</option>
-              <option value="Electrical Office">Electrical Office</option>
-              <option value="Security Office">Security Office</option>
-              <option value="Office of Registrar">Office of Registrar</option>
-              <option value="Office of Admission">Office of Admission</option>
-              <option value="International Student Office">International Student Office</option>
+            {contacts.map((c) => (
+                                <option value={c.Email}>{c.Name}</option>
+                            ))}
             </select>
             <label htmlFor="transferTo">Transfer to</label>
           </div>
@@ -60,10 +127,9 @@ function TransferTicket() {
             <label htmlFor="additionalCommentNotVisibleToClient">Additional Comment (not visible to client)</label>
             <div className="invalid-feedback" data-sb-feedback="additionalCommentNotVisibleToClient:required">Additional Comment (not visible to client) is required.</div>
           </div>
-          
-          <div className="d-none" id="submitErrorMessage">
-            <div className="text-center text-danger mb-3">Error sending message!</div>
-          </div>
+
+          <input type="hidden" id="status" name="status" value="Transfered"></input>
+
           <div className="d-grid">
             <button className="btn btn-primary btn-lg " id="submitButton" type="submit">Submit</button>
           </div>

@@ -42,10 +42,10 @@ function ManagementConsole() {
                                         <path d="M3 4.5h10a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2zm0 1a1 1 0 0 0-1 1v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3a1 1 0 0 0-1-1H3zM1 2a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 2zm0 12a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1h-13A.5.5 0 0 1 1 14z" />
                                     </svg>
                                 </div>
-                                <h2>Quick Response List</h2>
-                                <p> This entry is for maintain the Quick Solution database. NOTE: This will effect all user!     </p>
-                                <Link to="/articleList" class="icon-link">
-                                    Go to Quick Response
+                                <h2>FAQ Article Management</h2>
+                                <p> This entry is for maintain the FAQ article.      </p>
+                                <Link to="/faq" class="icon-link">
+                                    Go to FAQ Management
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi" width="1em" height="1em"><use xlinkHref="#chevron-right" /><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                                     </svg>
                                 </Link>
@@ -59,9 +59,9 @@ function ManagementConsole() {
                                         <path d="M14 4a4 4 0 1 1-8 0 4 4 0 0 1 8 0z" />
                                         <use xlinkHref="#toggles2" /></svg>
                                 </div>
-                                <h2>Ticket Management</h2>
-                                <p>Click below to view all the tickets and manage the tickets as neededs. </p>
-                                <Link to="/dashboard" class="icon-link">
+                                <h2>Contact Management</h2>
+                                <p>Click below to maintain the contact list (for Ticket Transfer) </p>
+                                <Link to="/contacts" class="icon-link">
                                     Go to tickets
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" class="bi" width="1em" height="1em"><use xlinkHref="#chevron-right" /><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
                                     </svg>

@@ -159,7 +159,7 @@ router.post('/', (req, res) => {
                     sgMail
                     .send(msg)
                     .then(() => {
-                        console.log('Email sent')
+                        console.log('Email sent-submit')
                     })
                     .catch((error) => {
                         console.error(error)
@@ -237,7 +237,7 @@ router.patch('/:id', getTicket, async (req, res) => {
             sgMail
             .send(msg)
             .then(() => {
-                console.log('Email sent')
+                console.log('Email sent-closed')
             })
             .catch((error) => {
                 console.error(error)
@@ -290,7 +290,7 @@ router.patch('/:id', getTicket, async (req, res) => {
             sgMail
             .send(msg)
             .then(() => {
-                console.log('Email sent')
+                console.log('Email sent-more info')
             })
             .catch((error) => {
                 console.error(error)
@@ -348,7 +348,42 @@ router.patch('/:id', getTicket, async (req, res) => {
             //     }
             // });
 
+        }else{
+            if(req.body.status==="Transfered"){
+            const msg = {
+                to: `${req.body.transferTo}`, // Change to your recipient
+                from: 'dmao6@myseneca.ca', // Change to your verified sender
+                subject: 'ServiceTicket - Requesting Attention',
+                text: `Hi ${req.body.transferTo}`,
+                html: `Ticket ${req.body.ticketNumber} need your attention`,
+            }
+            sgMail
+            .send(msg)
+            .then(() => {
+                console.log('Email sent-xFer')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
         }
+        if(req.body.additionalEmail){
+            const msg = {
+                to: `${req.body.additionalEmail}`, // Change to your recipient
+                from: 'dmao6@myseneca.ca', // Change to your verified sender
+                subject: 'ServiceTicket - Requesting Attention',
+                text: `Hi ${req.body.transferTo}`,
+                html: `Ticket ${req.body.ticketNumber} need your attention`,
+            }
+            sgMail
+            .send(msg)
+            .then(() => {
+                console.log('Email sent-xFr-addEmail')
+            })
+            .catch((error) => {
+                console.error(error)
+            })
+        }
+        } 
     } catch (err) {
         res.status(400).json({ message: err.message })
     }
