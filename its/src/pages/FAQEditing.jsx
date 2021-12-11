@@ -10,7 +10,7 @@ function FAQEdit(props) {
     const [FAQData, setFAQData] = useState("");
     const history = useHistory();
     useEffect(() => {
-      fetch(`http://localhost:5000/faq/${params.id}`)
+      fetch(`https://damp-river-45159.herokuapp.com/faq/${params.id}`)
           .then(res => res.json())
           .then(result => {
               if (result) {
@@ -33,7 +33,7 @@ function FAQEdit(props) {
         };
         console.log('The FAQ Article Was Submitted: ' + JSON.stringify(FAQData));
           return new Promise(function (resolve, reject) {
-              fetch(`http://localhost:5000/faq/${params.id}`, requestOptions)
+              fetch(`https://damp-river-45159.herokuapp.com/faq/${params.id}`, requestOptions)
               .then((response) => {
                 return response.json();
             })

@@ -29,7 +29,7 @@ function ClosingTicket(props) {
                     };
                     console.log('Ticket Closed: ' + JSON.stringify(tickets));
                       return new Promise(function (resolve, reject) {
-                          fetch(`http://localhost:5000/ticket/${params._id}`, requestOptions)
+                          fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`, requestOptions)
                           .then((response) => {
                             return response.json();
                           })    

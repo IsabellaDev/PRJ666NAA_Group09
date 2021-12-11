@@ -10,7 +10,7 @@ function ContactEdit(props) {
     const [contactData, setContactData] = useState("");
     const history = useHistory();
     useEffect(() => {
-      fetch(`http://localhost:5000/contacts/${params.id}`)
+      fetch(`https://damp-river-45159.herokuapp.com/contacts/${params.id}`)
           .then(res => res.json())
           .then(result => {
               if (result) {
@@ -33,7 +33,7 @@ function ContactEdit(props) {
         };
         console.log('The Contact Was updated: ' + JSON.stringify(contactData));
           return new Promise(function (resolve, reject) {
-              fetch(`http://localhost:5000/contacts/${params.id}`, requestOptions)
+              fetch(`https://damp-river-45159.herokuapp.com/contacts/${params.id}`, requestOptions)
               .then((response) => {
                 return response.json();
             })

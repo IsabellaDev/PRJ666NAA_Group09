@@ -29,7 +29,7 @@ function TicketLogHistory(props) {
                 };
                 console.log('Internal comment updated: ' + JSON.stringify(tickets));
                   return new Promise(function (resolve, reject) {
-                      fetch(`http://localhost:5000/ticket/${params._id}`, requestOptions)
+                      fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`, requestOptions)
                       .then((response) => {
                         return response.json();
                       })    
@@ -163,7 +163,7 @@ function TicketLogHistory(props) {
                 </span>
               </label>
               <div id="cid_6" className="form-input-wide jf-required" data-layout="full">
-                <a href={"localhost:5000/files/"+tickets.file}>{tickets.file}</a>
+                <a href={"https://damp-river-45159.herokuapp.com/files/"+tickets.file}>{tickets.file}</a>
               </div>
             </li>
             <li className="form-line jf-required" data-type="control_textarea" id="id_6">

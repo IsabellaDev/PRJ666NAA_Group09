@@ -28,7 +28,7 @@ function ContactAdd() {
         };
         console.log('The Contact Record Was Submitted: ' + JSON.stringify(contactData));
           return new Promise(function (resolve, reject) {
-              fetch(`http://localhost:5000/contacts/`, requestOptions)
+              fetch(`https://damp-river-45159.herokuapp.com/contacts/`, requestOptions)
               .then((response) => {
                 return response.json();
             })
