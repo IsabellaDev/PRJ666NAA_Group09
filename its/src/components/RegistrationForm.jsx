@@ -59,7 +59,7 @@ function RegistrationForm(props) {
 
   function handle(e) {
     setUser({ ...user, [e.target.name]: e.target.value });
-    if (user.isAdmin == 'admin') {
+    if (user.isAdmin == 'true') {
       user.isAdmin = true;
     } 
     console.log(user);
@@ -86,8 +86,9 @@ function RegistrationForm(props) {
       setMessage(message);
       resetForm();
       if (!message.msgError) {
+        console.log(message.msgBody)
         timerID = setTimeout(() => {
-          alert("Congratulations! You have successfully registered!");
+          //alert("Congratulations! You have successfully registered!");
           props.history.push('/login');
         }, 2000)
       }
@@ -129,7 +130,7 @@ function RegistrationForm(props) {
           <Label className="user-type-label">Select which one you are:</Label> <br />
           <fieldset>
             <Label className="admin-label" htmlFor="isAdmin">Admin </Label>
-            <Input type="radio" onChange={handle} name="isAdmin" value="admin" />
+            <Input type="radio" onChange={handle} name="isAdmin" value="true" />
 
           </fieldset>
         </FormGroup>
@@ -142,8 +143,8 @@ function RegistrationForm(props) {
         <div className="register-btn">
           <Button type="submit" className="btn btn-success col-12">Register</Button>
         </div>
-      </Form>
       {message ? <Message message={message} /> : null}
+      </Form>
     </div>
   );
 }

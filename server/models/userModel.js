@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const bcrypt = require('bcrypt');  //this is for encrypting the password 
 const Schema = mongoose.Schema;
+const passportLocalMongoose = require('passport-local-mongoose');
 
 var UserSchema = new Schema({
     "lastName": {
@@ -36,6 +37,9 @@ var UserSchema = new Schema({
         default: false
     }
 });
+
+UserSchema.plugin(passportLocalMongoose);
+
 // This part is for hashing part. 
 UserSchema.pre('save', function (next) {
     if (!this.isModified('password'))

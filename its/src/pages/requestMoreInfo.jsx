@@ -1,20 +1,97 @@
-import React from "react";
-import {withRouter} from 'react-router-dom';
+
+import { Accordion } from 'react-bootstrap';
+import React, { useEffect, useState } from 'react';
+import { withRouter,useHistory,useParams } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.css';
+
+
+  
+
+
 function MoreInfo() {
+  const params = useParams();
+  const [TicketData, setTicketData] = useState([]);
+  const history = useHistory();
+
+  useEffect(() => {
+    fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`)
+        .then(res => res.json())
+        .then(result => {
+            if (result) {
+              console.log(result);
+              setTicketData(result);
+            } 
+        })
+    }, []);
+
+
+  const handleSubmit = (e) => {
+      e.preventDefault();
+      const requestOptions = {
+          method: 'PATCH',
+          
+          headers: { 'Content-Type': 'application/json' },
+          body:JSON.stringify(TicketData)
+      };
+      console.log('The FAQ Article Was Submitted: ' + JSON.stringify(TicketData));
+        return new Promise(function (resolve, reject) {
+            fetch(`https://damp-river-45159.herokuapp.com/ticket/${params._id}`, requestOptions)
+            .then((response) => {
+              return response.json();
+          })
+                
+                .then(result => {
+                    if (result) {
+                      console.log(result);  
+                      resolve(result);
+      
+                    }
+                })
+                
+             
+               .then(()=>{
+                   alert('Thank you. We already informed the user to provide the information you requested.');
+                  history.push('/AllTicket');
+               })
+              });
+        
+     
+  }
+
+  const handleChange = (e) => {
+      let target = e.target; // the element that initiated the event
+      let value = target.value; // its value
+      let name = target.name; // its name
+
+      setTicketData(TicketData => {
+        return {...TicketData, [name]: value};
+      })
+
+      setTicketData(TicketData => {
+          // return a new object built with the properties from userData 
+          // including a new property name:value.  If name:value exists, it will be 
+          // overwritten, ie: let obj1 = {x:5,x:6}; console.log(obj1); // {x: 6}  
+          //return {...TicketData, [name]: value, ["status"]:"pending respond"};
+          return {...TicketData, ["status"]:"Pending Client Response"}; 
+      });
+  }
+
   return (
     <div className="MoreInfo">
-     ;<div className="container px-5 my-5">
-  <form id="contactForm" data-sb-form-api-token="API_TOKEN">
+     <div className="container px-5 my-5"> 
+  <form id="contactForm" onSubmit={handleSubmit}>
   <h1 className="display-6">Request more information</h1>
     <div className="form-floating mb-3">
-      <input
+     <input
         className="form-control"
         id="ticketNumber"
         type="text"
+        value={TicketData.ticketNumber}
         placeholder="Ticket Number"
         data-sb-validations="required"
-      />
-      <label htmlFor="ticketNumber">Ticket Number</label>
+        disabled
+      /> 
+      <label htmlFor="ticketNumber">Ticket Number</label> 
       <div
         className="invalid-feedback"
         data-sb-feedback="ticketNumber:required"
@@ -22,6 +99,7 @@ function MoreInfo() {
         Ticket Number is required.
       </div>
     </div>
+
     <div className="form-floating mb-3">
       <textarea
         className="form-control"
@@ -30,7 +108,8 @@ function MoreInfo() {
         placeholder="Additional information required, if needed."
         style={{ height: "10rem" }}
         data-sb-validations
-        defaultValue={""}
+        value={TicketData.subject+"\n\n"+TicketData.description}
+        disabled
       />
       <label htmlFor="ticketDetails">
        Ticket Details Display:
@@ -162,7 +241,7 @@ function MoreInfo() {
           id="verificationPurpose"
           type="checkbox"
           name="reason"
-          data-sb-validations
+         
         />
         <label className="form-check-label" htmlFor="verificationPurpose">
           Verification Purpose
@@ -229,6 +308,7 @@ function MoreInfo() {
         type="email"
         placeholder="Email Address (if client provided)"
         data-sb-validations="email"
+        onChange={handleChange}
       />
       <label htmlFor="emailAddressIfClientProvided">
         Email Address (if client provided)
@@ -252,21 +332,10 @@ function MoreInfo() {
         Phone number (if client provided)
       </label>
     </div>
-    <div className="d-none" id="submitSuccessMessage">
-      <div className="text-center mb-3">
-        <div className="fw-bolder">Form submission successful!</div>
-        <p>To activate this form, sign up at</p>
-        <a href="https://startbootstrap.com/solution/contact-forms">
-          https://startbootstrap.com/solution/contact-forms
-        </a>
-      </div>
-    </div>
-    <div className="d-none" id="submitErrorMessage">
-      <div className="text-center text-danger mb-3">Error sending message!</div>
-    </div>
-    <div className="d-grid">
+    
+   <div>
       <button
-        className="btn btn-primary btn-lg disabled"
+        className="btn btn-primary btn-lg"
         id="submitButton"
         type="submit"
       >
