@@ -1,4 +1,4 @@
-import { React, useEffect,useState } from 'react';
+import  React, {useEffect,useState}  from 'react';
 import { Table, Button } from 'react-bootstrap';
 import { Accordion } from 'react-bootstrap';
 import { withRouter,useHistory } from 'react-router-dom';
@@ -57,6 +57,7 @@ function DeviceInventory() {
       }, []);
 
     return (
+        <>
         <div className="deviceInventory">
             <h2>Device Inventory</h2>
             <p></p>
@@ -91,8 +92,9 @@ function DeviceInventory() {
                 </tbody>
 
             </Table>
-
+                    
         </div>
+        </>
     )
 
 
