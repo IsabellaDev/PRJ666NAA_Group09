@@ -78,7 +78,7 @@ function NewTicket(props) {
       resetForm();
       if (!message.msgError){
         timerID = setTimeout(() => {
-          props.history.push('/managementConsole');
+          props.history.push('/AllTicket');
         }, 2000);
       }
 

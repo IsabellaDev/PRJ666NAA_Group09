@@ -86,9 +86,9 @@ function Navbar(props) {
         <li className="nav-text">
           <Link to='/install'><FaIcons.FaDownload /><span>Install Software</span></Link>
         </li>
-        {/* <li className="nav-text">
+        <li className="nav-text">
           <Link to='/contact'><AiIcons.AiFillContacts /><span>Contact Information</span></Link>
-        </li> */}
+        </li>
         <li className="nav-text">
           <Link to='/faq'><AiIcons.AiFillQuestionCircle /><span>FAQ</span></Link>
         </li>

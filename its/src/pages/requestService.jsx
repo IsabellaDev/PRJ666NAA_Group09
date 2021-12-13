@@ -20,7 +20,7 @@ require("isomorphic-fetch");
 
         useEffect(() => {
             //fetch("https://damp-river-45159.herokuapp.com/hardware")
-            fetch("/hardware")
+            fetch("https://damp-river-45159.herokuapp.com/hardware")
             .then(response => response.json())
             .then(json => setDevices(json))
         }, [])
@@ -84,15 +84,17 @@ require("isomorphic-fetch");
                 let seleDevice= decreaseQuantity(renter.equipment);
                 console.log(renter.equipment)
                 let qty=--seleDevice.quantity;
+                let name=seleDevice.equipmentName;
                 const decQuantity = {
                     method: 'PATCH',
                     headers: {'Content-Type': 'application/json' },
                     body:JSON.stringify({
+                        equipmentName : name,
                         quantity : qty
                       })
                 };
                 console.log(seleDevice)
-                fetch(`/hardware/${seleDevice._id}`, decQuantity)
+                fetch(`https://damp-river-45159.herokuapp.com/hardware/${seleDevice._id}`, decQuantity)
                 alert("Congratulations! You have successfully been registered to obtain the equipment you have selected!");
             })
             .then(()=>{

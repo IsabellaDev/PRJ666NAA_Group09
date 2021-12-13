@@ -104,7 +104,9 @@ function TicketLogHistory(props) {
                  
                 </div> 
                 <div  className="d-flex justify-content-end">
-                <button type="submit" className= {tickets.status=="Closed"?"btn btn-success":"btn btn-danger"} >
+                <button type="submit" className= {tickets.status=="Closed"?"btn btn-success":"btn btn-danger"} 
+                onClick={() => { if (tickets.status!=="Closed") history.push(`/ClosingTicket/${params._id}`) }}
+                >
                 {tickets.status=="Closed"?"Re-Open This Ticket":"Close This Ticket"}
                   </button>
                   </div>

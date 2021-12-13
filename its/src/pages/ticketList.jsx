@@ -139,7 +139,7 @@ const handleFilterDate = (date, field) => {
                     {/* <td class="col-md-3"><img src={ticket.file} /></td> */}
                     <td class="col-md-3"><Moment format="YYYY/MM/DD">{ticket.createOn}</Moment></td>
                     <td class="col-md-3"><button  class="btn btn-danger" type="button" key={ticket._id} onClick={()=> {if(window.confirm("Are you sure? If you already got a solution for this ticket, please consider to close it first! ")){deleteTicket(ticket._id); window.location.reload(false);} }}>Delete</button></td>
-                    <td class="col-md-3"><button  className="btn btn-primary" key={ticket._id} onClick={() => { history.push(`/TicketLogHistory/${ticket._id}`) }}>Log</button></td>
+                    <td class="col-md-3"><button  className="btn btn-primary" key={ticket._id} onClick={() => { history.push(`/TicketLogHistory/${ticket._id}`) }}>View</button></td>
                     <td class="col-md-3"><button  className="btn btn-warning" disabled={ticket.status === "Closed"} key={ticket._id} onClick={() => { history.push(`/ClosingTicket/${ticket._id}`) }}>Close</button></td>
                   </tr>
                 ))}
