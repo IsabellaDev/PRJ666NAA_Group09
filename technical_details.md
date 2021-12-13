@@ -11,8 +11,8 @@ of the application, including the forms, navbars, and buttons.
 
 ## Database
 
-An SQL database will be used to implement the database for our web application. An online
-database hosting service is still being decided. 
+A MongoDB database will be used to implement the database for our web application. MongoDB Atlas will
+used to host the database online in the cloud. 
 
 ## Developing Tools
 
